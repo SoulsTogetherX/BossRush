@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://lt1h1nu2iplm"]
+
+[ext_resource type="Script" path="res://src/level_objects/orbs/orb.gd" id="1_try8l"]
+
+[sub_resource type="Gradient" id="Gradient_7j2q1"]
+offsets = PackedFloat32Array(0, 0.815029, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Orb" type="Node2D"]
+script = ExtResource("1_try8l")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+amount = 128
+lifetime = 2.0
+emission_shape = 2
+emission_sphere_radius = 10.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+orbit_velocity_min = -0.2
+orbit_velocity_max = 0.2
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_7j2q1")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
+
+[connection signal="gui_input" from="Control" to="." method="_on_click"]
+[connection signal="mouse_entered" from="Control" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control" to="." method="_on_mouse_exited"]

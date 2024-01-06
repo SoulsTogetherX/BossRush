@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1625avtkbbq3"]
+
+[ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
+[ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="2_pve5w"]
+[ext_resource type="PackedScene" uid="uid://ctlyax3uosb1m" path="res://src/characters/test_dummy/test_dummy.tscn" id="3_6jpw2"]
+[ext_resource type="PackedScene" uid="uid://lt1h1nu2iplm" path="res://src/level_objects/orbs/orb.tscn" id="4_7dlbu"]
+
+[node name="TestRoom" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(551, 326)
+scale = Vector2(5, 5)
+texture = ExtResource("2_pve5w")
+
+[node name="Doggo" parent="." instance=ExtResource("1_vynos")]
+position = Vector2(365, 152)
+
+[node name="TestDummy" parent="." instance=ExtResource("3_6jpw2")]
+position = Vector2(577, 158)
+
+[node name="Orb" parent="." instance=ExtResource("4_7dlbu")]
+position = Vector2(510, 88)
+
+[node name="Orb2" parent="." instance=ExtResource("4_7dlbu")]
+position = Vector2(619, 227)
+
+[node name="Orb3" parent="." instance=ExtResource("4_7dlbu")]
+position = Vector2(650, 111)

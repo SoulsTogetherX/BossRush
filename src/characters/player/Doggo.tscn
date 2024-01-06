@@ -1,0 +1,97 @@
+[gd_scene load_steps=19 format=3 uid="uid://g022ma38jmtk"]
+
+[ext_resource type="Script" path="res://src/characters/player/Doggo.gd" id="1_621w4"]
+[ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="1_lxwdw"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="3_22scm"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_am8kh"]
+[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="3_bejcr"]
+[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_h4e8u"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="3_i5ea7"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/flow_movement.gd" id="3_svvuj"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_kp8qe"]
+[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="4_ngd8a"]
+[ext_resource type="Script" path="res://src/characters/player/states/idle.gd" id="5_xmvri"]
+[ext_resource type="Script" path="res://src/characters/player/states/walk.gd" id="6_2ol1i"]
+
+[sub_resource type="Resource" id="Resource_7q860"]
+script = ExtResource("3_22scm")
+max_health = 15
+name = "Doggo Health"
+description = "Nothing speical. Just regular health of a doggo."
+
+[sub_resource type="Resource" id="Resource_sxoce"]
+script = ExtResource("3_svvuj")
+speed = 200
+friction = 0.3
+name = ""
+description = ""
+
+[sub_resource type="Resource" id="Resource_heii7"]
+script = ExtResource("3_i5ea7")
+speed = 500
+duration = 0.2
+cool_down = 0.4
+becomes_invincible = false
+name = ""
+description = ""
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6i3q2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xy71d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lx5t1"]
+radius = 6.0
+
+[node name="Doggo" type="CharacterBody2D"]
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_621w4")
+health_handle = SubResource("Resource_7q860")
+primary_movement = SubResource("Resource_sxoce")
+secondary_movement = SubResource("Resource_heii7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_lxwdw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6i3q2")
+
+[node name="hit_box" type="Area2D" parent="."]
+script = ExtResource("3_am8kh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
+shape = SubResource("CircleShape2D_xy71d")
+debug_color = Color(0.67451, 0.45098, 0, 0.419608)
+
+[node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
+script = ExtResource("4_kp8qe")
+health_monitor = NodePath("../HealthMonitor")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="hurt_box"]
+position = Vector2(17, 0)
+shape = SubResource("CircleShape2D_lx5t1")
+debug_color = Color(0.992157, 0, 0.235294, 0.419608)
+
+[node name="HealthMonitor" type="Node" parent="."]
+script = ExtResource("3_h4e8u")
+_health = 10
+
+[node name="StateOverhead" type="Node" parent="." node_paths=PackedStringArray("_actor")]
+script = ExtResource("3_bejcr")
+_usesActor = true
+_actor = NodePath("..")
+_usesAnimationPlayer = false
+
+[node name="StateMachine" type="Node" parent="StateOverhead" node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_ngd8a")
+_name_id = "main"
+starting_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("walk")]
+script = ExtResource("5_xmvri")
+walk = NodePath("../move")
+
+[node name="move" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle")]
+script = ExtResource("6_2ol1i")
+idle = NodePath("../idle")
