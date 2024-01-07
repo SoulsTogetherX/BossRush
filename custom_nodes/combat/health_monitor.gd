@@ -49,12 +49,17 @@ func update_health(val : int) -> void:
 		
 		if val == 0:
 			killed.emit();
-		damage_taken.emit(_health - val);
+		
+		var delta = (_health - val);
+		_health = val;
+		damage_taken.emit(delta);
 	elif val > _health:
 		if _health == 0:
 			revived.emit();
-		healed.emit(val - _health);
-	_health = val;
+		
+		var delta = (val - _health);
+		_health = val;
+		healed.emit(delta);
 
 func health_change(amount : int) -> void:
 	health += amount;

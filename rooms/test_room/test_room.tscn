@@ -1,29 +1,73 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1625avtkbbq3"]
+[gd_scene load_steps=14 format=3 uid="uid://d1625avtkbbq3"]
 
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
 [ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="2_pve5w"]
 [ext_resource type="PackedScene" uid="uid://ctlyax3uosb1m" path="res://src/characters/test_dummy/test_dummy.tscn" id="3_6jpw2"]
 [ext_resource type="PackedScene" uid="uid://lt1h1nu2iplm" path="res://src/level_objects/orbs/orb.tscn" id="4_7dlbu"]
+[ext_resource type="PackedScene" uid="uid://cvrfi64eypl2d" path="res://src/GUI/GUI.tscn" id="5_ienh4"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="5_prli0"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="6_tqlvb"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/movement_exchangable.gd" id="7_lg0e8"]
+
+[sub_resource type="Gradient" id="Gradient_sfyie"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_02es4"]
+gradient = SubResource("Gradient_sfyie")
+
+[sub_resource type="Resource" id="Resource_cw5j3"]
+script = ExtResource("5_prli0")
+damage = 1
+name = "AttackTestName"
+description = "test_attack"
+symbol = 1
+
+[sub_resource type="Resource" id="Resource_vr7s6"]
+script = ExtResource("6_tqlvb")
+max_health = 15
+name = "HealthTestName"
+description = "test_health"
+symbol = 6
+
+[sub_resource type="Resource" id="Resource_uxeyy"]
+script = ExtResource("7_lg0e8")
+name = "MovementTestName"
+description = "test_movement"
+symbol = 4
 
 [node name="TestRoom" type="Node2D"]
 
+[node name="Room_Light" type="PointLight2D" parent="."]
+position = Vector2(739, 446.25)
+scale = Vector2(6.77344, 893.5)
+energy = 0.7
+blend_mode = 2
+texture = SubResource("GradientTexture2D_02es4")
+texture_scale = 50.0
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(551, 326)
-scale = Vector2(5, 5)
+position = Vector2(816, 453)
+scale = Vector2(9.14062, 6.98437)
 texture = ExtResource("2_pve5w")
 
 [node name="Doggo" parent="." instance=ExtResource("1_vynos")]
 position = Vector2(365, 152)
 
 [node name="TestDummy" parent="." instance=ExtResource("3_6jpw2")]
-position = Vector2(577, 158)
+position = Vector2(766, 483)
 
 [node name="Orb" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(510, 88)
+position = Vector2(607, 157)
+exchange = SubResource("Resource_cw5j3")
 
 [node name="Orb2" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(619, 227)
+position = Vector2(1013, 177)
+exchange = SubResource("Resource_vr7s6")
 
 [node name="Orb3" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(650, 111)
+position = Vector2(772, 160)
+exchange = SubResource("Resource_uxeyy")
+
+[node name="GUI" parent="." instance=ExtResource("5_ienh4")]
+
+[connection signal="damaged" from="TestDummy" to="GUI" method="update_health"]

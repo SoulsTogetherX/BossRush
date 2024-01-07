@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvrfi64eypl2d"]
+
+[ext_resource type="Script" path="res://src/GUI/GUI.gd" id="1_qxsjj"]
+[ext_resource type="Script" path="res://src/GUI/Health_Display.gd" id="2_0xwye"]
+[ext_resource type="Texture2D" uid="uid://cpu1ltj78m2o1" path="res://assets/sprites/GUI/Health.png" id="3_fowhc"]
+
+[node name="GUI" type="CanvasLayer"]
+follow_viewport_enabled = true
+script = ExtResource("1_qxsjj")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Top" type="Control" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Bottom" type="Control" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_vertical = 10
+mouse_filter = 2
+
+[node name="Health_Display" type="Control" parent="Control/VBoxContainer/Bottom"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 72.0
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_0xwye")
+
+[node name="Health_Back" type="TextureRect" parent="Control/VBoxContainer/Bottom/Health_Display"]
+modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+scale = Vector2(2, 2)
+mouse_filter = 2
+texture = ExtResource("3_fowhc")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="Health" type="TextureRect" parent="Control/VBoxContainer/Bottom/Health_Display"]
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+scale = Vector2(2, 2)
+mouse_filter = 2
+texture = ExtResource("3_fowhc")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="fade" type="ColorRect" parent="Control"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

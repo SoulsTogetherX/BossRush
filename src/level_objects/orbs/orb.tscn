@@ -1,15 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://lt1h1nu2iplm"]
+[gd_scene load_steps=8 format=3 uid="uid://lt1h1nu2iplm"]
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/orb.gd" id="1_try8l"]
+[ext_resource type="Texture2D" uid="uid://bptx0evn742ok" path="res://assets/sprites/symbols.png" id="2_u6e50"]
+
+[sub_resource type="Gradient" id="Gradient_mo0ps"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_um4t1"]
+gradient = SubResource("Gradient_mo0ps")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_7j2q1"]
-offsets = PackedFloat32Array(0, 0.815029, 1)
+offsets = PackedFloat32Array(0, 0.468208, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="SystemFont" id="SystemFont_2qooj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nmpi0"]
+font = SubResource("SystemFont_2qooj")
+font_size = 32
 
 [node name="Orb" type="Node2D"]
 script = ExtResource("1_try8l")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="color" type="PointLight2D" parent="."]
+energy = 3.0
+blend_mode = 2
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 10.0
+texture = SubResource("GradientTexture2D_um4t1")
+texture_scale = 9.0
+
+[node name="station_particle" type="CPUParticles2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
 show_behind_parent = true
 amount = 128
 lifetime = 2.0
@@ -21,9 +49,40 @@ gravity = Vector2(0, 0)
 initial_velocity_max = 20.0
 orbit_velocity_min = -0.2
 orbit_velocity_max = 0.2
+angle_min = -20.0
+angle_max = 20.0
 scale_amount_min = 2.0
 scale_amount_max = 5.0
 color_ramp = SubResource("Gradient_7j2q1")
+
+[node name="trail_particle" type="CPUParticles2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+amount = 128
+lifetime = 2.0
+emission_shape = 2
+emission_sphere_radius = 10.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+orbit_velocity_min = -0.02
+orbit_velocity_max = 0.02
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+damping_min = 20.0
+damping_max = 20.0
+angle_min = -20.0
+angle_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_7j2q1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_u6e50")
+hframes = 3
+vframes = 3
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -32,6 +91,20 @@ offset_left = -19.0
 offset_top = -19.0
 offset_right = 19.0
 offset_bottom = 19.0
+
+[node name="TitleDisplay" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 2000
+z_as_relative = false
+offset_left = -160.0
+offset_top = -48.0
+offset_right = 480.0
+offset_bottom = -3.0
+scale = Vector2(0.5, 0.5)
+text = "hello"
+label_settings = SubResource("LabelSettings_nmpi0")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="gui_input" from="Control" to="." method="_on_click"]
 [connection signal="mouse_entered" from="Control" to="." method="_on_mouse_entered"]
