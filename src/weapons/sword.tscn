@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cf13f75nsa557"]
 
-[ext_resource type="Texture2D" uid="uid://df0llebkh8r0l" path="res://assets/sprites/weapons/sword_bad.png" id="1_ahxu6"]
 [ext_resource type="Script" path="res://src/weapons/weapon.gd" id="1_p3bvg"]
+[ext_resource type="Texture2D" uid="uid://bjlc6vs0l8da1" path="res://assets/sprites/weapons/Doggos Sword.png" id="2_vlj04"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_j7x7h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rcehw"]
-size = Vector2(26, 3)
+size = Vector2(27, 2)
 
 [sub_resource type="Animation" id="Animation_7tvti"]
 resource_name = "RESET"
@@ -84,15 +84,16 @@ _data = {
 script = ExtResource("1_p3bvg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(12, 0)
-texture = ExtResource("1_ahxu6")
+position = Vector2(15, -1.5)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_vlj04")
 
 [node name="hit_box" type="Area2D" parent="."]
 monitorable = false
 script = ExtResource("3_j7x7h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
-position = Vector2(13, 1)
+position = Vector2(13.5, 0)
 shape = SubResource("RectangleShape2D_rcehw")
 debug_color = Color(0.67451, 0.45098, 0, 0.419608)
 

@@ -1,13 +1,10 @@
 class_name Player extends ExchangeType
 
-@onready var _state_overhead: StateOverhead = $StateOverhead;
+#@onready var _state_overhead: StateOverhead = $StateOverhead;
 
 func _ready() -> void:
 	super();
 	PlayerInfo.player = self;
-
-func set_up_weapon() -> void:
-	primary_attack._set_up_sprite(self, 30);
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack1"):

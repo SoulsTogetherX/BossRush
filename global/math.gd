@@ -1,9 +1,9 @@
 extends Node
 
-static func point_in_ellipse(oPos: Vector2, ePos: Vector2, rads) -> bool:
+func point_in_ellipse(oPos: Vector2, ePos: Vector2, rads) -> bool:
 	return ((oPos - ePos) / rads).length_squared() <= 1;
 
-static func distance_to_ellipse(oPos: Vector2, ePos: Vector2, rads) -> float:
+func distance_to_ellipse(oPos: Vector2, ePos: Vector2, rads) -> float:
 	var dPos  = oPos - ePos;
 
 	if dPos.x == 0:
@@ -28,7 +28,7 @@ static func distance_to_ellipse(oPos: Vector2, ePos: Vector2, rads) -> float:
 
 	return sqrt(minf(dist1, dist2));
 
-static func trangent_points_on_ellipse(oPos: Vector2, ePos: Vector2, rads : Vector2) -> Array[Vector2]:
+func trangent_points_on_ellipse(oPos: Vector2, ePos: Vector2, rads : Vector2) -> Array[Vector2]:
 	var dPos  = oPos - ePos;
 	var dPos2 = dPos * dPos;
 

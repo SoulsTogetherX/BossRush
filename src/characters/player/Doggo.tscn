@@ -1,53 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://g022ma38jmtk"]
+[gd_scene load_steps=16 format=3 uid="uid://g022ma38jmtk"]
 
 [ext_resource type="Script" path="res://src/characters/player/Doggo.gd" id="1_621w4"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="2_3po4b"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="3_22scm"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="3_bejcr"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_h4e8u"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="3_i5ea7"]
-[ext_resource type="PackedScene" uid="uid://cf13f75nsa557" path="res://src/weapons/sword.tscn" id="3_s2nf0"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/flow_movement.gd" id="3_svvuj"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_kp8qe"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="4_ngd8a"]
 [ext_resource type="Script" path="res://src/characters/player/states/idle.gd" id="5_xmvri"]
 [ext_resource type="Script" path="res://src/characters/player/states/walk.gd" id="6_2ol1i"]
 [ext_resource type="Texture2D" uid="uid://bx0li2pvo3r8p" path="res://assets/sprites/characters/player/Movement Mega Sheet.png" id="7_63mmi"]
-
-[sub_resource type="Resource" id="Resource_ce3x3"]
-script = ExtResource("2_3po4b")
-weapon_scene = ExtResource("3_s2nf0")
-damage = 1
-name = ""
-description = ""
-symbol = 0
-
-[sub_resource type="Resource" id="Resource_gy84s"]
-script = ExtResource("3_22scm")
-max_health = 15
-name = ""
-description = ""
-symbol = 0
-
-[sub_resource type="Resource" id="Resource_l7kcx"]
-script = ExtResource("3_svvuj")
-speed = 200
-friction = 0.3
-name = ""
-description = ""
-symbol = 0
-
-[sub_resource type="Resource" id="Resource_yxa8r"]
-script = ExtResource("3_i5ea7")
-speed = 500
-duration = 0.2
-cool_down = 0.0
-becomes_invincible = true
-in_burst_control = true
-burst_control_ratio = 0.1
-name = ""
-description = ""
-symbol = 0
 
 [sub_resource type="Animation" id="Animation_ny4wf"]
 length = 0.001
@@ -73,7 +33,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, -20)]
 }
 
 [sub_resource type="Animation" id="Animation_f4mux"]
@@ -183,10 +143,6 @@ collision_layer = 4
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_621w4")
-primary_attack = SubResource("Resource_ce3x3")
-health_handle = SubResource("Resource_gy84s")
-primary_movement = SubResource("Resource_l7kcx")
-secondary_movement = SubResource("Resource_yxa8r")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -195,6 +151,7 @@ libraries = {
 autoplay = "down_move"
 
 [node name="main" type="Sprite2D" parent="."]
+position = Vector2(0, -20)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("7_63mmi")
 hframes = 17

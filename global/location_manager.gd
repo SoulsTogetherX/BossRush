@@ -5,17 +5,20 @@ var _locations : Dictionary = {};
 
 func _enter_tree() -> void:
 	await ready; await ready;
-	PlayerInfo.player.set_up_weapon();
+	PlayerInfo.assign_player_moves();
 
 func _ready() -> void:
 	for loc in _locations:
 		loc.monitoring = true;
+	process_mode = Node.PROCESS_MODE_ALWAYS;
 
 func add_location(location : Location) -> void:
 	_locations[location.get_id()] = location;
 
 func request_transfer(scene : String, id : String) -> void:
 	TransitionManager.fade_in();
+	get_tree().paused = true;
+	PlayerInfo.reset();
 	
 	await TransitionManager.load_transition;
 	
@@ -24,7 +27,9 @@ func request_transfer(scene : String, id : String) -> void:
 	await ready;
 	
 	_position_player(id, PlayerInfo.player);
+	PlayerInfo.assign_player_moves();
 	PlayerInfo.cam.port_onto();
+	get_tree().paused = false;
 	
 	TransitionManager.fade_out();
 
@@ -41,5 +46,3 @@ func _position_player(id : String, player : Player) -> void:
 			player.set_direction("_move", PI);
 		SIDE_BOTTOM:
 			player.set_direction("_move", -(PI / 2));
-	
-	player.set_up_weapon();

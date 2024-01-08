@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackExchangable" load_steps=3 format=3 uid="uid://c6yje8gxfnmbr"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="1_yhvqo"]
+[ext_resource type="PackedScene" uid="uid://cf13f75nsa557" path="res://src/weapons/sword.tscn" id="2_w1vw4"]
+
+[resource]
+script = ExtResource("1_yhvqo")
+weapon_scene = ExtResource("2_w1vw4")
+damage = 1
+name = "Doggo Stab"
+symbol = 0

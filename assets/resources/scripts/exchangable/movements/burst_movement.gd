@@ -1,11 +1,12 @@
 @tool
-class_name BustMovement extends MovementExchangable
+class_name BurstMovement extends MovementExchangable
 
 @export var speed : int = 500;
 @export var duration : float = 0.2;
 @export var cool_down : float = 0.0;
 
 @export var becomes_invincible : bool = true;
+@export var can_stop : bool = false;
 @export var in_burst_control : bool = true:
 	set(val):
 		in_burst_control = val;
@@ -28,6 +29,10 @@ var on_cooldown : bool = false;
 
 signal end_bust;
 signal end_cooldown;
+
+func reset() -> void:
+	is_busting = false;
+	on_cooldown = false;
 
 func enact_move(_actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> bool:
 	if on_cooldown:
@@ -54,7 +59,6 @@ func enact_move(_actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> b
 
 func _end_dash(_actor : ExchangeType) -> void:
 	is_busting = false;
-	_actor.velocity = Vector2.ZERO;
 	end_bust.emit()
 	
 	if cool_down > 0:

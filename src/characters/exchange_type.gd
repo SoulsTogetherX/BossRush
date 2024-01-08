@@ -1,37 +1,65 @@
 class_name ExchangeType extends CharacterBody2D
 
+
+
 @export var primary_attack : AttackExchangable;
 @export var secondary_attack : AttackExchangable;
-@export var health_handle : HealthExchangable;
+
+@export var health_handle : HealthExchangable:
+	set(val):
+		if !is_node_ready():
+			await ready;
+		
+		if health_handle:
+			_health_monitor.damage_taken.disconnect(_damage_callable);
+		if val:
+			_damage_callable = val._on_damage.bind(self);
+			
+			_health_monitor.max_health = val.max_health;
+			_health_monitor.update_health_no_signal(val.max_health);
+			_health_monitor.damage_taken.connect(_damage_callable);
+		health_handle = val;
+
 @export var primary_movement : MovementExchangable;
 @export var secondary_movement : MovementExchangable;
 
-@onready var _health_monitor : HealthMonitor = $HealthMonitor
-@onready var _animationPlayer: AnimationPlayer = $AnimationPlayer
+@onready var _health_monitor : HealthMonitor = $HealthMonitor;
+@onready var _animationPlayer: AnimationPlayer = $AnimationPlayer;
+
+var _damage_callable: Callable;
 
 signal damaged(amount : int);
 signal killed;
 
 func _ready() -> void:
-	_health_monitor.max_health = health_handle.max_health;
-	_health_monitor.update_health_no_signal(health_handle.max_health);
-	_health_monitor.damage_taken.connect(health_handle._on_damage.bind(self));
-	
 	_health_monitor.damage_taken.connect(_signal_damaged);
 	_health_monitor.killed.connect(_signal_killed);
 
+var _lock : bool = false;
+var _move_save : MovementExchangable
 func _handle_movement(_actor : ExchangeType, _from : Vector2, move_dir : Vector2, primary : bool = true) -> bool:
-	var move : MovementExchangable = primary_movement if primary else secondary_movement;
+	if !_lock:
+		_move_save = primary_movement if (primary || !secondary_movement) else secondary_movement;
+		
+		if _move_save is BurstMovement && !_move_save.can_stop && !_move_save.on_cooldown:
+			_lock = true;
+			_move_save.end_bust.connect(_unlock, CONNECT_ONE_SHOT);
 	
-	return move.enact_move(_actor, _from, move_dir);
+	if _move_save:
+		return _move_save.enact_move(_actor, _from, move_dir);
+	else:
+		return false;
 
-func _handle_attack(primary : bool = true) -> void:
-	var attack : AttackExchangable = primary_attack if primary else secondary_attack;
+func _unlock() -> void:
+	_lock = false;
+
+#func _handle_attack(primary : bool = true) -> void:
+	#var attack : AttackExchangable = primary_attack if primary else secondary_attack;
 
 func toggle_invincible(toggle : bool) -> void:
 	_health_monitor.toggle_invincible(toggle);
 
-func _signal_damaged(amount : int) -> void:
+func _signal_damaged(_amount : int) -> void:
 	damaged.emit(_health_monitor.health);
 
 func _signal_killed() -> void:
@@ -40,7 +68,7 @@ func _signal_killed() -> void:
 func get_exchange(type : String) -> Array[Exchangable]:
 	match type:
 		"attack":
-			return [primary_attack, secondary_attack];
+			return [primary_attack];
 		"health":
 			return [health_handle];
 		"movement":

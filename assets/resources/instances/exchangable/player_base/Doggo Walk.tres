@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FlowMovement" load_steps=2 format=3 uid="uid://dvdydopu5lf8h"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/flow_movement.gd" id="1_a3748"]
+
+[resource]
+script = ExtResource("1_a3748")
+speed = 200
+friction = 0.3
+name = "Doggo Walk"
+symbol = 0

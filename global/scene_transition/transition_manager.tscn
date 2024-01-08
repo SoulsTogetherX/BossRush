@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://global/scene_transition/transition_manager.gd" id="1_8f3vi"]
 
 [node name="TransitionManager" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_8f3vi")
 
 [node name="fade" type="ColorRect" parent="."]

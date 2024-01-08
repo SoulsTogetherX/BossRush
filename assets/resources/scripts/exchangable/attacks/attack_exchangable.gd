@@ -5,11 +5,19 @@ class_name AttackExchangable extends Exchangable
 
 var _weapon : Weapon = null;
 
-func _set_up_sprite(actor : Node2D, distance : float) -> void:
+func reset() -> void:
+	_weapon = null;
+
+func _set_up_sprite(actor : Node2D, distance : float) -> Weapon:
+	if !weapon_scene:
+		return;
+	
 	_weapon = weapon_scene.instantiate();
 	_weapon.set_follow(actor, distance);
 	actor.get_tree().current_scene.add_child.call_deferred(_weapon);
 	_weapon.global_position = actor.global_position;
+	
+	return _weapon;
 
 func _on_attack(_target : Vector2) -> void:
 	pass;

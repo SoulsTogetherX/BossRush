@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d1625avtkbbq3"]
+[gd_scene load_steps=18 format=3 uid="uid://d1625avtkbbq3"]
 
 [ext_resource type="Script" path="res://rooms/test_room/room.gd" id="1_1tg0k"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
@@ -6,32 +6,37 @@
 [ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="2_pve5w"]
 [ext_resource type="PackedScene" uid="uid://ctlyax3uosb1m" path="res://src/characters/test_dummy/test_dummy.tscn" id="3_6jpw2"]
 [ext_resource type="PackedScene" uid="uid://lt1h1nu2iplm" path="res://src/level_objects/orbs/orb.tscn" id="4_7dlbu"]
+[ext_resource type="Texture2D" uid="uid://33e4mqbwkynt" path="res://assets/Arena test.png" id="4_hdcsl"]
 [ext_resource type="PackedScene" uid="uid://cvrfi64eypl2d" path="res://src/GUI/GUI.tscn" id="5_ienh4"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="5_prli0"]
-[ext_resource type="Script" path="res://src/level_objects/orbs/Reward_manager.gd" id="6_liyoc"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="6_fbwim"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="6_tqlvb"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/movement_exchangable.gd" id="7_lg0e8"]
+[ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="7_4v2gq"]
 [ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="11_fe0qj"]
 
 [sub_resource type="Resource" id="Resource_cw5j3"]
 script = ExtResource("5_prli0")
 damage = 1
 name = "AttackTestName"
-description = "test_attack"
 symbol = 1
 
 [sub_resource type="Resource" id="Resource_vr7s6"]
 script = ExtResource("6_tqlvb")
 max_health = 15
 name = "HealthTestName"
-description = "test_health"
 symbol = 6
 
-[sub_resource type="Resource" id="Resource_uxeyy"]
-script = ExtResource("7_lg0e8")
-name = "MovementTestName"
-description = "test_movement"
-symbol = 4
+[sub_resource type="Resource" id="Resource_t2uss"]
+script = ExtResource("6_fbwim")
+speed = 500
+duration = 0.2
+cool_down = 0.0
+becomes_invincible = true
+can_stop = false
+in_burst_control = true
+burst_control_ratio = 0.1
+name = ""
+symbol = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvtd3"]
 size = Vector2(30, 100)
@@ -39,6 +44,21 @@ size = Vector2(30, 100)
 [node name="TestRoom" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1tg0k")
+
+[node name="Reward_manager" parent="." node_paths=PackedStringArray("orbs") instance=ExtResource("7_4v2gq")]
+orbs = [NodePath("Orb"), NodePath("Orb2"), NodePath("Orb3")]
+
+[node name="Orb" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(707, 211)
+exchange = SubResource("Resource_cw5j3")
+
+[node name="Orb2" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(833, 314)
+exchange = SubResource("Resource_vr7s6")
+
+[node name="Orb3" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(654, 357)
+exchange = SubResource("Resource_t2uss")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 position = Vector2(358, 149)
@@ -51,8 +71,7 @@ position = Vector2(338, 149)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -99
 position = Vector2(600, 360)
-scale = Vector2(6.77344, 5.53906)
-texture = ExtResource("2_pve5w")
+texture = ExtResource("4_hdcsl")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 z_index = -99
@@ -67,27 +86,10 @@ scale = Vector2(0.359375, 0.765625)
 texture = ExtResource("2_pve5w")
 
 [node name="TestDummy" parent="." instance=ExtResource("3_6jpw2")]
-position = Vector2(766, 483)
+position = Vector2(807, 486)
 
 [node name="GUI" parent="." instance=ExtResource("5_ienh4")]
 follow_viewport_enabled = false
-
-[node name="Reward_manager" type="Node" parent="." node_paths=PackedStringArray("orbs", "player")]
-script = ExtResource("6_liyoc")
-orbs = [NodePath("../Orb"), NodePath("../Orb2"), NodePath("../Orb3")]
-player = NodePath("../Doggo")
-
-[node name="Orb" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(699, 108)
-exchange = SubResource("Resource_cw5j3")
-
-[node name="Orb2" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(914, 175)
-exchange = SubResource("Resource_vr7s6")
-
-[node name="Orb3" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(849, 96)
-exchange = SubResource("Resource_uxeyy")
 
 [node name="Area2D" parent="." instance=ExtResource("11_fe0qj")]
 position = Vector2(180, 360)
