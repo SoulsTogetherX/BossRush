@@ -9,7 +9,7 @@ func state_ready() -> void:
 	pass;
 
 func enter() -> void:
-	print(get_id());
+	pass;
 
 func exit() -> void:
 	pass;

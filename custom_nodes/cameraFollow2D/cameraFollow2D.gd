@@ -151,6 +151,10 @@ func update_position_pos(delta : float, pos : Vector2) -> void:
 			var des_pos_y = pos.y + desired_range.y * sign(diff_y);
 			position.y = lerp(position.y, des_pos_y, (axis_lerp.y ** (delta * 100)));
 
+func port_onto() -> void:
+	if follow:
+		position = follow.position;
+
 ## Starts camera shake.[br]
 ## The shake will have [param stength] shake strength, and will
 ## lerp to [code]0[/code], with the ratios given in [param decay_spd],

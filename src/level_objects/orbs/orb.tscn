@@ -19,16 +19,18 @@ offsets = PackedFloat32Array(0, 0.468208, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="SystemFont" id="SystemFont_2qooj"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_nmpi0"]
 font = SubResource("SystemFont_2qooj")
 font_size = 32
 
 [node name="Orb" type="Node2D"]
+z_index = 1
 script = ExtResource("1_try8l")
 
 [node name="color" type="PointLight2D" parent="."]
-energy = 3.0
+energy = 2.0
 blend_mode = 2
 shadow_enabled = true
 shadow_filter = 1
@@ -58,7 +60,7 @@ color_ramp = SubResource("Gradient_7j2q1")
 [node name="trail_particle" type="CPUParticles2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.392157)
 show_behind_parent = true
-amount = 128
+amount = 32
 lifetime = 2.0
 emission_shape = 2
 emission_sphere_radius = 10.0

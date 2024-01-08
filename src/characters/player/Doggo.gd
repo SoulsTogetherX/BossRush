@@ -4,43 +4,21 @@ class_name Player extends ExchangeType
 
 func _ready() -> void:
 	super();
+	PlayerInfo.player = self;
+
+func set_up_weapon() -> void:
+	primary_attack._set_up_sprite(self, 30);
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack1"):
+		if primary_attack:
+			primary_attack.handle_attack(get_local_mouse_position());
+	elif event.is_action_pressed("attack2"):
+		if secondary_attack:
+			secondary_attack.handle_attack(get_local_mouse_position());
 
 func get_input() -> Vector2:
 	return Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized();
 
-func get_animation_modifer() -> String:
-	var dir = wrapi(int(snapped(velocity.angle(), PI/4) / (PI/4)), 0, 8);
-	match dir:
-		0:
-				#left
-			scale.x = scale.y;
-			return "left";
-		1:
-				#left down
-			scale.x = scale.y;
-			return "down_left";
-		2:
-				#down
-			scale.x = scale.y;
-			return "down";
-		3:
-				#right down
-			scale.x = -scale.y;
-			return "down_left";
-		4:
-				#right
-			scale.x = -scale.y;
-			return "left";
-		5:
-				#right up
-			scale.x = -scale.y;
-			return "up_left";
-		6:
-				#up
-			scale.x = -scale.y;
-			return "up";
-		7:
-				#left up
-			scale.x = scale.y;
-			return "up_left";
-	return "";
+func get_weapon_info() -> Array[float]:
+	return [get_local_mouse_position().angle(), global_position.distance_to(get_global_mouse_position())];

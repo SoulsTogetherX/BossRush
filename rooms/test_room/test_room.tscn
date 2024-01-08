@@ -1,19 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1625avtkbbq3"]
+[gd_scene load_steps=17 format=3 uid="uid://d1625avtkbbq3"]
 
+[ext_resource type="Script" path="res://rooms/test_room/room.gd" id="1_1tg0k"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
+[ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="2_5duej"]
 [ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="2_pve5w"]
 [ext_resource type="PackedScene" uid="uid://ctlyax3uosb1m" path="res://src/characters/test_dummy/test_dummy.tscn" id="3_6jpw2"]
 [ext_resource type="PackedScene" uid="uid://lt1h1nu2iplm" path="res://src/level_objects/orbs/orb.tscn" id="4_7dlbu"]
 [ext_resource type="PackedScene" uid="uid://cvrfi64eypl2d" path="res://src/GUI/GUI.tscn" id="5_ienh4"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="5_prli0"]
+[ext_resource type="Script" path="res://src/level_objects/orbs/Reward_manager.gd" id="6_liyoc"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="6_tqlvb"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/movement_exchangable.gd" id="7_lg0e8"]
-
-[sub_resource type="Gradient" id="Gradient_sfyie"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_02es4"]
-gradient = SubResource("Gradient_sfyie")
+[ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="11_fe0qj"]
 
 [sub_resource type="Resource" id="Resource_cw5j3"]
 script = ExtResource("5_prli0")
@@ -35,39 +33,79 @@ name = "MovementTestName"
 description = "test_movement"
 symbol = 4
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvtd3"]
+size = Vector2(30, 100)
+
 [node name="TestRoom" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_1tg0k")
 
-[node name="Room_Light" type="PointLight2D" parent="."]
-position = Vector2(739, 446.25)
-scale = Vector2(6.77344, 893.5)
-energy = 0.7
-blend_mode = 2
-texture = SubResource("GradientTexture2D_02es4")
-texture_scale = 50.0
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(816, 453)
-scale = Vector2(9.14062, 6.98437)
-texture = ExtResource("2_pve5w")
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
+position = Vector2(358, 149)
+script = ExtResource("2_5duej")
+follow = NodePath("../Doggo")
 
 [node name="Doggo" parent="." instance=ExtResource("1_vynos")]
-position = Vector2(365, 152)
+position = Vector2(338, 149)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -99
+position = Vector2(600, 360)
+scale = Vector2(6.77344, 5.53906)
+texture = ExtResource("2_pve5w")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = -99
+position = Vector2(142, 360)
+scale = Vector2(0.359375, 0.765625)
+texture = ExtResource("2_pve5w")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+z_index = -99
+position = Vector2(1055, 358)
+scale = Vector2(0.359375, 0.765625)
+texture = ExtResource("2_pve5w")
 
 [node name="TestDummy" parent="." instance=ExtResource("3_6jpw2")]
 position = Vector2(766, 483)
 
+[node name="GUI" parent="." instance=ExtResource("5_ienh4")]
+follow_viewport_enabled = false
+
+[node name="Reward_manager" type="Node" parent="." node_paths=PackedStringArray("orbs", "player")]
+script = ExtResource("6_liyoc")
+orbs = [NodePath("../Orb"), NodePath("../Orb2"), NodePath("../Orb3")]
+player = NodePath("../Doggo")
+
 [node name="Orb" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(607, 157)
+position = Vector2(699, 108)
 exchange = SubResource("Resource_cw5j3")
 
 [node name="Orb2" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(1013, 177)
+position = Vector2(914, 175)
 exchange = SubResource("Resource_vr7s6")
 
 [node name="Orb3" parent="." instance=ExtResource("4_7dlbu")]
-position = Vector2(772, 160)
+position = Vector2(849, 96)
 exchange = SubResource("Resource_uxeyy")
 
-[node name="GUI" parent="." instance=ExtResource("5_ienh4")]
+[node name="Area2D" parent="." instance=ExtResource("11_fe0qj")]
+position = Vector2(180, 360)
+move_to = "2"
+scene_path = "res://rooms/test_room/test_room.tscn"
+location_id = "1"
+direction = 2
 
-[connection signal="damaged" from="TestDummy" to="GUI" method="update_health"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-40, 0)
+shape = SubResource("RectangleShape2D_gvtd3")
+
+[node name="Area2D2" parent="." instance=ExtResource("11_fe0qj")]
+position = Vector2(1020, 360)
+move_to = "1"
+scene_path = "res://rooms/test_room/test_room.tscn"
+location_id = "2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(40, 0)
+shape = SubResource("RectangleShape2D_gvtd3")

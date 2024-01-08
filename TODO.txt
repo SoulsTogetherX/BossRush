@@ -1,7 +1,9 @@
-Camera
+Attack
 
 Orb exchange
 
 Boss AI
 
 Boss Death
+
+Dialog

@@ -6,8 +6,8 @@ func _init() -> void:
 	collision_layer = 2;
 	collision_mask = 0;
 
-func set_amount(amount : int) -> void:
-	self.amount = amount;
+func set_amount(amt : int) -> void:
+	self.amount = amt;
 
 func toggle_hitbox(toggle : bool) -> void:
 	monitorable = toggle;
