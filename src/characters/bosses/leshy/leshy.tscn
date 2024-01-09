@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cd6retw663av0"]
+[gd_scene load_steps=20 format=3 uid="uid://cd6retw663av0"]
 
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
 [ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_aq87j"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="3_m11at"]
 [ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature_Dash.tres" id="3_xwxah"]
+[ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="7_vtdju"]
 
 [sub_resource type="Resource" id="Resource_660g0"]
 script = ExtResource("3_m11at")
@@ -180,6 +181,17 @@ health_monitor = NodePath("../HealthMonitor")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
 position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_jb7n3")
+debug_color = Color(0.937255, 0, 0.631373, 0.419608)
+
+[node name="hit_area" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("7_vtdju")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="hit_area"]
+position = Vector2(0, -67)
 shape = SubResource("CapsuleShape2D_jb7n3")
 debug_color = Color(0.937255, 0, 0.631373, 0.419608)
 

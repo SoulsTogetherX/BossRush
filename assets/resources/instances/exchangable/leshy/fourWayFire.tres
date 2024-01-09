@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FourWayAttack" load_steps=5 format=3 uid="uid://vndacp7gvurp"]
 
-[ext_resource type="PackedScene" uid="uid://bq0lespwow1jd" path="res://src/weapons/projectiles/lasting/projectile.tscn" id="1_lwvim"]
+[ext_resource type="PackedScene" uid="uid://bq0lespwow1jd" path="res://src/weapons/projectiles/basic/projectile.tscn" id="1_lwvim"]
 [ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_bntv5"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/fourwayShoot.gd" id="3_jka7k"]
 

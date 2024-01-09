@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cf13f75nsa557"]
+[gd_scene load_steps=10 format=3 uid="uid://6wo1ybgdo3ao"]
 
 [ext_resource type="Script" path="res://src/weapons/weapon.gd" id="1_p3bvg"]
 [ext_resource type="Texture2D" uid="uid://obtr7td8mhtc" path="res://assets/sprites/weapons/Doggos Sword.png" id="2_vlj04"]
 [ext_resource type="AudioStream" uid="uid://bsdnc6ie8lqs" path="res://assets/sounds/effects/sword/Sword_swipe.wav" id="3_bta5b"]
+[ext_resource type="AudioStream" uid="uid://bfaromemu3x8g" path="res://assets/sounds/effects/sword/Sword_hit_person.wav" id="4_62pk5"]
+[ext_resource type="AudioStream" uid="uid://dyvtnf8gfbo51" path="res://assets/sounds/effects/sword/Sword_hit.wav" id="5_dc608"]
 
 [sub_resource type="Animation" id="Animation_7tvti"]
 resource_name = "RESET"
@@ -57,8 +59,9 @@ _data = {
 "idle": SubResource("Animation_b64qb")
 }
 
-[node name="Sword" type="Node2D"]
+[node name="Sword" type="Node2D" node_paths=PackedStringArray("sounds")]
 script = ExtResource("1_p3bvg")
+sounds = [NodePath("hit_person"), NodePath("hit_wall"), NodePath("swipe")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(15, -2.5)
@@ -78,6 +81,14 @@ wait_time = 0.3
 [node name="Center" type="Marker2D" parent="."]
 position = Vector2(17, 0)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="swipe" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_bta5b")
+bus = &"Sound"
+
+[node name="hit_person" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_62pk5")
+bus = &"Sound"
+
+[node name="hit_wall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_dc608")
 bus = &"Sound"

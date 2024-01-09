@@ -1,21 +1,17 @@
-[gd_resource type="Resource" script_class="AttackRange" load_steps=6 format=3 uid="uid://bgv7vr76m7wja"]
+[gd_resource type="Resource" script_class="AttackInstant" load_steps=4 format=3 uid="uid://c6cvbl8c7v250"]
 
-[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/OneTimeLaunch.gd" id="1_6umrr"]
-[ext_resource type="PackedScene" uid="uid://cwsgumnakdsa7" path="res://src/weapons/projectiles/one_time/one_time.tscn" id="1_yis6u"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_range.gd" id="2_6eh4b"]
-[ext_resource type="PackedScene" uid="uid://cf13f75nsa557" path="res://src/weapons/sword.tscn" id="2_w1vw4"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_instant.gd" id="1_cm4nl"]
+[ext_resource type="PackedScene" uid="uid://6wo1ybgdo3ao" path="res://src/weapons/sword.tscn" id="4_spbja"]
 
-[sub_resource type="Resource" id="Resource_0jp27"]
-script = ExtResource("1_6umrr")
-protectile = ExtResource("1_yis6u")
-range = 40.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_t26mw"]
+radius = 25.0
 
 [resource]
-script = ExtResource("2_6eh4b")
-launch = SubResource("Resource_0jp27")
-weapon_scene = ExtResource("2_w1vw4")
-weapon_range = 15.0
+script = ExtResource("1_cm4nl")
+shape = SubResource("CircleShape2D_t26mw")
+weapon_scene = ExtResource("4_spbja")
+weapon_range = 8.0
 delta = -1
-cooldown = 0.3
+cooldown = 0.0
 name = ""
 symbol = 0

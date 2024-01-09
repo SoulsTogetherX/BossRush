@@ -24,3 +24,12 @@ func _on_hit(hitbox : HitBox) -> void:
 	
 	hitbox.hit.emit(self);
 	hit.emit(hitbox);
+
+func _hit_check(align : ALIGNMENT, amount : int) -> bool:
+	if align == alignment:
+		return false;
+	
+	health_monitor.health_change(amount);
+	hit.emit(null);
+	
+	return true;

@@ -1,4 +1,6 @@
-class_name Projectile extends OneTimeHit
+class_name Projectile extends Node2D
+
+@onready var _hitbox : HitBox = $hitbox;
 
 var _movement : Tween;
 

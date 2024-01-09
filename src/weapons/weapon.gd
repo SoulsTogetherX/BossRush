@@ -1,5 +1,7 @@
 class_name Weapon extends Node2D
 
+@export var sounds : Array[AudioStreamPlayer];
+
 @onready var _center : Marker2D = $Center;
 @onready var _animation : AnimationPlayer = $AnimationPlayer;
 
@@ -14,7 +16,7 @@ func set_follow(follow : ExchangeType, distance : float) -> void:
 	_follow = follow;
 	_follow_distance = distance;
 
-func handle_attack(exch : Exchangable) -> void:
+func handle_attack(_exch : Exchangable) -> void:
 	_animation.stop();
 	_animation.play("attack");
 
@@ -27,3 +29,6 @@ func _physics_process(_delta: float) -> void:
 
 func get_center() -> Vector2:
 	return _center.global_position;
+
+func play_sound(sound : int) -> void:
+	sounds[sound].play();

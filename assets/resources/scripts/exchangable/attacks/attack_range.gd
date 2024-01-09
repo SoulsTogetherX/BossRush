@@ -1,6 +1,6 @@
 class_name AttackRange extends AttackExchangable
 
-@export var launch : OneTimeLaunch;
+@export var launch : LinearLaunch;
 
 func _on_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	var pro := launch.fire_protectile(from.get_tree().current_scene, from.get_center(), (target - from.get_center()).angle(), true);

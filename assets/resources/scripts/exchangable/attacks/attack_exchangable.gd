@@ -30,6 +30,9 @@ func _on_attack(_from : Node2D, _target : Vector2, _alignment : HurtBox.ALIGNMEN
 func handle_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if !_cooldown_check(from.get_tree()):
 		return;
+	if self is AttackInstant && from == _weapon:
+		self.playSound.connect(_weapon.play_sound, CONNECT_ONE_SHOT);
+	
 	_on_attack(from, target, alignment);
 	if from == _weapon:
 		_weapon.handle_attack(self);

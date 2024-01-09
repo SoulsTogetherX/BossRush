@@ -47,7 +47,7 @@ func can_move_here(pos : Vector2) -> bool:
 	var pp = PhysicsPointQueryParameters2D.new()
 	pp.collide_with_areas = true 
 	pp.position = pos;
-	pp.collision_mask = 16;
+	pp.collision_mask = 32;
 	return !get_world_2d().direct_space_state.intersect_point(pp, 1).is_empty();
 
 func die() -> void:

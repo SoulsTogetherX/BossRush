@@ -1,5 +1,7 @@
-class_name LinearLaunch extends OneTimeLaunch
+class_name LinearLaunch extends Resource
 
+@export var protectile : PackedScene;
+@export var range : float;
 @export var speed : float;
 
 func fire_protectile(parent : Node, from : Vector2, angle : float, rotate : bool) -> Projectile:
