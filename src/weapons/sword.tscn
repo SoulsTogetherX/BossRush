@@ -1,11 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf13f75nsa557"]
+[gd_scene load_steps=7 format=3 uid="uid://cf13f75nsa557"]
 
 [ext_resource type="Script" path="res://src/weapons/weapon.gd" id="1_p3bvg"]
 [ext_resource type="Texture2D" uid="uid://bjlc6vs0l8da1" path="res://assets/sprites/weapons/Doggos Sword.png" id="2_vlj04"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_j7x7h"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rcehw"]
-size = Vector2(27, 2)
 
 [sub_resource type="Animation" id="Animation_7tvti"]
 resource_name = "RESET"
@@ -20,20 +16,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("hit_box")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [false],
-"method": &"toggle_hitbox"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_78t0i"]
@@ -51,23 +33,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 0.0784314, 0.0784314, 1), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("hit_box")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.01),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [true],
-"method": &"toggle_hitbox"
-}, {
-"args": [false],
-"method": &"toggle_hitbox"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_b64qb"]
@@ -87,15 +52,6 @@ script = ExtResource("1_p3bvg")
 position = Vector2(15, -1.5)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_vlj04")
-
-[node name="hit_box" type="Area2D" parent="."]
-monitorable = false
-script = ExtResource("3_j7x7h")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
-position = Vector2(13.5, 0)
-shape = SubResource("RectangleShape2D_rcehw")
-debug_color = Color(0.67451, 0.45098, 0, 0.419608)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

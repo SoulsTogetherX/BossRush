@@ -168,5 +168,3 @@ func _selected_option() -> void:
 	set_physics_process(false);
 	set_process_input(false);
 	PlayerInfo.overwrite_player(false);
-	
-	

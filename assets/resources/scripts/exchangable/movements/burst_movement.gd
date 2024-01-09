@@ -27,12 +27,23 @@ func _get_property_list() -> Array[Dictionary]:
 var is_busting : bool = false;
 var on_cooldown : bool = false;
 
+var _timer1 : SceneTreeTimer;
+var _timer2 : SceneTreeTimer;
+
 signal end_bust;
 signal end_cooldown;
 
 func reset() -> void:
+	super();
 	is_busting = false;
 	on_cooldown = false;
+	
+	if is_instance_valid(_timer1) && _timer1:
+		_timer1.timeout.disconnect(_end_dash);
+	if is_instance_valid(_timer2) && _timer2:
+		_timer2.timeout.disconnect(_end_dash);
+	_timer1 = null;
+	_timer2 = null;
 
 func enact_move(_actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> bool:
 	if on_cooldown:
@@ -48,7 +59,8 @@ func enact_move(_actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> b
 		_actor.move_and_slide();
 		
 		if duration > 0:
-			_actor.get_tree().create_timer(duration).timeout.connect(_end_dash.bind(_actor));
+			_timer1 = _actor.get_tree().create_timer(duration);
+			_timer1.timeout.connect(_end_dash.bind(_actor));
 		return true;
 	
 	if in_burst_control:
@@ -63,7 +75,8 @@ func _end_dash(_actor : ExchangeType) -> void:
 	
 	if cool_down > 0:
 		on_cooldown = true;
-		_actor.get_tree().create_timer(cool_down).timeout.connect(_end_cooldown);
+		_timer2 = _actor.get_tree().create_timer(cool_down);
+		_timer2.timeout.connect(_end_cooldown);
 
 func _end_cooldown() -> void:
 	on_cooldown = false;

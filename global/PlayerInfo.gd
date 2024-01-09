@@ -51,6 +51,9 @@ func replace(idx : int, with : Exchangable) -> void:
 			if weapon:
 				weapon.queue_free();
 			weapon = primary_attack._set_up_sprite(player, 30);
+		else:
+			secondary_attack = with;
+			player.secondary_attack = with;
 	elif with is HealthExchangable:
 		if idx == 0:
 			health_handle = with;

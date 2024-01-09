@@ -1,13 +1,13 @@
 [gd_scene load_steps=8 format=3 uid="uid://ctlyax3uosb1m"]
 
-[ext_resource type="Script" path="res://src/characters/test_dummy/test_dummy.gd" id="1_148i4"]
-[ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="1_srv3k"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_gkg4g"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="2_wogp4"]
-[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_vobip"]
+[ext_resource type="Script" path="res://src/characters/template/boss.gd" id="1_4sfvm"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_gi7pa"]
+[ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="3_wni4u"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_cc3mh"]
+[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="5_mwql5"]
 
 [sub_resource type="Resource" id="Resource_lvr1h"]
-script = ExtResource("2_gkg4g")
+script = ExtResource("2_gi7pa")
 max_health = 8
 name = ""
 symbol = 0
@@ -15,8 +15,9 @@ symbol = 0
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvjdm"]
 radius = 34.0147
 
-[node name="TestDummy" type="CharacterBody2D"]
-script = ExtResource("1_148i4")
+[node name="Boss_template" type="CharacterBody2D"]
+script = ExtResource("1_4sfvm")
+alignment = 1
 health_handle = SubResource("Resource_lvr1h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -24,18 +25,19 @@ health_handle = SubResource("Resource_lvr1h")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0.643137, 1)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_srv3k")
+texture = ExtResource("3_wni4u")
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
-script = ExtResource("2_wogp4")
+script = ExtResource("4_cc3mh")
 health_monitor = NodePath("../HealthMonitor")
+alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
 shape = SubResource("CircleShape2D_hvjdm")
 debug_color = Color(0.67451, 0.45098, 0, 0.419608)
 
 [node name="HealthMonitor" type="Node" parent="."]
-script = ExtResource("3_vobip")
+script = ExtResource("5_mwql5")
 _health = 10
 
 [connection signal="damage_taken" from="HealthMonitor" to="." method="_on_damage"]

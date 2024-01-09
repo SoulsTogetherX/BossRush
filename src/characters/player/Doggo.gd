@@ -6,13 +6,13 @@ func _ready() -> void:
 	super();
 	PlayerInfo.player = self;
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack1"):
 		if primary_attack:
-			primary_attack.handle_attack(get_local_mouse_position());
+			primary_attack.handle_attack((PlayerInfo.weapon as Node2D) if PlayerInfo.weapon else (self as Node2D), get_global_mouse_position(), alignment);
 	elif event.is_action_pressed("attack2"):
 		if secondary_attack:
-			secondary_attack.handle_attack(get_local_mouse_position());
+			secondary_attack.handle_attack((PlayerInfo.weapon as Node2D) if PlayerInfo.weapon else (self as Node2D), get_global_mouse_position(), alignment);
 
 func get_input() -> Vector2:
 	return Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized();

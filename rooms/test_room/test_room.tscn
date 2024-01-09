@@ -1,33 +1,41 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1625avtkbbq3"]
+[gd_scene load_steps=24 format=3 uid="uid://d1625avtkbbq3"]
 
 [ext_resource type="Script" path="res://rooms/test_room/room.gd" id="1_1tg0k"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="2_5duej"]
 [ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="2_pve5w"]
-[ext_resource type="PackedScene" uid="uid://ctlyax3uosb1m" path="res://src/characters/test_dummy/test_dummy.tscn" id="3_6jpw2"]
+[ext_resource type="PackedScene" uid="uid://ctlyax3uosb1m" path="res://src/characters/template/boss.tscn" id="3_6jpw2"]
 [ext_resource type="PackedScene" uid="uid://lt1h1nu2iplm" path="res://src/level_objects/orbs/orb.tscn" id="4_7dlbu"]
-[ext_resource type="Texture2D" uid="uid://33e4mqbwkynt" path="res://assets/Arena test.png" id="4_hdcsl"]
+[ext_resource type="Texture2D" uid="uid://33e4mqbwkynt" path="res://assets/sprites/ground/Arena test.png" id="4_hdcsl"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="5_ai1bo"]
 [ext_resource type="PackedScene" uid="uid://cvrfi64eypl2d" path="res://src/GUI/GUI.tscn" id="5_ienh4"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="5_prli0"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="6_fbwim"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="6_tqlvb"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_range.gd" id="6_hpmk4"]
 [ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="7_4v2gq"]
+[ext_resource type="PackedScene" uid="uid://cf13f75nsa557" path="res://src/weapons/sword.tscn" id="7_7mnod"]
 [ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="11_fe0qj"]
+[ext_resource type="Resource" uid="uid://dvdydopu5lf8h" path="res://assets/resources/instances/exchangable/player_base/Doggo Walk.tres" id="12_1xhm3"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="13_84ksy"]
+[ext_resource type="Resource" uid="uid://vndacp7gvurp" path="res://assets/resources/instances/exchangable/leshy/fourWayFire.tres" id="14_27uvd"]
+[ext_resource type="PackedScene" uid="uid://bq0lespwow1jd" path="res://src/weapons/projectiles/projectile.tscn" id="14_dqaky"]
+[ext_resource type="Script" path="res://rooms/test_room/dialog_test.gd" id="18_2f2fh"]
 
-[sub_resource type="Resource" id="Resource_cw5j3"]
-script = ExtResource("5_prli0")
-damage = 1
-name = "AttackTestName"
+[sub_resource type="Resource" id="Resource_oq01m"]
+script = ExtResource("5_ai1bo")
+protectile = ExtResource("14_dqaky")
+speed = 100.0
+range = 100.0
+
+[sub_resource type="Resource" id="Resource_fvio8"]
+script = ExtResource("6_hpmk4")
+launch = SubResource("Resource_oq01m")
+weapon_scene = ExtResource("7_7mnod")
+delta = -1
+cooldown = 0.0
+name = "SimpleRangeTest"
 symbol = 1
 
-[sub_resource type="Resource" id="Resource_vr7s6"]
-script = ExtResource("6_tqlvb")
-max_health = 15
-name = "HealthTestName"
-symbol = 6
-
-[sub_resource type="Resource" id="Resource_t2uss"]
-script = ExtResource("6_fbwim")
+[sub_resource type="Resource" id="Resource_ke2q7"]
+script = ExtResource("13_84ksy")
 speed = 500
 duration = 0.2
 cool_down = 0.0
@@ -35,38 +43,18 @@ becomes_invincible = true
 can_stop = false
 in_burst_control = true
 burst_control_ratio = 0.1
-name = ""
+name = "Super Speed"
 symbol = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvtd3"]
 size = Vector2(30, 100)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ndea"]
+size = Vector2(127.948, 130.904)
+
 [node name="TestRoom" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1tg0k")
-
-[node name="Reward_manager" parent="." node_paths=PackedStringArray("orbs") instance=ExtResource("7_4v2gq")]
-orbs = [NodePath("Orb"), NodePath("Orb2"), NodePath("Orb3")]
-
-[node name="Orb" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
-position = Vector2(707, 211)
-exchange = SubResource("Resource_cw5j3")
-
-[node name="Orb2" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
-position = Vector2(833, 314)
-exchange = SubResource("Resource_vr7s6")
-
-[node name="Orb3" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
-position = Vector2(654, 357)
-exchange = SubResource("Resource_t2uss")
-
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
-position = Vector2(358, 149)
-script = ExtResource("2_5duej")
-follow = NodePath("../Doggo")
-
-[node name="Doggo" parent="." instance=ExtResource("1_vynos")]
-position = Vector2(338, 149)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -99
@@ -85,8 +73,32 @@ position = Vector2(1055, 358)
 scale = Vector2(0.359375, 0.765625)
 texture = ExtResource("2_pve5w")
 
-[node name="TestDummy" parent="." instance=ExtResource("3_6jpw2")]
-position = Vector2(807, 486)
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
+position = Vector2(358, 149)
+script = ExtResource("2_5duej")
+follow = NodePath("../Doggo")
+
+[node name="Doggo" parent="." instance=ExtResource("1_vynos")]
+position = Vector2(338, 149)
+
+[node name="Reward_manager" parent="." node_paths=PackedStringArray("orbs") instance=ExtResource("7_4v2gq")]
+orbs = [NodePath("Orb"), NodePath("Orb2"), NodePath("Orb3"), NodePath("Orb4")]
+
+[node name="Orb" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(320, 797)
+exchange = SubResource("Resource_fvio8")
+
+[node name="Orb2" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(1332, 141)
+exchange = ExtResource("12_1xhm3")
+
+[node name="Orb3" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(1332, 209)
+exchange = SubResource("Resource_ke2q7")
+
+[node name="Orb4" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(410, 796)
+exchange = ExtResource("14_27uvd")
 
 [node name="GUI" parent="." instance=ExtResource("5_ienh4")]
 follow_viewport_enabled = false
@@ -111,3 +123,22 @@ location_id = "2"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
 position = Vector2(40, 0)
 shape = SubResource("RectangleShape2D_gvtd3")
+
+[node name="Boss_template" parent="." instance=ExtResource("3_6jpw2")]
+position = Vector2(760, 441)
+
+[node name="dialog_test" type="Area2D" parent="."]
+position = Vector2(-462.896, 288.192)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("18_2f2fh")
+
+[node name="Sprite2D" type="Sprite2D" parent="dialog_test"]
+position = Vector2(58.8963, 29.808)
+texture = ExtResource("2_pve5w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="dialog_test"]
+position = Vector2(59.9222, 30.356)
+shape = SubResource("RectangleShape2D_5ndea")
+
+[connection signal="body_entered" from="dialog_test" to="dialog_test" method="_on_body_entered"]

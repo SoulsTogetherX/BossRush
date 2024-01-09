@@ -1,8 +1,4 @@
-Attacks
-
-Artifically long loading screengs
-
-Orb exchange
+Artificially long loading screens
 
 Boss AI
 

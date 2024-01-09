@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_a3748")
-speed = 200
+speed = 350
 friction = 0.3
 name = "Doggo Walk"
 symbol = 0

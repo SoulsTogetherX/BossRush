@@ -1,7 +1,6 @@
 class_name ExchangeType extends CharacterBody2D
 
-
-
+@export var alignment : HurtBox.ALIGNMENT;
 @export var primary_attack : AttackExchangable;
 @export var secondary_attack : AttackExchangable;
 
@@ -34,6 +33,7 @@ signal killed;
 func _ready() -> void:
 	_health_monitor.damage_taken.connect(_signal_damaged);
 	_health_monitor.killed.connect(_signal_killed);
+	$hurt_box.alignment = alignment;
 
 var _lock : bool = false;
 var _move_save : MovementExchangable
@@ -68,7 +68,7 @@ func _signal_killed() -> void:
 func get_exchange(type : String) -> Array[Exchangable]:
 	match type:
 		"attack":
-			return [primary_attack];
+			return [primary_attack, secondary_attack];
 		"health":
 			return [health_handle];
 		"movement":
@@ -137,3 +137,6 @@ func set_direction(animationType : String, angle : float) -> void:
 		var pos : float = _animationPlayer.current_animation_position;
 		_animationPlayer.play(animation);
 		_animationPlayer.seek(pos, true);
+
+func get_alignment() -> HurtBox.ALIGNMENT:
+	return alignment;

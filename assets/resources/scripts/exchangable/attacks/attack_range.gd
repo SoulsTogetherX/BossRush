@@ -1,6 +1,9 @@
-class_name AttackRange extends Exchangable
+class_name AttackRange extends AttackExchangable
 
-@export var projectile : PackedScene;
+@export var launch : LinearLaunch;
 
-func _on_attack() -> void:
-	pass;
+func _on_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+	var pro := launch.fire_protectile(from.get_tree().current_scene, from.global_position, (target - from.global_position).angle(), true);
+	
+	pro.set_alignment(alignment);
+	pro.set_delta(delta);
