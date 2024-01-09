@@ -1,8 +1,6 @@
-class_name LinearLaunch extends Resource
+class_name LinearLaunch extends OneTimeLaunch
 
-@export var protectile : PackedScene;
 @export var speed : float;
-@export var range : float;
 
 func fire_protectile(parent : Node, from : Vector2, angle : float, rotate : bool) -> Projectile:
 	var pro : Projectile = protectile.instantiate();
@@ -10,11 +8,15 @@ func fire_protectile(parent : Node, from : Vector2, angle : float, rotate : bool
 	pro.global_position = from;
 	
 	var tween : Tween = parent.create_tween();
-	tween.tween_property(pro, "global_position", from + (Vector2(cos(angle), sin(angle)) * range), range / speed);
+	var end_pos : Vector2 = from + (Vector2(cos(angle), sin(angle)) * range);
+	tween.tween_property(pro, "global_position", end_pos, range / speed);
 	tween.tween_callback(pro.on_dissipate);
 	pro._movement = tween;
 	
 	if rotate:
 		pro.global_rotation = angle;
+	if end_pos.y > from.y:
+		pro.z_index = 1;
+	
 	
 	return pro;

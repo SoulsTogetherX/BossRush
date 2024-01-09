@@ -1,8 +1,9 @@
-class_name Projectile extends Node2D
-
-@onready var _hitbox : HitBox = $hitbox;
+class_name Projectile extends OneTimeHit
 
 var _movement : Tween;
+
+func _ready() -> void:
+	pass;
 
 func set_alignment(allign : HurtBox.ALIGNMENT) -> void:
 	_hitbox.alignment = allign;
@@ -18,3 +19,6 @@ func on_collide(hurtbox : HurtBox) -> void:
 
 func on_dissipate() -> void:
 	destroy();
+
+func activate() -> void:
+	_hitbox.toggle_hitbox(true);

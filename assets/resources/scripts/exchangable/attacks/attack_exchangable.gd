@@ -1,6 +1,7 @@
 class_name AttackExchangable extends Exchangable
 
 @export var weapon_scene : PackedScene;
+@export var weapon_range : float;
 @export var delta : int = -1;
 @export var cooldown : float = 0.0;
 
@@ -23,15 +24,15 @@ func _set_up_sprite(actor : Node2D, distance : float) -> Weapon:
 	
 	return _weapon;
 
-func _on_attack(_from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+func _on_attack(_from : Node2D, _target : Vector2, _alignment : HurtBox.ALIGNMENT) -> void:
 	pass;
 
 func handle_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if !_cooldown_check(from.get_tree()):
 		return;
 	_on_attack(from, target, alignment);
-	if _weapon:
-		_weapon.handle_attack();
+	if from == _weapon:
+		_weapon.handle_attack(self);
 
 func _cooldown_check(scene : SceneTree) -> bool:
 	if _on_cooldown:

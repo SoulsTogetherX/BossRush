@@ -41,7 +41,7 @@ func reset() -> void:
 	if is_instance_valid(_timer1) && _timer1:
 		_timer1.timeout.disconnect(_end_dash);
 	if is_instance_valid(_timer2) && _timer2:
-		_timer2.timeout.disconnect(_end_dash);
+		_timer2.timeout.disconnect(_end_cooldown);
 	_timer1 = null;
 	_timer2 = null;
 

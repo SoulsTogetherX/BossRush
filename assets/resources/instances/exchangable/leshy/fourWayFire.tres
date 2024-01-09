@@ -1,18 +1,19 @@
 [gd_resource type="Resource" script_class="FourWayAttack" load_steps=5 format=3 uid="uid://vndacp7gvurp"]
 
-[ext_resource type="PackedScene" uid="uid://bq0lespwow1jd" path="res://src/weapons/projectiles/projectile.tscn" id="1_lwvim"]
+[ext_resource type="PackedScene" uid="uid://bq0lespwow1jd" path="res://src/weapons/projectiles/lasting/projectile.tscn" id="1_lwvim"]
 [ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_bntv5"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/fourwayShoot.gd" id="3_jka7k"]
 
 [sub_resource type="Resource" id="Resource_u3sp4"]
 script = ExtResource("2_bntv5")
-protectile = ExtResource("1_lwvim")
 speed = 100.0
+protectile = ExtResource("1_lwvim")
 range = 1000.0
 
 [resource]
 script = ExtResource("3_jka7k")
 launch = SubResource("Resource_u3sp4")
+weapon_range = 0.0
 delta = -1
 cooldown = 4.0
 name = "Fourway Fire"

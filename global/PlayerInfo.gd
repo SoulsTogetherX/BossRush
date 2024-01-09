@@ -32,39 +32,46 @@ func overwrite_player(toggle : bool) -> void:
 			_fade_tween.tween_property(weapon, "modulate:a", 1.0, 0.5);
 
 func assign_player_moves() -> void:
-	player.primary_attack = primary_attack;
 	if primary_attack:
-		weapon = primary_attack._set_up_sprite(player, 30);
-	player.secondary_attack = secondary_attack;
+		player.primary_attack = primary_attack.duplicate();
+		weapon_settup(player.primary_attack);
+	if secondary_attack:
+		player.secondary_attack = secondary_attack.duplicate();
 	
-	player.health_handle = health_handle;
+	if health_handle:
+		player.health_handle = health_handle.duplicate();
 	
-	player.primary_movement = primary_movement;
-	player.secondary_movement = secondary_movement;
+	if primary_movement:
+		player.primary_movement = primary_movement.duplicate();
+	if secondary_movement:
+		player.secondary_movement = secondary_movement.duplicate();
 	
 func replace(idx : int, with : Exchangable) -> void:
 	if with is AttackExchangable:
 		if idx == 0:
 			primary_attack = with;
-			player.primary_attack = with;
+			player.primary_attack = primary_attack.duplicate();
 			
-			if weapon:
-				weapon.queue_free();
-			weapon = primary_attack._set_up_sprite(player, 30);
+			weapon_settup(player.primary_attack);
 		else:
 			secondary_attack = with;
-			player.secondary_attack = with;
+			player.secondary_attack = secondary_attack.duplicate();
 	elif with is HealthExchangable:
 		if idx == 0:
 			health_handle = with;
-			player.health_handle = with;
+			player.health_handle = health_handle.duplicate();
 	else:
 		if idx == 0:
 			primary_movement = with;
-			player.primary_movement = with;
+			player.primary_movement = primary_movement.duplicate();
 		else:
 			secondary_movement = with;
-			player.secondary_movement = with;
+			player.secondary_movement = secondary_movement.duplicate();
+
+func weapon_settup(exchan : AttackExchangable) -> void:
+	if is_instance_valid(weapon) && weapon:
+		weapon.queue_free();
+	weapon = exchan._set_up_sprite(player, exchan.weapon_range);
 
 func reset() -> void:
 	if primary_attack:

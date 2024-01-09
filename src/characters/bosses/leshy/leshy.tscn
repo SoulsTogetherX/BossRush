@@ -1,0 +1,203 @@
+[gd_scene load_steps=19 format=3 uid="uid://cd6retw663av0"]
+
+[ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
+[ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="2_lk0ei"]
+[ext_resource type="Resource" uid="uid://vndacp7gvurp" path="res://assets/resources/instances/exchangable/leshy/fourWayFire.tres" id="2_ynr0m"]
+[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_aq87j"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="3_m11at"]
+[ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature_Dash.tres" id="3_xwxah"]
+
+[sub_resource type="Resource" id="Resource_660g0"]
+script = ExtResource("3_m11at")
+max_health = 6
+name = ""
+symbol = 0
+
+[sub_resource type="Animation" id="Animation_wsca8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fufym"]
+resource_name = "dash_down"
+length = 0.3
+loop_mode = 2
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_tmqc5"]
+resource_name = "dash_side"
+length = 0.3
+loop_mode = 2
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13]
+}
+
+[sub_resource type="Animation" id="Animation_fxkjw"]
+resource_name = "dash_up"
+length = 0.3
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18]
+}
+
+[sub_resource type="Animation" id="Animation_gj0ci"]
+resource_name = "idle"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_an0xl"]
+resource_name = "spin_continue"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [21, 22, 23, 25, 26]
+}
+
+[sub_resource type="Animation" id="Animation_a45uk"]
+resource_name = "spin_start"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wafcm"]
+_data = {
+"RESET": SubResource("Animation_wsca8"),
+"dash_down": SubResource("Animation_fufym"),
+"dash_side": SubResource("Animation_tmqc5"),
+"dash_up": SubResource("Animation_fxkjw"),
+"idle": SubResource("Animation_gj0ci"),
+"spin_continue": SubResource("Animation_an0xl"),
+"spin_start": SubResource("Animation_a45uk")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jb7n3"]
+radius = 39.0
+height = 134.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1ghpr"]
+radius = 20.0
+height = 64.0
+
+[node name="Leshy" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_fbt6r")
+alignment = 1
+primary_attack = ExtResource("2_ynr0m")
+health_handle = SubResource("Resource_660g0")
+primary_movement = ExtResource("3_xwxah")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wafcm")
+}
+next/spin_start = &"spin_continue"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.643137, 1)
+position = Vector2(0, -74)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_4ufux")
+hframes = 27
+
+[node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
+position = Vector2(0, -74)
+script = ExtResource("2_lk0ei")
+health_monitor = NodePath("../HealthMonitor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
+position = Vector2(0, 7)
+shape = SubResource("CapsuleShape2D_jb7n3")
+debug_color = Color(0.937255, 0, 0.631373, 0.419608)
+
+[node name="HealthMonitor" type="Node" parent="."]
+script = ExtResource("3_aq87j")
+_health = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1ghpr")
+
+[node name="sequence_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Center" type="Marker2D" parent="."]
+position = Vector2(0, -60)
+
+[connection signal="hit" from="hurt_box" to="." method="_on_hit"]
+[connection signal="killed" from="HealthMonitor" to="." method="die"]
+[connection signal="timeout" from="sequence_timer" to="." method="_next_sequence"]

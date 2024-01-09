@@ -132,7 +132,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7h7jm"]
-height = 34.0
+radius = 5.0
+height = 20.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo2dx"]
 radius = 6.0
@@ -157,7 +158,8 @@ texture = ExtResource("7_63mmi")
 hframes = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -17)
+position = Vector2(0, -3)
+rotation = 1.5708
 shape = SubResource("CapsuleShape2D_7h7jm")
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
@@ -192,3 +194,6 @@ walk = NodePath("../move")
 [node name="move" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle")]
 script = ExtResource("6_2ol1i")
 idle = NodePath("../idle")
+
+[node name="Center" type="Marker2D" parent="."]
+position = Vector2(0, -16)

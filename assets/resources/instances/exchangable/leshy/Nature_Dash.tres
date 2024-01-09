@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BurstMovement" load_steps=2 format=3 uid="uid://c21gnq340y8a3"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="1_xnh5v"]
+
+[resource]
+script = ExtResource("1_xnh5v")
+speed = 700
+duration = 0.4
+cool_down = 0.2
+becomes_invincible = false
+can_stop = false
+in_burst_control = false
+name = "Nature Dash"
+symbol = 0

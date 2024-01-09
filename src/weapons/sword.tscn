@@ -1,42 +1,54 @@
-[gd_scene load_steps=7 format=3 uid="uid://cf13f75nsa557"]
+[gd_scene load_steps=8 format=3 uid="uid://cf13f75nsa557"]
 
 [ext_resource type="Script" path="res://src/weapons/weapon.gd" id="1_p3bvg"]
-[ext_resource type="Texture2D" uid="uid://bjlc6vs0l8da1" path="res://assets/sprites/weapons/Doggos Sword.png" id="2_vlj04"]
+[ext_resource type="Texture2D" uid="uid://obtr7td8mhtc" path="res://assets/sprites/weapons/Doggos Sword.png" id="2_vlj04"]
+[ext_resource type="AudioStream" uid="uid://bsdnc6ie8lqs" path="res://assets/sounds/effects/sword/Sword_swipe.wav" id="3_bta5b"]
 
 [sub_resource type="Animation" id="Animation_7tvti"]
 resource_name = "RESET"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_78t0i"]
 resource_name = "attack"
 length = 0.4
-step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 0.0784314, 0.0784314, 1), Color(1, 1, 1, 1)]
+"values": [1, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_b64qb"]
 resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ln6qv"]
 _data = {
@@ -49,14 +61,23 @@ _data = {
 script = ExtResource("1_p3bvg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(15, -1.5)
+position = Vector2(15, -2.5)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_vlj04")
+hframes = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ln6qv")
 }
+next/attack = &"idle"
 
 [node name="cooldown" type="Timer" parent="."]
 wait_time = 0.3
+
+[node name="Center" type="Marker2D" parent="."]
+position = Vector2(17, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bta5b")
+bus = &"Sound"

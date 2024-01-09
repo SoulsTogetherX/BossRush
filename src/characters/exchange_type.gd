@@ -24,6 +24,7 @@ class_name ExchangeType extends CharacterBody2D
 
 @onready var _health_monitor : HealthMonitor = $HealthMonitor;
 @onready var _animationPlayer: AnimationPlayer = $AnimationPlayer;
+@onready var _center: Marker2D = $Center;
 
 var _damage_callable: Callable;
 
@@ -140,3 +141,6 @@ func set_direction(animationType : String, angle : float) -> void:
 
 func get_alignment() -> HurtBox.ALIGNMENT:
 	return alignment;
+
+func get_center() -> Vector2:
+	return _center.global_position;
