@@ -1,0 +1,103 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbuhiqsiu6dy"]
+
+[ext_resource type="Script" path="res://rooms/main_menu/pages/settings.gd" id="1_h7ylc"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h7ylc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MasterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MasterContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MasterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/MasterContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "Master"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/MasterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
+
+[node name="MusicContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MusicContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MusicContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/MusicContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "Music"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/MusicContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
+
+[node name="SoundContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SoundContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/SoundContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/SoundContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "Sound Effects"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/SoundContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Back" type="Button" parent="VBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="value_changed" from="VBoxContainer/MasterContainer/VBoxContainer/Slider" to="." method="change_master"]
+[connection signal="value_changed" from="VBoxContainer/MusicContainer/VBoxContainer/Slider" to="." method="change_music"]
+[connection signal="value_changed" from="VBoxContainer/SoundContainer/VBoxContainer/Slider" to="." method="change_sound"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Back" to="." method="_on_main_pressed"]

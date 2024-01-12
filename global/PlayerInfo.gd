@@ -9,11 +9,21 @@ var secondary_movement : MovementExchangable = null;
 var player : Player;
 var weapon : Weapon;
 var cam : CameraFollow2D;
+var saved_health : int;
 
 var _fade_tween : Tween;
 
+signal max_health_changed(amount : int);
+signal health_changed(amount : int);
+
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS;
+
+func max_health_update() -> void:
+	health_changed.emit(player.get_max_health());
+
+func health_update(_amount : int = 0) -> void:
+	health_changed.emit(player.get_health());
 
 func overwrite_player(toggle : bool) -> void:
 	player.process_mode = Node.PROCESS_MODE_DISABLED if toggle else Node.PROCESS_MODE_INHERIT;
@@ -46,12 +56,16 @@ func assign_player_moves() -> void:
 	if secondary_movement:
 		player.secondary_movement = secondary_movement.duplicate();
 	
+	max_health_update();
+	health_update();
+	
 func replace(idx : int, with : Exchangable) -> void:
 	if with is AttackExchangable:
 		if idx == 0:
 			primary_attack = with;
 			player.primary_attack = primary_attack.duplicate();
 			
+			print("hello?")
 			weapon_settup(player.primary_attack);
 		else:
 			secondary_attack = with;
@@ -59,7 +73,11 @@ func replace(idx : int, with : Exchangable) -> void:
 	elif with is HealthExchangable:
 		if idx == 0:
 			health_handle = with;
+			health_handle.health = health_handle.max_health;
 			player.health_handle = health_handle.duplicate();
+			
+			max_health_update();
+			health_update();
 	else:
 		if idx == 0:
 			primary_movement = with;
@@ -72,17 +90,3 @@ func weapon_settup(exchan : AttackExchangable) -> void:
 	if is_instance_valid(weapon) && weapon:
 		weapon.queue_free();
 	weapon = exchan._set_up_sprite(player, exchan.weapon_range);
-
-func reset() -> void:
-	if primary_attack:
-		primary_attack.reset();
-	if secondary_attack:
-		secondary_attack.reset();
-	
-	if health_handle:
-		health_handle.reset();
-	
-	if primary_movement:
-		primary_movement.reset();
-	if secondary_movement:
-		secondary_movement.reset();

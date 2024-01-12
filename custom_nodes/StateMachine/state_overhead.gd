@@ -7,8 +7,6 @@ class_name StateOverhead extends Node
 ## [b]Note[/b]: Changing this value during runtime does nothing.
 @export var _usesActor : bool = false:
 	set(val):
-		if !Engine.is_editor_hint():
-			return;
 		_usesActor = val;
 		notify_property_list_changed();
 ## Checks if this [StateOverhead] object will use an animationPlayer.[br][br]
@@ -16,8 +14,6 @@ class_name StateOverhead extends Node
 ## [b]Note[/b]: Changing this value during runtime does nothing.
 var _usesAnimationPlayer : bool:
 	set(val):
-		if !Engine.is_editor_hint():
-			return;
 		_usesAnimationPlayer = val;
 		notify_property_list_changed();
 ## The actor that will give assigned to every [State]. Typically a [CharacterBody2D] or [CharacterBody3D].[br][br]
@@ -72,10 +68,9 @@ func _ready() -> void:
 		set_process(false);
 		return;
 	
-	if _usesActor && not _actor.is_inside_tree():
+	if _usesActor && !_actor.is_node_ready():
 		await _actor.ready;
-	
-	if _usesAnimationPlayer && not _animationPlayer.is_inside_tree():
+	if _usesAnimationPlayer && !_animationPlayer.is_node_ready():
 		await _animationPlayer.ready;
 	
 	for machine in get_children():

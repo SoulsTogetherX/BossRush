@@ -10,8 +10,14 @@ var _on_cooldown : bool = false;
 
 signal cooldown_end;
 
+var _cooldown_timer : SceneTreeTimer;
+
 func reset() -> void:
+	super();
 	_weapon = null;
+	_on_cooldown = false;
+	if is_instance_valid(_cooldown_timer) && _cooldown_timer && _cooldown_timer.timeout.is_connected(_on_cooldown_end): 
+		_cooldown_timer.timeout.disconnect(_on_cooldown_end);
 
 func _set_up_sprite(actor : Node2D, distance : float) -> Weapon:
 	if !weapon_scene:
@@ -33,16 +39,17 @@ func handle_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMEN
 	if self is AttackInstant && from == _weapon:
 		self.playSound.connect(_weapon.play_sound, CONNECT_ONE_SHOT);
 	
-	_on_attack(from, target, alignment);
 	if from == _weapon:
-		_weapon.handle_attack(self);
+		await _weapon.handle_attack(self);
+	_on_attack(from, target, alignment);
 
 func _cooldown_check(scene : SceneTree) -> bool:
 	if _on_cooldown:
 		return false;
 	
 	_on_cooldown = true;
-	scene.create_timer(cooldown).timeout.connect(_on_cooldown_end);
+	_cooldown_timer = scene.create_timer(cooldown);
+	_cooldown_timer.timeout.connect(_on_cooldown_end)
 	return true;
 
 func _on_cooldown_end() -> void:

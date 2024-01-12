@@ -11,19 +11,40 @@ class_name ExchangeType extends CharacterBody2D
 		
 		if health_handle:
 			_health_monitor.damage_taken.disconnect(_damage_callable);
+			health_handle.toggle_hitable.disconnect($hurt_box.toggle_hurtbox);
 		if val:
 			_damage_callable = val._on_damage.bind(self);
 			
 			_health_monitor.max_health = val.max_health;
-			_health_monitor.update_health_no_signal(val.max_health);
+			_health_monitor.update_health_no_signal(val.health);
+			
 			_health_monitor.damage_taken.connect(_damage_callable);
+			val.toggle_hitable.connect($hurt_box.toggle_hurtbox);
 		health_handle = val;
 
-@export var primary_movement : MovementExchangable;
-@export var secondary_movement : MovementExchangable;
+@export var primary_movement : MovementExchangable:
+	set(val):
+		if !is_node_ready():
+			await ready;
+		
+		if primary_movement && primary_movement is BurstMovement:
+			primary_movement.toggle_hitable.disconnect($hurt_box.toggle_hurtbox);
+		if val && val is BurstMovement:
+			val.toggle_hitable.connect($hurt_box.toggle_hurtbox);
+			val.reset();
+		primary_movement = val;
+@export var secondary_movement : MovementExchangable:
+	set(val):
+		if !is_node_ready():
+			await ready;
+		
+		if secondary_movement && secondary_movement is BurstMovement:
+			secondary_movement.toggle_hitable.disconnect($hurt_box.toggle_hurtbox);
+		if val && val is BurstMovement:
+			val.toggle_hitable.connect($hurt_box.toggle_hurtbox);
+		secondary_movement = val;
 
 @onready var _health_monitor : HealthMonitor = $HealthMonitor;
-@onready var _animationPlayer: AnimationPlayer = $AnimationPlayer;
 @onready var _center: Marker2D = $Center;
 
 var _damage_callable: Callable;
@@ -35,6 +56,21 @@ func _ready() -> void:
 	_health_monitor.damage_taken.connect(_signal_damaged);
 	_health_monitor.killed.connect(_signal_killed);
 	$hurt_box.alignment = alignment;
+	_reset();
+
+func _reset() -> void:
+	if primary_attack:
+		primary_attack.reset();
+	if secondary_attack:
+		secondary_attack.reset();
+	
+	if health_handle:
+		health_handle.reset();
+	
+	if primary_movement:
+		primary_movement.reset();
+	if secondary_movement:
+		secondary_movement.reset();
 
 var _lock : bool = false;
 var _move_save : MovementExchangable
@@ -117,27 +153,18 @@ func get_animation_modifer_4(angle : float, sprite : Sprite2D) -> String:
 	var dir = wrapi(int(snapped(angle, PI/2) / (PI/2)), 0, 4);
 	match dir:
 		0:
-				#left
-			sprite.flip_h = false;
-			return "side";
+				#right
+			return "right";
 		1:
 				#down
 			return "down";
 		2:
-				#right
-			sprite.flip_h = true;
-			return "side";
+				#left
+			return "left";
 		3:
 				#up
 			return "up";
 	return "";
-
-func set_direction(animationType : String, angle : float) -> void:
-	var animation : String = get_animation_modifer_4(angle, $main) + animationType;
-	if _animationPlayer.current_animation != animation:
-		var pos : float = _animationPlayer.current_animation_position;
-		_animationPlayer.play(animation);
-		_animationPlayer.seek(pos, true);
 
 func get_alignment() -> HurtBox.ALIGNMENT:
 	return alignment;

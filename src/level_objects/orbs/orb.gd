@@ -14,15 +14,22 @@ var unselected : bool = false;
 var disable : bool = false;
 var disable_click : bool = false
 var staged : bool = false;
+var shake : bool = false:
+	set(val):
+		shake = val;
+		_shake_ramp = 0.0;
+		set_process(val);
 
 signal stage(orb : Orb);
 signal unstage(orb : Orb);
+signal destroyed();
 
 func _ready() -> void:
 	z_index = 1;
 	
 	reset_pos = position;
 	set_exchange(exchange);
+	set_process(shake);
 	
 	$color.scale = Vector2(0.95, 0.95);
 	var tween = create_tween().set_loops();
@@ -30,15 +37,17 @@ func _ready() -> void:
 	tween.set_ease(Tween.EASE_IN_OUT);
 	tween.tween_property($color, "scale", Vector2(1.05, 1.05), 1.5);
 	tween.tween_property($color, "scale", Vector2(0.95, 0.95), 1.5);
+	
+	$color.texture.gradient.colors = $color.texture.gradient.colors.duplicate();
 
 func set_exchange(exchan : Exchangable) -> void:
 	if exchan:
 		if exchan is HealthExchangable:
 			modulate = Color.LIME_GREEN;
 		elif exchan is AttackExchangable:
-			modulate = Color.CRIMSON;
+			modulate = Color.RED;
 		elif exchan is MovementExchangable:
-			modulate = Color.CADET_BLUE;
+			modulate = Color.DEEP_SKY_BLUE;
 		
 		$Sprite2D.frame = exchan.symbol;
 		title_display.text = exchan.name;
@@ -97,6 +106,11 @@ func _on_mouse_exited() -> void:
 		unstage.emit(self);
 		staged = false;
 
+var _shake_ramp = 0.0;
+func _process(_delta: float) -> void:
+	position = reset_pos + Vector2(randf(), randf()) * _shake_ramp;
+	_shake_ramp = min(_shake_ramp + 0.05, 5.0);
+
 func reset(scale_ : bool, position_ : bool, title : bool, flow : bool) -> void:
 	if _tween_decorate:
 		_tween_decorate.kill();
@@ -120,3 +134,25 @@ func reset(scale_ : bool, position_ : bool, title : bool, flow : bool) -> void:
 
 func toggle_flow_particles(toggle : bool) -> void:
 	$station_particle.emitting = toggle;
+
+func destroy() -> void:
+	$station_particle.emitting = false;
+	$trail_particle.emitting = false;
+	$break_particle.emitting = true;
+	$break_particle.global_position = global_position;
+	disable = true;
+	disable_click = true;
+	
+	self_modulate.a = 0.0;
+	
+	$Sprite2D.visible = false;
+	title_display.visible = false;
+	
+	var tween : Tween = create_tween();
+	tween.tween_interval(2.0);
+	
+	await tween.finished;
+	destroyed.emit();
+
+func _tween_light(interval : float) -> void:
+	$color.texture.gradient.colors[0].a = interval; 

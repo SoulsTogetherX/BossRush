@@ -232,7 +232,42 @@ func zoom_event(
 		_zoom_tweem.tween_property(self, "zoom:x", zoom_target.x, times.x);
 	if times.y > 0:
 		_zoom_tweem.tween_property(self, "zoom:y", zoom_target.y, times.y);
-	_zoom_tweem.tween_callback(func(): finish_zoom.emit());
+	
+	_zoom_tweem.chain().tween_callback(func(): finish_zoom.emit());
+
+func zoom_into_event(
+				times       : Vector2,
+				zoom_target : Vector2,
+				trans       : Tween.TransitionType = Tween.TRANS_SINE,
+				ease_       : Tween.EaseType       = Tween.EASE_IN_OUT
+				) -> void:
+	if _zoom_tweem:
+		_zoom_tweem.kill();
+	_zoom_tweem = create_tween().set_parallel();
+	_zoom_tweem.set_ease(ease_);
+	_zoom_tweem.set_trans(trans);
+	if times.x > 0:
+		_zoom_tweem.tween_method(_zoom_at_point_x, zoom.x, zoom_target.x, times.x);
+	if times.y > 0:
+		_zoom_tweem.tween_method(_zoom_at_point_y, zoom.y, zoom_target.y, times.y);
+	
+	_zoom_tweem.chain().tween_callback(func(): finish_zoom.emit());
+
+func _zoom_at_point_x(new_zoom : float):
+	var previous_mouse_position := get_local_mouse_position().x
+	zoom.x = new_zoom
+	var diff = previous_mouse_position - get_local_mouse_position().x
+	offset.x += diff
+
+func _zoom_at_point_y(new_zoom : float):
+	var previous_mouse_position := get_local_mouse_position().y
+	zoom.y = new_zoom
+	var diff = previous_mouse_position - get_local_mouse_position().y
+	offset.y += diff
+
+func cancle_zoom() -> void:
+	if _zoom_tweem:
+		_zoom_tweem.kill();
 
 ## Returns if the camera is still zooming.
 func is_zooming() -> bool:

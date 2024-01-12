@@ -1,27 +1,36 @@
 class_name FourWayAttack extends AttackRange
 
-var timer1 : SceneTreeTimer = null;
-var timer2 : SceneTreeTimer = null;
+@export var spawn_delay : float;
+@export var ring_count : int = 1;
+
+var timers : Array[SceneTreeTimer];
 
 func reset() -> void:
 	super();
-	if is_instance_valid(timer1) && timer1:
-		timer1.timeout.disconnect(four_fire);
-	if is_instance_valid(timer2) && timer2:
-		timer2.timeout.disconnect(four_fire);
-	
-	timer1 = null;
-	timer2 = null;
+	clear_timers();
+
+func clear_timers() -> void:
+	for timer in timers:
+		if is_instance_valid(timer) && timer:
+			timer.timeout.disconnect(four_fire);
+	timers.clear();
 
 func _on_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+	if ring_count <= 0:
+		return;
+	
 	var angle : float = (target - from.get_center()).angle();
-	four_fire(from.get_tree().current_scene, from.get_center(), angle, alignment);
 	
-	timer1 = from.get_tree().create_timer(0.6);
-	timer1.timeout.connect(four_fire.bind(from.get_tree().current_scene, from.get_center(), angle + (PI / 4), alignment));
-	
-	timer2 = from.get_tree().create_timer(1.2);
-	timer2.timeout.connect(four_fire.bind(from.get_tree().current_scene, from.get_center(), angle, alignment));
+	if spawn_delay > 0:
+		var delay : float = 0;
+		for idx in ring_count:
+			timers.append(from.get_tree().create_timer(delay));
+			timers.back().timeout.connect(four_fire.bind(from.get_tree().current_scene, from.get_center(), angle + ((PI / 4) * float(idx & 1)), alignment));
+			delay += spawn_delay;
+	else:
+		four_fire(from.get_tree().current_scene, from.get_center(), angle, alignment);
+		if ring_count > 1:
+			four_fire(from.get_tree().current_scene, from.get_center(), angle + (PI / 4), alignment);
 
 func four_fire(parent : Node2D, pos : Vector2, angle : float, alignment : HurtBox.ALIGNMENT) -> void:
 	var pro := launch.fire_protectile(parent, pos, angle, true);

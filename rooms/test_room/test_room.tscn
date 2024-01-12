@@ -1,38 +1,36 @@
-[gd_scene load_steps=34 format=3 uid="uid://d1625avtkbbq3"]
+[gd_scene load_steps=32 format=3 uid="uid://d1625avtkbbq3"]
 
-[ext_resource type="Script" path="res://rooms/test_room/room.gd" id="1_1tg0k"]
+[ext_resource type="Script" path="res://rooms/room.gd" id="1_1tg0k"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="2_5duej"]
 [ext_resource type="Texture2D" uid="uid://1uijmhx7d0bg" path="res://icon.svg" id="2_pve5w"]
 [ext_resource type="PackedScene" uid="uid://lt1h1nu2iplm" path="res://src/level_objects/orbs/orb.tscn" id="4_7dlbu"]
 [ext_resource type="Texture2D" uid="uid://33e4mqbwkynt" path="res://assets/sprites/ground/Arena test.png" id="4_hdcsl"]
 [ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="5_ai1bo"]
-[ext_resource type="PackedScene" uid="uid://cvrfi64eypl2d" path="res://src/GUI/GUI.tscn" id="5_ienh4"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_range.gd" id="6_hpmk4"]
 [ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="7_4v2gq"]
 [ext_resource type="Script" path="res://src/weapons/weapon.gd" id="10_rdt05"]
-[ext_resource type="Texture2D" uid="uid://obtr7td8mhtc" path="res://assets/sprites/weapons/Doggos Sword.png" id="11_b7mml"]
 [ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="11_fe0qj"]
 [ext_resource type="Resource" uid="uid://dvdydopu5lf8h" path="res://assets/resources/instances/exchangable/player_base/Doggo Walk.tres" id="12_1xhm3"]
-[ext_resource type="AudioStream" uid="uid://bsdnc6ie8lqs" path="res://assets/sounds/effects/sword/Sword_swipe.wav" id="12_lg6y6"]
+[ext_resource type="AudioStream" uid="uid://bsdnc6ie8lqs" path="res://assets/sounds/effects/weapon/sword/Sword_swipe.wav" id="12_lg6y6"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="13_84ksy"]
-[ext_resource type="Resource" uid="uid://vndacp7gvurp" path="res://assets/resources/instances/exchangable/leshy/fourWayFire.tres" id="14_27uvd"]
-[ext_resource type="PackedScene" uid="uid://bq0lespwow1jd" path="res://src/weapons/projectiles/basic/projectile.tscn" id="14_dqaky"]
-[ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature_Dash.tres" id="14_ygkil"]
+[ext_resource type="Resource" uid="uid://vndacp7gvurp" path="res://assets/resources/instances/exchangable/leshy/FourWayFire.tres" id="14_27uvd"]
+[ext_resource type="PackedScene" uid="uid://bs00uwofbh6wm" path="res://src/weapons/projectiles/Leshy/leshy_arrow.tscn" id="14_dqaky"]
+[ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature Dash.tres" id="14_ygkil"]
+[ext_resource type="Resource" uid="uid://dg66auy72xda7" path="res://assets/resources/instances/exchangable/leshy/Pine Health.tres" id="17_peyvy"]
 [ext_resource type="Script" path="res://rooms/test_room/dialog_test.gd" id="18_2f2fh"]
-[ext_resource type="PackedScene" uid="uid://cd6retw663av0" path="res://src/characters/bosses/leshy/leshy.tscn" id="18_tafsh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lgyr6"]
 size = Vector2(130.832, 119.386)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgr7a"]
-size = Vector2(556, 420)
-
-[sub_resource type="Resource" id="Resource_oq01m"]
+[sub_resource type="Resource" id="Resource_ao7kb"]
 script = ExtResource("5_ai1bo")
 protectile = ExtResource("14_dqaky")
-range = 100.0
+fire_range = 1000.0
 speed = 100.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3c164"]
+load_path = "res://.godot/imported/Doggo Sword.png-0c3cfe9192fd02650c30273bfc13bc74.ctex"
 
 [sub_resource type="Animation" id="Animation_7tvti"]
 resource_name = "RESET"
@@ -87,7 +85,7 @@ _data = {
 "idle": SubResource("Animation_b64qb")
 }
 
-[sub_resource type="PackedScene" id="PackedScene_ftcd3"]
+[sub_resource type="PackedScene" id="PackedScene_300oj"]
 _bundled = {
 "conn_count": 0,
 "conns": PackedInt32Array(),
@@ -96,7 +94,7 @@ _bundled = {
 "node_count": 6,
 "node_paths": [NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath(".")],
 "nodes": PackedInt32Array(-1, -1, 1, 0, -1, 1, 2, 0, 0, 1073741824, 0, 4, 3, -1, 4, 5, 1, 6, 2, 7, 3, 8, 4, 0, 1073741825, 0, 10, 9, -1, 2, 11, 5, 12, 6, 0, 1073741826, 0, 14, 13, -1, 1, 15, 7, 0, 1073741827, 0, 17, 16, -1, 1, 18, 8, 0, 1073741828, 0, 20, 19, -1, 2, 21, 9, 22, 10, 0),
-"variants": [ExtResource("10_rdt05"), Vector2(15, -2.5), Vector2(0.7, 0.7), ExtResource("11_b7mml"), 7, {
+"variants": [ExtResource("10_rdt05"), Vector2(15, -2.5), Vector2(0.7, 0.7), SubResource("CompressedTexture2D_3c164"), 7, {
 "": SubResource("AnimationLibrary_ln6qv")
 }, &"idle", 0.3, Vector2(17, 0), ExtResource("12_lg6y6"), &"Sound"],
 "version": 3
@@ -104,8 +102,8 @@ _bundled = {
 
 [sub_resource type="Resource" id="Resource_fvio8"]
 script = ExtResource("6_hpmk4")
-launch = SubResource("Resource_oq01m")
-weapon_scene = SubResource("PackedScene_ftcd3")
+launch = SubResource("Resource_ao7kb")
+weapon_scene = SubResource("PackedScene_300oj")
 weapon_range = 0.0
 delta = -1
 cooldown = 0.0
@@ -117,10 +115,10 @@ script = ExtResource("13_84ksy")
 speed = 500
 duration = 0.2
 cool_down = 0.0
-becomes_invincible = true
 can_stop = false
 in_burst_control = true
 burst_control_ratio = 0.1
+animation = ""
 name = "Super Speed"
 symbol = 0
 
@@ -146,15 +144,6 @@ z_index = -99
 position = Vector2(600, 360)
 texture = ExtResource("4_hdcsl")
 
-[node name="walk_area" type="Area2D" parent="."]
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="walk_area"]
-position = Vector2(601, 362)
-shape = SubResource("RectangleShape2D_dgr7a")
-debug_color = Color(0.772549, 0.14902, 1, 0.419608)
-
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 z_index = -99
 position = Vector2(142, 360)
@@ -167,13 +156,8 @@ position = Vector2(1055, 358)
 scale = Vector2(0.359375, 0.765625)
 texture = ExtResource("2_pve5w")
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
-position = Vector2(358, 219)
-script = ExtResource("2_5duej")
-follow = NodePath("../Doggo")
-
 [node name="Reward_manager" parent="." node_paths=PackedStringArray("orbs") instance=ExtResource("7_4v2gq")]
-orbs = [NodePath("Orb"), NodePath("Orb2"), NodePath("Orb3"), NodePath("Orb4"), NodePath("Orb5")]
+orbs = [NodePath("Orb"), NodePath("Orb2"), NodePath("Orb3"), NodePath("Orb4"), NodePath("Orb5"), NodePath("Orb6")]
 
 [node name="Orb" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
 position = Vector2(320, 797)
@@ -195,27 +179,28 @@ exchange = ExtResource("14_27uvd")
 position = Vector2(1332, 284)
 exchange = ExtResource("14_ygkil")
 
-[node name="GUI" parent="." instance=ExtResource("5_ienh4")]
-follow_viewport_enabled = false
+[node name="Orb6" parent="Reward_manager" instance=ExtResource("4_7dlbu")]
+position = Vector2(385, -91)
+exchange = ExtResource("17_peyvy")
 
-[node name="Area2D" parent="." instance=ExtResource("11_fe0qj")]
+[node name="door2" parent="." instance=ExtResource("11_fe0qj")]
 position = Vector2(180, 360)
 move_to = "2"
 scene_path = "res://rooms/test_room/test_room.tscn"
 location_id = "1"
 direction = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door2"]
 position = Vector2(-40, 0)
 shape = SubResource("RectangleShape2D_gvtd3")
 
-[node name="Area2D2" parent="." instance=ExtResource("11_fe0qj")]
+[node name="door" parent="." instance=ExtResource("11_fe0qj")]
 position = Vector2(1020, 360)
-move_to = "1"
-scene_path = "res://rooms/test_room/test_room.tscn"
+move_to = "3"
+scene_path = "res://rooms/rooms/Leshy_Boss_room/Leshy_room.tscn"
 location_id = "2"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
 position = Vector2(40, 0)
 shape = SubResource("RectangleShape2D_gvtd3")
 
@@ -233,11 +218,14 @@ texture = ExtResource("2_pve5w")
 position = Vector2(59.9222, 30.356)
 shape = SubResource("RectangleShape2D_5ndea")
 
-[node name="Leshy" parent="." node_paths=PackedStringArray("_movement_area") instance=ExtResource("18_tafsh")]
-position = Vector2(792, 427)
-_movement_area = NodePath("../walk_area")
-
 [node name="Doggo" parent="." instance=ExtResource("1_vynos")]
 position = Vector2(369, 219)
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
+top_level = true
+position = Vector2(349, 219)
+script = ExtResource("2_5duej")
+follow = NodePath("../Doggo")
+auto_follow = true
 
 [connection signal="body_entered" from="dialog_test" to="dialog_test" method="_on_body_entered"]

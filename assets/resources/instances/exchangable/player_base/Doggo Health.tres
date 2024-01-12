@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_qdhyl")
-max_health = 15
+max_health = 4
 name = "Doggo Health"
 symbol = 0

@@ -16,13 +16,16 @@ func add_location(location : Location) -> void:
 	_locations[location.get_id()] = location;
 
 func request_transfer(scene : String, id : String) -> void:
+	var saved_health = PlayerInfo.player.get_health();
+	
+	ResourceLoader.load_threaded_request(scene);
+	
 	TransitionManager.fade_in();
 	get_tree().paused = true;
-	PlayerInfo.reset();
 	
 	await TransitionManager.load_transition;
 	
-	get_tree().change_scene_to_file(scene);
+	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(scene));
 	
 	await ready;
 	
@@ -32,6 +35,9 @@ func request_transfer(scene : String, id : String) -> void:
 	get_tree().paused = false;
 	
 	TransitionManager.fade_out();
+	
+	PlayerInfo.player.set_health(saved_health);
+	PlayerInfo.health_update();
 
 func _position_player(id : String, player : Player) -> void:
 	var loc : Location = _locations[id];
@@ -39,10 +45,10 @@ func _position_player(id : String, player : Player) -> void:
 	
 	match loc.direction:
 		SIDE_RIGHT:
-			player.set_direction("_move", 0);
+			player.set_direction("idle_", 0);
 		SIDE_TOP:
-			player.set_direction("_move", PI / 2);
+			player.set_direction("idle_", PI / 2);
 		SIDE_LEFT:
-			player.set_direction("_move", PI);
+			player.set_direction("idle_", PI);
 		SIDE_BOTTOM:
-			player.set_direction("_move", -(PI / 2));
+			player.set_direction("idle_", -(PI / 2));

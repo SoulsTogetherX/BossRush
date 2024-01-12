@@ -5,7 +5,15 @@ class_name BurstMovement extends MovementExchangable
 @export var duration : float = 0.2;
 @export var cool_down : float = 0.0;
 
-@export var becomes_invincible : bool = true;
+@export var _incincible : Invincibility = null:
+	set(val):
+		if _incincible:
+			_incincible.invincible_start.disconnect(_incincible_on);
+			_incincible.invincible_end.disconnect(_incincible_off);
+		if val:
+			val.invincible_start.connect(_incincible_on);
+			val.invincible_end.connect(_incincible_off);
+		_incincible = val;
 @export var can_stop : bool = false;
 @export var in_burst_control : bool = true:
 	set(val):
@@ -32,6 +40,7 @@ var _timer2 : SceneTreeTimer;
 
 signal end_bust;
 signal end_cooldown;
+signal toggle_hitable(toggle : bool);
 
 func reset() -> void:
 	super();
@@ -45,7 +54,7 @@ func reset() -> void:
 	_timer1 = null;
 	_timer2 = null;
 
-func enact_move(_actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> bool:
+func enact_move(actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> bool:
 	if on_cooldown:
 		return false;
 	
@@ -55,18 +64,20 @@ func enact_move(_actor : ExchangeType, _from : Vector2, move_dir : Vector2) -> b
 		
 		is_busting = true;
 		
-		_actor.velocity = move_dir * speed;
-		_actor.move_and_slide();
+		actor.velocity = move_dir * speed;
+		actor.move_and_slide();
 		
+		if _incincible:
+			_incincible.start(actor.get_tree())
 		if duration > 0:
-			_timer1 = _actor.get_tree().create_timer(duration);
-			_timer1.timeout.connect(_end_dash.bind(_actor));
+			_timer1 = actor.get_tree().create_timer(duration);
+			_timer1.timeout.connect(_end_dash.bind(actor));
 		return true;
 	
 	if in_burst_control:
-		_actor.velocity = (_actor.velocity + (move_dir * speed * burst_control_ratio)).normalized() * speed;
+		actor.velocity = (actor.velocity + (move_dir * speed * burst_control_ratio)).normalized() * speed;
 	
-	_actor.move_and_slide();
+	actor.move_and_slide();
 	return true;
 
 func _end_dash(_actor : ExchangeType) -> void:
@@ -81,3 +92,8 @@ func _end_dash(_actor : ExchangeType) -> void:
 func _end_cooldown() -> void:
 	on_cooldown = false;
 	end_cooldown.emit();
+
+func _incincible_on() -> void:
+	toggle_hitable.emit(false);
+func _incincible_off() -> void:
+	toggle_hitable.emit(true);

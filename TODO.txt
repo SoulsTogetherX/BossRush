@@ -1,7 +1,5 @@
-Artificially long loading screens
+Highlight friendly projectils green and enemy red.
 
-Boss AI
+Settings menu.
 
-Boss Death
-
-Dialog
+Polish???

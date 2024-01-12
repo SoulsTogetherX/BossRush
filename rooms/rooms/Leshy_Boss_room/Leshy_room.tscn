@@ -1,0 +1,598 @@
+[gd_scene load_steps=22 format=3 uid="uid://dp324cpihdn7s"]
+
+[ext_resource type="Script" path="res://rooms/room.gd" id="1_6erxl"]
+[ext_resource type="Texture2D" uid="uid://d2l4g60ps0t60" path="res://assets/sprites/ground/Leshy/Floor 1 BG (Leshy Floor).png" id="1_erk7l"]
+[ext_resource type="PackedScene" uid="uid://cd6retw663av0" path="res://src/characters/bosses/leshy/leshy.tscn" id="3_qsitx"]
+[ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="4_mbe6u"]
+[ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="4_xd7kx"]
+[ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="5_sv2ph"]
+[ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="8_ff4pi"]
+[ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="9_pks3f"]
+[ext_resource type="Texture2D" uid="uid://djb1qsiodkqtb" path="res://assets/sprites/ground/Leshy/Floor 1-walls.png" id="9_xpu01"]
+[ext_resource type="Texture2D" uid="uid://b7g6nxlyapyws" path="res://assets/sprites/ground/Leshy/Floor 1 -walls-second-layer.png" id="10_lfjar"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s0ak0"]
+size = Vector2(607, 433)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_my4nl"]
+radius = 21.0
+height = 56.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpcp5"]
+size = Vector2(279, 39)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e16fu"]
+size = Vector2(694.5, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4tw8s"]
+size = Vector2(26, 555)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbnah"]
+size = Vector2(24, 155.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_58m6h"]
+size = Vector2(24, 226.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tq3ux"]
+size = Vector2(26, 167)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0lp45"]
+radius = 28.0
+height = 70.0
+
+[sub_resource type="Gradient" id="Gradient_a6kpq"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4vpcj"]
+gradient = SubResource("Gradient_a6kpq")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
+
+[node name="Leshy_room" type="Node2D"]
+script = ExtResource("1_6erxl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("1_erk7l")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = ExtResource("9_xpu01")
+
+[node name="walk_area" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="walk_area"]
+position = Vector2(-0.5, 13.5)
+shape = SubResource("RectangleShape2D_s0ak0")
+debug_color = Color(0.772549, 0.14902, 1, 0.419608)
+
+[node name="Reward_manager" parent="." instance=ExtResource("5_sv2ph")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-94, -268)
+shape = SubResource("CapsuleShape2D_my4nl")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(77, -272)
+shape = SubResource("CapsuleShape2D_my4nl")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(341, -117)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_my4nl")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(340, 47)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_my4nl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-221.5, -274.5)
+shape = SubResource("RectangleShape2D_wpcp5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(206, -274)
+shape = SubResource("RectangleShape2D_wpcp5")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-3, -313)
+shape = SubResource("RectangleShape2D_wpcp5")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-1.25, 279)
+shape = SubResource("RectangleShape2D_e16fu")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-353, 9.5)
+shape = SubResource("RectangleShape2D_4tw8s")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(351, -209.75)
+shape = SubResource("RectangleShape2D_hbnah")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(388, -35)
+shape = SubResource("RectangleShape2D_hbnah")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(349, 174.875)
+shape = SubResource("RectangleShape2D_58m6h")
+
+[node name="door" parent="." instance=ExtResource("4_xd7kx")]
+position = Vector2(322, -33)
+move_to = "2"
+scene_path = "res://rooms/test_room/test_room.tscn"
+location_id = "3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door"]
+position = Vector2(42, 5.5)
+shape = SubResource("RectangleShape2D_tq3ux")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
+top_level = true
+position = Vector2(161, -102)
+script = ExtResource("8_ff4pi")
+follow = NodePath("../Doggo")
+auto_follow = true
+
+[node name="Bushes" type="Node" parent="."]
+
+[node name="Bush_1" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-229, -144)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_1"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_1"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_1/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_2" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-92, -144)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_2"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_2"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_2/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_3" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(71, -144)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_3"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_3"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_3/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_4" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(200, -150)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_4"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_4"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_4/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_5" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-229, -23)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_5"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_5"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_5/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_6" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-92, -23)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_6"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_6"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_6/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_7" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(24, -1)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_7"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_7"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_7/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_8" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(217, -23)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_8"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_8"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_8/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_9" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-229, 92)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_9"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_9"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_9/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_10" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-114, 73)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_10"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_10"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_10/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_11" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(71, 92)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_11"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_11"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_11/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_12" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(189, 78)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_12"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_12"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_12/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_13" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-200, 163)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_13"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_13"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_13/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_14" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-92, 194)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_14"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_14"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_14/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_15" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(86, 186)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_15"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_15"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_15/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_16" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(217, 194)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_16"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_16"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_16/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_17" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(107, -56)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_17"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_17"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_17/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_20" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-157, -107)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_20"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_20"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_20/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_21" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(149, 19)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_21"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_21"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_21/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_18" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-14, -125)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_18"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_18"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_18/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_19" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-6, 143)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_19"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_19"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_19/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_22" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-33, 75)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_22"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_22"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_22/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Bush_23" type="Node2D" parent="Bushes"]
+y_sort_enabled = true
+position = Vector2(-174, 9)
+
+[node name="Bush_1" type="Sprite2D" parent="Bushes/Bush_23"]
+position = Vector2(4, -57)
+texture = ExtResource("9_pks3f")
+hframes = 49
+frame = 28
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_23"]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_23/StaticBody2D"]
+position = Vector2(1, -5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0lp45")
+
+[node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
+position = Vector2(141, -102)
+
+[node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "_reward_manager") instance=ExtResource("3_qsitx")]
+position = Vector2(-17, -3)
+bushes = NodePath("../Bushes")
+_reward_manager = NodePath("../Reward_manager")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+texture = ExtResource("10_lfjar")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.4
+blend_mode = 1
+texture = SubResource("GradientTexture2D_4vpcj")
+texture_scale = 50.0

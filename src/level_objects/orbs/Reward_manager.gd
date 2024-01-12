@@ -1,4 +1,4 @@
-extends Node
+class_name RewardManager extends Node
 
 const ORB_SCENE : PackedScene = preload("res://src/level_objects/orbs/orb.tscn");
 
@@ -110,18 +110,19 @@ func spawn_options() -> void:
 		exchanges = PlayerInfo.player.get_exchange("health");
 	
 	var orb : Orb;
+	var start : Vector2 = PlayerInfo.player.get_center() + + Vector2(0, -20);
 	if exchanges.size() == 1:
-		orb = _create_orb(exchanges[0], Vector2(  0, -100));
+		orb = _create_orb(exchanges[0], start, Vector2(0, -80));
 		orb.stage.connect(_holding);
 		orb.unstage.connect(_let_go);
 		_player_orbs.append(orb);
 	elif exchanges.size() == 2:
-		orb = _create_orb(exchanges[0], Vector2(-25, -100));
+		orb = _create_orb(exchanges[0], start, Vector2(-25, -80));
 		orb.stage.connect(_holding);
 		orb.unstage.connect(_let_go);
 		_player_orbs.append(orb);
 		
-		orb = _create_orb(exchanges[1], Vector2( 25, -100));
+		orb = _create_orb(exchanges[1], start, Vector2( 25, -80));
 		orb.stage.connect(_holding);
 		orb.unstage.connect(_let_go);
 		_player_orbs.append(orb);
@@ -132,17 +133,29 @@ func _destroy_options() -> void:
 	_player_orbs.clear();
 
 func _destroy_collectable() -> void:
+	var tween : Tween = create_tween().set_parallel();
+	for orb : Orb in orbs:
+		orb.disable = true;
+		orb.disable_click = true;
+		tween.tween_property(orb, "modulate:a", 0.0, 0.5);
+		tween.tween_property(orb, "scale", Vector2.ZERO, 0.7);
+	
+	await tween.finished;
+	
 	for orb : Orb in orbs:
 		orb.queue_free();
 	orbs.clear();
 
-func _create_orb(exchange : Exchangable, offset : Vector2) -> Orb:
+func _tween_light(interval : float, grad : GradientTexture2D) -> void:
+	grad.colors[0].a = interval; 
+
+func _create_orb(exchange : Exchangable, start : Vector2, offset : Vector2) -> Orb:
 	var orb : Orb = ORB_SCENE.instantiate();
+	orb.exchange = exchange;
 	add_child(orb);
-	orb.set_exchange(exchange);
-	orb.global_position = PlayerInfo.player.global_position + Vector2(0, -20);
+	orb.global_position = start;
 	orb.scale = Vector2(0.1, 0.1);
-	orb.reset_pos = PlayerInfo.player.global_position + offset;
+	orb.reset_pos = start + offset;
 	orb.z_index = -1;
 	orb.reset(true, true, true, true);
 	
@@ -151,20 +164,83 @@ func _create_orb(exchange : Exchangable, offset : Vector2) -> Orb:
 func _holding(orb : Orb) -> void:
 	timer.start();
 	_option_selected = orb;
-
+	orb.shake = true;
+	PlayerInfo.cam.auto_follow = false;
+	PlayerInfo.cam.zoom_into_event(Vector2(3.0, 3.0), Vector2(2.0, 2.0));
 func _let_go(orb : Orb) -> void:
 	if _option_selected == orb:
 		timer.stop();
+		orb.shake = false;
+		PlayerInfo.cam.auto_follow = true;
+		PlayerInfo.cam.zoom_event(Vector2(0.2, 0.2), Vector2(1.0, 1.0));
+		
 		_option_selected = null;
 
 func _selected_option() -> void:
-	PlayerInfo.replace(_player_orbs.find(_option_selected), _selected.exchange);
+	set_process_input(false);
+	_option_selected.shake = false;
+	
+	var idx : int = _player_orbs.find(_option_selected);
+	_player_orbs.erase(_option_selected);
+	_option_selected.destroy();
+	
+	for orb : Orb in _player_orbs:
+		orb.disable = true;
+		orb.disable_click = true;
+	for orb : Orb in orbs:
+		orb.disable = true;
+		orb.disable_click = true;
+	
+	await _option_selected.destroyed;
+	
+	var tt : Tween = create_tween();
+	tt.tween_property(_option_selected, "scale", Vector2(0,0), 5.0);
+	
+	await get_tree().create_timer(0.2).timeout;
+	
+	var tween : Tween = create_tween();
+	set_physics_process(false);
+	tween.tween_property(_selected, "scale", Vector2(0,0), 0.4);
+	tween.parallel().tween_property(_selected, "global_position", PlayerInfo.player.get_center(), 0.2).set_delay(0.2);
+	
+	for orb in _player_orbs:
+		orb.z_index = -1;
+		tween.tween_property(orb, "scale", Vector2(0,0), 0.4);
+		tween.parallel().tween_property(orb, "global_position", PlayerInfo.player.get_center(), 0.2).set_delay(0.2);
+	
+	PlayerInfo.replace(idx, _selected.exchange);
+	
+	await tween.finished;
 	_destroy_options();
 	_destroy_collectable();
 	
 	_selected = null;
 	_option_selected = null;
 	
-	set_physics_process(false);
-	set_process_input(false);
 	PlayerInfo.overwrite_player(false);
+	PlayerInfo.cam.auto_follow = true;
+	PlayerInfo.cam.zoom_event(Vector2(0.2, 0.2), Vector2(1.0, 1.0));
+
+func _spawn_orbs(character : ExchangeType) -> void:
+	var exs : Array[Exchangable] = [];
+	
+	if character.primary_attack:
+		exs.append(character.primary_attack);
+	if character.secondary_attack:
+		exs.append(character.secondary_attack);
+	if character.health_handle:
+		exs.append(character.health_handle);
+	if character.primary_movement:
+		exs.append(character.primary_movement);
+	if character.secondary_movement:
+		exs.append(character.secondary_movement);
+	
+	var angle : float = randf() * TAU;
+	var inc : float = TAU / exs.size();
+	var dist : float = (exs.size() - 1) * 20;
+	
+	for ex in exs:
+		var orb : Orb = _create_orb(ex, character.get_center(), Vector2(cos(angle), sin(angle)) * dist + Vector2(0, -80));
+		orbs.append(orb);
+		orb.stage.connect(_stage_orb);
+		angle += inc;

@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/Reward_manager.gd" id="1_dn1pl"]
 
-[node name="Reward_manager" type="Node" node_paths=PackedStringArray("orbs")]
+[node name="Reward_manager" type="Node"]
 script = ExtResource("1_dn1pl")
-orbs = [null, null, null]
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_selected_option"]

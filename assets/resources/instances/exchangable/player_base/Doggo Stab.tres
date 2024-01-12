@@ -4,14 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://6wo1ybgdo3ao" path="res://src/weapons/sword.tscn" id="4_spbja"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t26mw"]
-radius = 25.0
+radius = 45.0
 
 [resource]
 script = ExtResource("1_cm4nl")
 shape = SubResource("CircleShape2D_t26mw")
 weapon_scene = ExtResource("4_spbja")
-weapon_range = 8.0
+weapon_range = 16.0
 delta = -1
 cooldown = 0.0
-name = ""
+name = "Doggo Stab"
 symbol = 0

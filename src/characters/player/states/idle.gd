@@ -6,7 +6,7 @@ func get_id():
 	return "idle";
 
 func state_ready() -> void:
-	pass;
+	_actor.set_direction("idle_", 0);
 
 func enter() -> void:
 	pass;

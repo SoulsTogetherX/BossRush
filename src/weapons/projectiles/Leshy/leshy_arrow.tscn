@@ -1,0 +1,140 @@
+[gd_scene load_steps=16 format=3 uid="uid://bs00uwofbh6wm"]
+
+[ext_resource type="Script" path="res://src/weapons/projectiles/Leshy/leshy_arrow.gd" id="1_e0qy1"]
+[ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="2_aglto"]
+[ext_resource type="Texture2D" uid="uid://b17fqxh8qbi8i" path="res://assets/sprites/characters/bosses/leshy/Leshy Arow.png" id="2_erjfe"]
+[ext_resource type="Script" path="res://custom_nodes/trail/trail.gd" id="2_ks0nh"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_xldus"]
+[ext_resource type="AudioStream" uid="uid://derni41h3vnwc" path="res://assets/sounds/effects/boss/leshy/arrow/Leshy Arrow Impact.ogg" id="7_xdlu4"]
+
+[sub_resource type="Curve" id="Curve_jptal"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.362538, 0.651371), 1.38081, 1.38081, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uybh0"]
+resource_local_to_scene = true
+shader = ExtResource("2_aglto")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8okip"]
+size = Vector2(24, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qka5p"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_d37by"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_iiei5"]
+resource_name = "startup"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.7), Vector2(0.7, 0.7)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-4, 0), Vector2(3, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbjvj"]
+_data = {
+"RESET": SubResource("Animation_d37by"),
+"startup": SubResource("Animation_iiei5")
+}
+
+[sub_resource type="Gradient" id="Gradient_yc8ce"]
+colors = PackedColorArray(1, 1, 0.301961, 0.803922, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5rw6o"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_yc8ce")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
+
+[node name="LeshyArrow" type="Node2D"]
+script = ExtResource("1_e0qy1")
+
+[node name="trail" type="Line2D" parent="." node_paths=PackedStringArray("follow")]
+show_behind_parent = true
+z_index = -1
+width = 5.0
+width_curve = SubResource("Curve_jptal")
+script = ExtResource("2_ks0nh")
+follow = NodePath("..")
+trailLength = 16
+
+[node name="sprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_uybh0")
+position = Vector2(3, 0)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_erjfe")
+
+[node name="hitbox" type="Area2D" parent="."]
+script = ExtResource("3_xldus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(9, 0)
+shape = SubResource("RectangleShape2D_8okip")
+
+[node name="collide_detect" type="Area2D" parent="."]
+position = Vector2(-7, 0)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collide_detect"]
+shape = SubResource("CircleShape2D_qka5p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tbjvj")
+}
+autoplay = "startup"
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(1, 0.6)
+energy = 0.5
+texture = SubResource("GradientTexture2D_5rw6o")
+texture_scale = 5.0
+
+[node name="impact" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_xdlu4")
+volume_db = -5.0
+
+[connection signal="hit" from="hitbox" to="." method="on_collide"]
+[connection signal="body_entered" from="collide_detect" to="." method="on_collide_wall"]
