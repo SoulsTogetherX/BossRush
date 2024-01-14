@@ -11,7 +11,7 @@ var _tween_move : Tween;
 
 var reset_pos : Vector2;
 var unselected : bool = false;
-var disable : bool = false;
+var disable : bool = true;
 var disable_click : bool = false
 var staged : bool = false;
 var shake : bool = false:
@@ -112,6 +112,7 @@ func _process(_delta: float) -> void:
 	_shake_ramp = min(_shake_ramp + 0.05, 5.0);
 
 func reset(scale_ : bool, position_ : bool, title : bool, flow : bool) -> void:
+	disable = false;
 	if _tween_decorate:
 		_tween_decorate.kill();
 	

@@ -18,10 +18,14 @@ var _sequence_idx : int = 0;
 signal before_swap;
 signal after_swap;
 
+func _ready() -> void:
+	super();
+	PlayerInfo.boss = self;
+
 func _add_to_sequence(call_fuc : Callable, time : float) -> void:
 	_sequence.append(_Boss_Action.new(call_fuc, time));
 
-func _next_sequence() -> void:
+func _next_sequence(skip : int = 0) -> void:
 	if _sequence.is_empty():
 		return;
 	
@@ -30,11 +34,16 @@ func _next_sequence() -> void:
 	
 	before_swap.emit();
 	
+	_sequence_idx += skip;
 	var action : _Boss_Action = _sequence[_sequence_idx];
 	_call_at(action.call_fuc, action.delay);
 	_sequence_idx += 1;
 	
 	after_swap.emit();
+
+func _reset_sequence() -> void:
+	_sequence_idx = 0;
+	_next_sequence();
 
 func _call_at(call_fuc : Callable, time : float) -> void:
 	call_fuc.call();
@@ -56,13 +65,6 @@ func get_player() -> Vector2:
 
 func aim_at_player() -> float:
 	return (PlayerInfo.player.global_position - global_position).angle();
-
-func can_move_here(pos : Vector2) -> bool:
-	var pp = PhysicsPointQueryParameters2D.new()
-	pp.collide_with_areas = true 
-	pp.position = pos;
-	pp.collision_mask = 32;
-	return !get_world_2d().direct_space_state.intersect_point(pp, 1).is_empty();
 
 func die() -> void:
 	_sequence_timer.stop();

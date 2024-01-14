@@ -74,16 +74,16 @@ func _reset() -> void:
 
 var _lock : bool = false;
 var _move_save : MovementExchangable
-func _handle_movement(_actor : ExchangeType, _from : Vector2, move_dir : Vector2, primary : bool = true) -> bool:
+func _handle_movement(delta : float, _actor : ExchangeType, _from : Vector2, move_dir : Vector2, primary : bool = true) -> bool:
 	if !_lock:
 		_move_save = primary_movement if (primary || !secondary_movement) else secondary_movement;
 		
-		if _move_save is BurstMovement && !_move_save.can_stop && !_move_save.on_cooldown:
+		if _move_save is HitMovement && !_move_save.can_stop && !_move_save.on_cooldown:
 			_lock = true;
 			_move_save.end_bust.connect(_unlock, CONNECT_ONE_SHOT);
 	
 	if _move_save:
-		return _move_save.enact_move(_actor, _from, move_dir);
+		return _move_save.enact_move(delta, _actor, _from, move_dir);
 	else:
 		return false;
 
@@ -149,7 +149,7 @@ func get_animation_modifer_8(angle : float) -> String:
 			return "up_left";
 	return "";
 
-func get_animation_modifer_4(angle : float, sprite : Sprite2D) -> String:
+func get_animation_modifer_4(angle : float, _sprite : Sprite2D) -> String:
 	var dir = wrapi(int(snapped(angle, PI/2) / (PI/2)), 0, 4);
 	match dir:
 		0:

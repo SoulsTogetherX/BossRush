@@ -9,9 +9,12 @@ var secondary_movement : MovementExchangable = null;
 var player : Player;
 var weapon : Weapon;
 var cam : CameraFollow2D;
+var boss : Boss;
 var saved_health : int;
 
 var _fade_tween : Tween;
+
+var hard_mode : bool = false;
 
 signal max_health_changed(amount : int);
 signal health_changed(amount : int);

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="BossRush"
-run/main_scene="res://rooms/rooms/Leshy_Boss_room/Leshy_room.tscn"
+run/main_scene="res://rooms/rooms/Shaka_room/Shaka_room.tscn"
 config/features=PackedStringArray("4.2")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,7 @@ LocationManager="*res://global/location_manager.gd"
 PlayerInfo="*res://global/PlayerInfo.gd"
 TransitionManager="*res://global/scene_transition/transition_manager.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+TimeManager="*res://global/time_manager.gd"
 
 [dialogue_manager]
 
@@ -91,7 +92,10 @@ locale/translations_pot_files=PackedStringArray("res://Dialog/Test/test_1.dialog
 2d_physics/layer_4="Boss"
 2d_physics/layer_5="HitArea"
 2d_physics/layer_6="WalkArea"
-2d_physics/layer_7="Other_Collide"
+2d_physics/layer_7="Bush"
+2d_physics/layer_8="No_Boss"
+2d_physics/layer_9="Slime"
+2d_physics/layer_10="No_player"
 
 [rendering]
 

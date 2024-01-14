@@ -44,8 +44,13 @@ func _input(event: InputEvent) -> void:
 					orb_.unselected = false;
 			
 			_destroy_options();
+			$Cancel.play();
 
 func _stage_orb(orb : Orb) -> void:
+	if !$Hover.playing || $Hover.get_playback_position() > 0.8:
+		$Hover.pitch_scale = (randf() * 0.2) + 0.4;
+		$Hover.play_random();
+	
 	if _tween:
 		_tween.kill();
 	_tween = create_tween();
@@ -162,6 +167,7 @@ func _create_orb(exchange : Exchangable, start : Vector2, offset : Vector2) -> O
 	return orb;
 
 func _holding(orb : Orb) -> void:
+	$Absorb.play();
 	timer.start();
 	_option_selected = orb;
 	orb.shake = true;
@@ -169,6 +175,8 @@ func _holding(orb : Orb) -> void:
 	PlayerInfo.cam.zoom_into_event(Vector2(3.0, 3.0), Vector2(2.0, 2.0));
 func _let_go(orb : Orb) -> void:
 	if _option_selected == orb:
+		$Absorb.stop();
+		$Cancel.play();
 		timer.stop();
 		orb.shake = false;
 		PlayerInfo.cam.auto_follow = true;
@@ -177,6 +185,8 @@ func _let_go(orb : Orb) -> void:
 		_option_selected = null;
 
 func _selected_option() -> void:
+	$Absorb.stop();
+	$Get.play();
 	set_process_input(false);
 	_option_selected.shake = false;
 	
@@ -222,18 +232,7 @@ func _selected_option() -> void:
 	PlayerInfo.cam.zoom_event(Vector2(0.2, 0.2), Vector2(1.0, 1.0));
 
 func _spawn_orbs(character : ExchangeType) -> void:
-	var exs : Array[Exchangable] = [];
-	
-	if character.primary_attack:
-		exs.append(character.primary_attack);
-	if character.secondary_attack:
-		exs.append(character.secondary_attack);
-	if character.health_handle:
-		exs.append(character.health_handle);
-	if character.primary_movement:
-		exs.append(character.primary_movement);
-	if character.secondary_movement:
-		exs.append(character.secondary_movement);
+	var exs : Array[Exchangable] = character.get_skills();
 	
 	var angle : float = randf() * TAU;
 	var inc : float = TAU / exs.size();

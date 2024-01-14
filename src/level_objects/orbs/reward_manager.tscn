@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsn4rpp66og77"]
+[gd_scene load_steps=9 format=3 uid="uid://bsn4rpp66og77"]
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/Reward_manager.gd" id="1_dn1pl"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="2_db4wm"]
+[ext_resource type="AudioStream" uid="uid://brucq6hbt3cag" path="res://assets/sounds/effects/orb/Hover over power up 2.ogg" id="3_1eh3n"]
+[ext_resource type="AudioStream" uid="uid://bsqco4cmau70f" path="res://assets/sounds/effects/orb/Hover over power up 3.ogg" id="4_yaear"]
+[ext_resource type="AudioStream" uid="uid://bbm7ikehl40cc" path="res://assets/sounds/effects/orb/Hover over power up.ogg" id="5_lhsr1"]
+[ext_resource type="AudioStream" uid="uid://dvxfptmn8yp1l" path="res://assets/sounds/effects/orb/Power Absorb.ogg" id="6_vj5y4"]
+[ext_resource type="AudioStream" uid="uid://b2pvidv6on0m2" path="res://assets/sounds/effects/orb/Power Cancel.ogg" id="7_lnw04"]
+[ext_resource type="AudioStream" uid="uid://wpm4uyo1vsqs" path="res://assets/sounds/effects/orb/Power Get.ogg" id="8_qv26s"]
 
 [node name="Reward_manager" type="Node"]
 script = ExtResource("1_dn1pl")
@@ -8,5 +15,18 @@ script = ExtResource("1_dn1pl")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="Absorb" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_vj5y4")
+
+[node name="Cancel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_lnw04")
+
+[node name="Get" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_qv26s")
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+script = ExtResource("2_db4wm")
+audios = Array[AudioStream]([ExtResource("3_1eh3n"), ExtResource("4_yaear"), ExtResource("5_lhsr1")])
 
 [connection signal="timeout" from="Timer" to="." method="_selected_option"]

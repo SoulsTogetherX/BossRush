@@ -103,6 +103,7 @@ _bundled = {
 [sub_resource type="Resource" id="Resource_fvio8"]
 script = ExtResource("6_hpmk4")
 launch = SubResource("Resource_ao7kb")
+offset = 0.0
 weapon_scene = SubResource("PackedScene_300oj")
 weapon_range = 0.0
 delta = -1
@@ -112,8 +113,8 @@ symbol = 1
 
 [sub_resource type="Resource" id="Resource_ke2q7"]
 script = ExtResource("13_84ksy")
-speed = 500
 duration = 0.2
+speed = 500
 cool_down = 0.0
 can_stop = false
 in_burst_control = true
@@ -131,6 +132,7 @@ size = Vector2(127.948, 130.904)
 [node name="TestRoom" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1tg0k")
+_step_type = 1
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(112.168, 113.614)

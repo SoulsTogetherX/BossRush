@@ -4,10 +4,10 @@ class_name LinearLaunch extends Resource
 @export var fire_range : float;
 @export var speed : float;
 
-func fire_protectile(parent : Node, from : Vector2, angle : float, rotate : bool) -> Projectile:
+func fire_protectile(parent : Node, from : Vector2, offset : float, angle : float, rotate : bool) -> Projectile:
 	var pro : Projectile = protectile.instantiate();
 	parent.add_child(pro);
-	pro.global_position = from;
+	pro.global_position = from + (Vector2(cos(angle), sin(angle)) * offset);
 	
 	var tween : Tween = parent.create_tween();
 	var end_pos : Vector2 = from + (Vector2(cos(angle), sin(angle)) * fire_range);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://g022ma38jmtk"]
+[gd_scene load_steps=43 format=3 uid="uid://g022ma38jmtk"]
 
 [ext_resource type="Script" path="res://src/characters/player/Doggo.gd" id="1_621w4"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="2_rfwko"]
@@ -10,10 +10,17 @@
 [ext_resource type="Script" path="res://src/characters/player/states/walk.gd" id="6_2ol1i"]
 [ext_resource type="Texture2D" uid="uid://bx0li2pvo3r8p" path="res://assets/sprites/characters/player/Movement Mega Sheet.png" id="7_63mmi"]
 [ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="9_donoc"]
-[ext_resource type="AudioStream" uid="uid://pr5v3y3ovf21" path="res://assets/sounds/effects/player/footsteps/player/step_1.ogg" id="10_c0vxs"]
-[ext_resource type="AudioStream" uid="uid://b8joqu2onjulo" path="res://assets/sounds/effects/player/footsteps/player/step_2.ogg" id="11_x7uk0"]
-[ext_resource type="AudioStream" uid="uid://dsqxrqh6xciyq" path="res://assets/sounds/effects/player/footsteps/player/step_3.ogg" id="12_grlh1"]
+[ext_resource type="AudioStream" uid="uid://nc758een4jn7" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep1.ogg" id="11_6vs6g"]
+[ext_resource type="AudioStream" uid="uid://pr5v3y3ovf21" path="res://assets/sounds/effects/player/footsteps/player/old/step_1.ogg" id="11_dsbi7"]
+[ext_resource type="AudioStream" uid="uid://b8joqu2onjulo" path="res://assets/sounds/effects/player/footsteps/player/old/step_2.ogg" id="12_8a5rw"]
+[ext_resource type="AudioStream" uid="uid://d1pwox7mcr7xj" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep2.ogg" id="12_44kf1"]
+[ext_resource type="AudioStream" uid="uid://m6yd0j3gwcs5" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep3.ogg" id="13_hwiht"]
+[ext_resource type="AudioStream" uid="uid://dsqxrqh6xciyq" path="res://assets/sounds/effects/player/footsteps/player/old/step_3.ogg" id="13_nssuv"]
 [ext_resource type="PackedScene" uid="uid://cvrfi64eypl2d" path="res://src/GUI/GUI.tscn" id="14_yex3s"]
+[ext_resource type="AudioStream" uid="uid://bvohaf8gn2u4m" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep4.ogg" id="14_ykcdi"]
+[ext_resource type="AudioStream" uid="uid://baiwckrpmvtca" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep5.ogg" id="15_y1y14"]
+[ext_resource type="AudioStream" uid="uid://imc7snfhoyk0" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep6.ogg" id="16_20jaj"]
+[ext_resource type="AudioStream" uid="uid://blcygsw1ru4fj" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep7.ogg" id="17_wrlwp"]
 
 [sub_resource type="Gradient" id="Gradient_a0khv"]
 offsets = PackedFloat32Array(0, 0.213058, 1)
@@ -497,34 +504,34 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, -20)]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/path = NodePath("walk_particles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"play_random"
-}, {
-"args": [],
-"method": &"play_random"
-}]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("walk_particles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_step"
+}, {
+"args": [],
+"method": &"play_step"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_xyeo4"]
@@ -555,27 +562,22 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, -20), Vector2(0, -20.1), Vector2(0, -20), Vector2(0, -20.1)]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/path = NodePath("main:flip_h")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"play_random"
-}, {
-"args": [],
-"method": &"play_random"
-}]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("main:flip_h")
+tracks/3/path = NodePath("walk_particles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -584,17 +586,22 @@ tracks/3/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/4/type = "value"
+tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("walk_particles:emitting")
+tracks/4/path = NodePath(".")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_step"
+}, {
+"args": [],
+"method": &"play_step"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_lhi0j"]
@@ -625,46 +632,46 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, -20), Vector2(0, -20.1), Vector2(0, -20), Vector2(0, -20.1)]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/path = NodePath("main:flip_h")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"play_random"
-}, {
-"args": [],
-"method": &"play_random"
-}]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("main:flip_h")
+tracks/3/path = NodePath("walk_particles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
-tracks/4/type = "value"
+tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("walk_particles:emitting")
+tracks/4/path = NodePath(".")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_step"
+}, {
+"args": [],
+"method": &"play_step"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_l60wl"]
@@ -695,34 +702,34 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, -20)]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/path = NodePath("walk_particles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"play_random"
-}, {
-"args": [],
-"method": &"play_random"
-}]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("walk_particles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"play_step"
+}, {
+"args": [],
+"method": &"play_step"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fh33d"]
@@ -750,11 +757,20 @@ height = 20.0
 radius = 6.0
 height = 24.0
 
+[sub_resource type="Gradient" id="Gradient_pyi3v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6gwgw"]
+gradient = SubResource("Gradient_pyi3v")
+width = 50
+height = 4
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_34iyd"]
+
 [node name="Doggo" type="CharacterBody2D"]
+y_sort_enabled = true
 collision_layer = 4
-collision_mask = 65
+collision_mask = 577
 motion_mode = 1
-wall_min_slide_angle = 0.0
 script = ExtResource("1_621w4")
 
 [node name="dash_particles" type="CPUParticles2D" parent="."]
@@ -819,6 +835,7 @@ health_monitor = NodePath("../HealthMonitor")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="hurt_box"]
 position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_bo2dx")
+disabled = true
 debug_color = Color(0.992157, 0, 0.235294, 0.419608)
 
 [node name="HealthMonitor" type="Node" parent="."]
@@ -847,11 +864,65 @@ idle = NodePath("../idle")
 [node name="Center" type="Marker2D" parent="."]
 position = Vector2(0, -16)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="dirt_step" type="AudioStreamPlayer" parent="."]
+volume_db = -15.0
+bus = &"Sound"
+script = ExtResource("9_donoc")
+audios = Array[AudioStream]([ExtResource("11_dsbi7"), ExtResource("12_8a5rw"), ExtResource("13_nssuv")])
+
+[node name="stone_step" type="AudioStreamPlayer" parent="."]
 volume_db = -10.0
 bus = &"Sound"
 script = ExtResource("9_donoc")
-audios = Array[AudioStream]([ExtResource("10_c0vxs"), ExtResource("11_x7uk0"), ExtResource("12_grlh1")])
+audios = Array[AudioStream]([ExtResource("11_6vs6g"), ExtResource("12_44kf1"), ExtResource("13_hwiht"), ExtResource("14_ykcdi"), ExtResource("15_y1y14"), ExtResource("16_20jaj"), ExtResource("17_wrlwp")])
 
 [node name="GUI" parent="." instance=ExtResource("14_yex3s")]
 follow_viewport_enabled = false
+
+[node name="Timers" type="VBoxContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -40.0
+offset_right = 25.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 10
+
+[node name="Attack1" type="TextureProgressBar" parent="Timers"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+value = 10.0
+texture_over = SubResource("GradientTexture2D_6gwgw")
+
+[node name="Attack2" type="TextureProgressBar" parent="Timers"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+value = 10.0
+texture_over = SubResource("GradientTexture2D_6gwgw")
+texture_progress = SubResource("PlaceholderTexture2D_34iyd")
+
+[node name="Movement1" type="TextureProgressBar" parent="Timers"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+value = 10.0
+texture_over = SubResource("GradientTexture2D_6gwgw")
+texture_progress = SubResource("PlaceholderTexture2D_34iyd")
+
+[node name="Movement2" type="TextureProgressBar" parent="Timers"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+value = 10.0
+texture_over = SubResource("GradientTexture2D_6gwgw")
+texture_progress = SubResource("PlaceholderTexture2D_34iyd")
+
+[connection signal="killed" from="." to="." method="died"]
+[connection signal="hit" from="hurt_box" to="." method="_on_hurt_box_hit"]

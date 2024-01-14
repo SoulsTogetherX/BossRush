@@ -42,3 +42,26 @@ func set_direction(animationType : String, angle : float) -> void:
 			_animationPlayer.seek(pos, true);
 		else:
 			last_ani_type = animationType;
+
+func _on_hurt_box_hit(_hitbox: HitBox) -> void:
+	modulate = Color.RED;
+	var t : Tween = create_tween();
+	if t == null:
+		return;
+	
+	t.tween_interval(0.3);
+	t.tween_property(self, "modulate", Color.WHITE, 0.2);
+	
+	TimeManager.instant_time_scale(0.2);
+	PlayerInfo.cam.shake_event(Vector3(0.3, 0.3, 0), Vector3(3., 3., 0));
+
+func died() -> void:
+	$HealthMonitor.update_health_no_signal(0);
+	LocationManager.reload();
+
+func play_step() -> void:
+	match LocationManager.get_step_type():
+		0:
+			$dirt_step.play_random();
+		1:
+			$stone_step.play_random();

@@ -101,7 +101,7 @@ libraries = {
 next/attack = &"idle"
 
 [node name="Center" type="Marker2D" parent="."]
-position = Vector2(18, 0)
+position = Vector2(28, 0)
 
 [node name="swipe" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_pmjit")

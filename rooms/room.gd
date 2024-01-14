@@ -1,4 +1,7 @@
 extends Node2D
 
+@export var _step_type : int = 0;
+
 func _ready() -> void:
-	LocationManager.ready.emit();
+	LocationManager.room_ready.emit();
+	LocationManager.step_type(_step_type);

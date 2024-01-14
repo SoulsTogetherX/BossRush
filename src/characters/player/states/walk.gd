@@ -21,10 +21,10 @@ func exit() -> void:
 func process_input(_event: InputEvent) -> State:
 	return null;
 
-func process_physics(_delta: float) -> State:
+func process_physics(delta: float) -> State:
 	var input : Vector2 = _actor.get_input();
 	
-	if !_actor._handle_movement(_actor, _actor.global_position, input, !Input.is_action_pressed("move_switch")):
+	if !_actor._handle_movement(delta, _actor, _actor.global_position, input, !Input.is_action_pressed("move_switch")):
 		_actor.set_direction("idle_", last_move.angle());
 		_actor.velocity = Vector2.ZERO;
 		return idle;
