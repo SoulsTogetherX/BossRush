@@ -28,7 +28,7 @@ func _ready() -> void:
 		_add_to_sequence(hide_self.bind("bush_hard", 0.25), 2.5);
 		_add_to_sequence(show_self_hard, 0.75);
 		
-		$dash_timer.timeout.connect(create_after_image.bind(0.1));
+		$dash_timer.timeout.connect(create_after_image.bind(Color(1.0, 1.0, 1.0, 0.1)));
 		$hitbox/CollisionShape2D.disabled = false;
 	else:
 		_add_to_sequence(dash, 0.6);
@@ -42,7 +42,7 @@ func _ready() -> void:
 		_add_to_sequence(hide_self.bind("bush", 0.3), 5.6);
 		_add_to_sequence(show_self, 2.0);
 		
-		$dash_timer.timeout.connect(create_after_image.bind(0.3));
+		$dash_timer.timeout.connect(create_after_image.bind(Color(1.0, 1.0, 1.0, 0.3)));
 		$hitbox/CollisionShape2D.disabled = true;
 	
 	call_deferred("_calculate_distance");
@@ -118,14 +118,14 @@ func hide_self(animate : String, delay : float) -> void:
 	lower_shield();
 	global_position = self_pos.get_child(0).global_position;
 	global_position.y += 49.3333;
-	
 	_animation_player.play(animate);
-	swap(true);
-	await get_tree().create_timer(0.05).timeout;
-	$hurt_box.toggle_hurtbox(true);
 	
 	self_pos.scale = Vector2.ZERO;
 	self_pos.visible = false;
+	
+	swap(true);
+	await get_tree().create_timer(0.05).timeout;
+	$hurt_box.toggle_hurtbox(true);
 
 func show_self_hard() -> void:
 	_animation_player.play("jump_hard");
@@ -248,23 +248,6 @@ func _stun() -> void:
 func set_light_at_flip(pos : Vector2) -> void:
 	pos.x *= -1 if $Sprite2D.flip_h else 1;
 	$light_holder.position = pos;
-
-func create_after_image(mod : float) -> void:
-	var sprite : Sprite2D = Sprite2D.new();
-	add_child(sprite);
-	sprite.top_level = true;
-	sprite.global_position = $Sprite2D.global_position;
-	sprite.texture = $Sprite2D.texture;
-	sprite.flip_h = $Sprite2D.flip_h;
-	sprite.hframes = $Sprite2D.hframes;
-	sprite.frame = $Sprite2D.frame;
-	sprite.modulate.a = mod;
-	if velocity.y <= 0:
-		sprite.z_index = -1;
-	
-	var tw : Tween = create_tween();
-	tw.tween_property(sprite, "modulate:a", 0.0, 0.2);
-	tw.tween_callback(sprite.queue_free);
 
 func before_change() -> void:
 	_animation_player.play("RESET");

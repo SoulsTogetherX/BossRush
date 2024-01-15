@@ -53,11 +53,11 @@ size = Vector2(26, 167)
 radius = 28.0
 height = 70.0
 
-[sub_resource type="Gradient" id="Gradient_a6kpq"]
+[sub_resource type="Gradient" id="Gradient_8md3c"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_4vpcj"]
-gradient = SubResource("Gradient_a6kpq")
+gradient = SubResource("Gradient_8md3c")
 width = 32
 height = 32
 fill = 1

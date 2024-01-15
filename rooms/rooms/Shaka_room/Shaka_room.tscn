@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckg7jtsjjc2tm"]
+[gd_scene load_steps=14 format=3 uid="uid://ckg7jtsjjc2tm"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_0u52g"]
 [ext_resource type="Texture2D" uid="uid://cnjlc55438p2m" path="res://assets/sprites/ground/Shaka/Floor 2 Circus.png" id="2_64b0d"]
 [ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="4_t7au6"]
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="5_ldcvy"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="6_51n6a"]
+[ext_resource type="Texture2D" uid="uid://bbk8hr8rh0ayh" path="res://assets/sprites/characters/bosses/shaka boom/burn-marks.png" id="7_mlp8g"]
 [ext_resource type="PackedScene" uid="uid://bxtp8uggorlqb" path="res://src/characters/bosses/Shaka Boom/Shaka.tscn" id="8_hwx5n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrkoc"]
@@ -15,6 +16,14 @@ size = Vector2(714.5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abf41"]
 size = Vector2(583.25, 20)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_umpmj"]
+
+[sub_resource type="Gradient" id="Gradient_f3t4m"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k03ig"]
+gradient = SubResource("Gradient_f3t4m")
 
 [node name="Clown_room" type="Node2D"]
 y_sort_enabled = true
@@ -42,9 +51,10 @@ auto_follow = true
 [node name="Doggo" parent="." instance=ExtResource("6_51n6a")]
 position = Vector2(228, -7)
 
-[node name="Shaka" parent="." node_paths=PackedStringArray("slime_summon_area") instance=ExtResource("8_hwx5n")]
-position = Vector2(-2, -2)
+[node name="Shaka" parent="." node_paths=PackedStringArray("slime_summon_area", "fly_nodes", "center_node") instance=ExtResource("8_hwx5n")]
 slime_summon_area = NodePath("../Slime_Summon_Area")
+fly_nodes = NodePath("../Fly Pos")
+center_node = NodePath("../Center")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -65,3 +75,44 @@ shape = SubResource("RectangleShape2D_abf41")
 position = Vector2(344, -1)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_abf41")
+
+[node name="Fly Pos" type="Node" parent="."]
+
+[node name="Top-Left" type="Sprite2D" parent="Fly Pos"]
+visible = false
+z_index = -3
+position = Vector2(-280, -208)
+texture = ExtResource("7_mlp8g")
+
+[node name="Top-Rght" type="Sprite2D" parent="Fly Pos"]
+visible = false
+z_index = -3
+position = Vector2(273, -211)
+texture = ExtResource("7_mlp8g")
+
+[node name="Bottom-Right" type="Sprite2D" parent="Fly Pos"]
+visible = false
+z_index = -3
+position = Vector2(275, 205)
+texture = ExtResource("7_mlp8g")
+
+[node name="Bottom-Left" type="Sprite2D" parent="Fly Pos"]
+visible = false
+z_index = -3
+position = Vector2(-281, 209)
+texture = ExtResource("7_mlp8g")
+
+[node name="Center" type="Sprite2D" parent="."]
+visible = false
+z_index = -3
+position = Vector2(0, -10)
+texture = ExtResource("7_mlp8g")
+
+[node name="Dark" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.568627)
+z_index = 100
+material = SubResource("CanvasItemMaterial_umpmj")
+position = Vector2(-11, -7.49998)
+scale = Vector2(11.6563, 9.64062)
+texture = SubResource("GradientTexture2D_k03ig")

@@ -72,6 +72,8 @@ func _on_click(event: InputEvent) -> void:
 				unstage.emit(self);
 				staged = false;
 
+var _choice_idx : int = 0;
+@onready var _choices : Array[AudioStreamPlayer] = [$Choice_1, $Choice_2, $Choice_3, $Choice_4];
 func _on_mouse_entered() -> void:
 	if disable:
 		return;
@@ -86,6 +88,10 @@ func _on_mouse_entered() -> void:
 	if unselected:
 		_tween_decorate.tween_property(self, "modulate:a", 1.0, 0.4);
 	_selected = true;
+	
+	if !_choices[_choice_idx].playing:
+		_choices[_choice_idx].play_random();
+		_choice_idx = (_choice_idx + 1) & 3;
 
 func _on_mouse_exited() -> void:
 	if disable:

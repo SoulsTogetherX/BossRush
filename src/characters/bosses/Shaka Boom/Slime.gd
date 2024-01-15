@@ -44,7 +44,7 @@ func create_puddle() -> void:
 	
 	puddle1.global_position = global_position;
 	puddle1.scale = Vector2(1.5, 1.5);
-	puddle1.z_index = -2;
+	puddle1.z_index = -3;
 	puddle1.rotation = randf() * TAU;
 	
 	var puddle2 : Sprite2D = Sprite2D.new();
@@ -53,7 +53,7 @@ func create_puddle() -> void:
 	
 	puddle2.global_position = global_position;
 	puddle2.scale = Vector2(1.5, 1.5);
-	puddle2.z_index = -2;
+	puddle2.z_index = -3;
 	puddle2.rotation = randf() * TAU;
 	
 	var tw : Tween = puddle1.create_tween();
@@ -65,9 +65,10 @@ func create_puddle() -> void:
 	tw.tween_callback(puddle2.queue_free);
 
 func _on_hit(hitbox: HitBox) -> void:
-	if !_dead && _animation_player.current_animation != "hurt":
-		_animation_player.play("hurt");
-		set_physics_process(true);
+	if !_dead:
+		if _animation_player.current_animation != "hurt":
+			_animation_player.play("hurt");
+			set_physics_process(true);
 	
 	var target_pos : Vector2 = _target.global_position if hitbox == null else hitbox.global_position;
 	var dir : Vector2 = (global_position - target_pos).normalized();
@@ -91,6 +92,8 @@ func stop_knockback() -> void:
 func _physics_process(delta: float) -> void:
 	if _knock_back == Vector2.ZERO:
 		_handle_movement(delta, self, global_position, (_target.global_position - global_position).normalized());
+		if !velocity.is_zero_approx():
+			$Sprite2D.flip_h = (velocity.x >= 0);
 	else:
 		velocity = _knock_back;
 		move_and_slide();

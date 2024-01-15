@@ -20,6 +20,7 @@ func process_input(_event: InputEvent) -> State:
 func process_physics(_delta: float) -> State:
 	if _actor.get_input():
 		return walk;
+	_actor.velocity = Vector2.ZERO;
 	return null;
 
 func process_frame(_delta: float) -> State:

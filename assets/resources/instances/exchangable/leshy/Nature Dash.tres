@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_xnh5v")
-speed = 700
 duration = 0.4
+speed = 700
 cool_down = 0.2
 can_stop = false
 in_burst_control = false

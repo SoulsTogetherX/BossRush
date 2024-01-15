@@ -21,7 +21,12 @@ func handle_attack(_exch : Exchangable) -> void:
 	_animation.stop();
 	_animation.play("attack");
 	if delay > 0:
-		await get_tree().create_timer(delay).timeout
+		await get_tree().create_timer(delay).timeout;
+
+func handle_kickback(dir : Vector2) -> void:
+	_follow.velocity += (dir - _follow.get_center()).normalized() * 200;
+	_follow.change_direction(_follow.velocity.angle());
+	_follow.move_and_slide();
 
 func _physics_process(_delta: float) -> void:
 	var desired_info : Array[float] = _follow.get_weapon_info();

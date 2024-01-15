@@ -1,6 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://bvlv7rwah6txw"]
+[gd_scene load_steps=11 format=3 uid="uid://bvlv7rwah6txw"]
 
-[ext_resource type="Script" path="res://src/weapons/projectiles/template/projectile.gd" id="1_o8e4l"]
+[ext_resource type="Script" path="res://src/weapons/projectiles/projectile.gd" id="1_m0cbk"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="5_q7q7a"]
 [ext_resource type="AudioStream" uid="uid://derni41h3vnwc" path="res://assets/sounds/effects/boss/leshy/arrow/Leshy Arrow Impact.ogg" id="6_6yaaa"]
 
@@ -31,28 +31,18 @@ _data = {
 "startup": SubResource("Animation_iiei5")
 }
 
-[sub_resource type="Gradient" id="Gradient_yc8ce"]
-colors = PackedColorArray(1, 1, 0.301961, 0.803922, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5rw6o"]
-resource_local_to_scene = true
-gradient = SubResource("Gradient_yc8ce")
-width = 32
-height = 32
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0, 0.5)
-
 [node name="ShakaFire" type="Node2D"]
 z_index = -1
-script = ExtResource("1_o8e4l")
+script = ExtResource("1_m0cbk")
 
 [node name="hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+monitorable = false
 script = ExtResource("5_q7q7a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource("CircleShape2D_nw5y4")
-disabled = true
 
 [node name="collide_detect" type="Area2D" parent="."]
 collision_layer = 0
@@ -85,13 +75,6 @@ libraries = {
 "": SubResource("AnimationLibrary_tbjvj")
 }
 autoplay = "startup"
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-visible = false
-scale = Vector2(1, 0.6)
-energy = 0.5
-texture = SubResource("GradientTexture2D_5rw6o")
-texture_scale = 5.0
 
 [node name="impact" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_6yaaa")

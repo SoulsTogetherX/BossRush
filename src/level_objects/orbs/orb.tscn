@@ -1,7 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://lt1h1nu2iplm"]
+[gd_scene load_steps=12 format=3 uid="uid://lt1h1nu2iplm"]
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/orb.gd" id="1_try8l"]
 [ext_resource type="Texture2D" uid="uid://bptx0evn742ok" path="res://assets/sprites/symbols.png" id="2_u6e50"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="3_r7rkh"]
+[ext_resource type="AudioStream" uid="uid://knoj1l3k80om" path="res://assets/sounds/effects/orb/Power Choice v1.ogg" id="4_hr3s8"]
+[ext_resource type="AudioStream" uid="uid://dg2ps76664hri" path="res://assets/sounds/effects/orb/Power Choice v2.ogg" id="5_ckl18"]
+[ext_resource type="AudioStream" uid="uid://duyx11n43nmus" path="res://assets/sounds/effects/orb/Power Choice v3.ogg" id="6_qsvim"]
 
 [sub_resource type="Gradient" id="Gradient_mo0ps"]
 colors = PackedColorArray(1, 1, 0.301961, 1, 1, 1, 1, 0)
@@ -130,6 +134,22 @@ text = "hello"
 label_settings = SubResource("LabelSettings_nmpi0")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Choice_1" type="AudioStreamPlayer" parent="."]
+script = ExtResource("3_r7rkh")
+audios = Array[AudioStream]([ExtResource("4_hr3s8"), ExtResource("5_ckl18"), ExtResource("6_qsvim")])
+
+[node name="Choice_2" type="AudioStreamPlayer" parent="."]
+script = ExtResource("3_r7rkh")
+audios = Array[AudioStream]([ExtResource("4_hr3s8"), ExtResource("5_ckl18"), ExtResource("6_qsvim")])
+
+[node name="Choice_3" type="AudioStreamPlayer" parent="."]
+script = ExtResource("3_r7rkh")
+audios = Array[AudioStream]([ExtResource("4_hr3s8"), ExtResource("5_ckl18"), ExtResource("6_qsvim")])
+
+[node name="Choice_4" type="AudioStreamPlayer" parent="."]
+script = ExtResource("3_r7rkh")
+audios = Array[AudioStream]([ExtResource("4_hr3s8"), ExtResource("5_ckl18"), ExtResource("6_qsvim")])
 
 [connection signal="gui_input" from="Control" to="." method="_on_click"]
 [connection signal="mouse_entered" from="Control" to="." method="_on_mouse_entered"]

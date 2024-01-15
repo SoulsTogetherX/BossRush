@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AttackRange" load_steps=5 format=3 uid="uid://blg63wyo4fjm5"]
+
+[ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="1_md0lo"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_hbvnx"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_range.gd" id="3_b6d4a"]
+
+[sub_resource type="Resource" id="Resource_5obuq"]
+script = ExtResource("2_hbvnx")
+protectile = ExtResource("1_md0lo")
+fire_range = 1000.0
+speed = 400.0
+fade_after = -1.0
+
+[resource]
+script = ExtResource("3_b6d4a")
+launch = SubResource("Resource_5obuq")
+offset = 0.0
+weapon_range = 0.0
+delta = -1
+cooldown = 0.0
+name = ""
+symbol = 0

@@ -1,12 +1,18 @@
-[gd_resource type="Resource" script_class="BurstMovement" load_steps=2 format=3 uid="uid://5ikil3v2priw"]
+[gd_resource type="Resource" script_class="BurstMovement" load_steps=4 format=3 uid="uid://5ikil3v2priw"]
 
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/burst_movement.gd" id="1_23qet"]
+[ext_resource type="Script" path="res://assets/resources/scripts/extra/invincibility.gd" id="1_itxqi"]
+
+[sub_resource type="Resource" id="Resource_cso2q"]
+script = ExtResource("1_itxqi")
+i_frames = 0.15
 
 [resource]
 script = ExtResource("1_23qet")
 duration = 0.2
 speed = 700
 cool_down = 0.2
+_incincible = SubResource("Resource_cso2q")
 can_stop = false
 in_burst_control = false
 animation = "dash"

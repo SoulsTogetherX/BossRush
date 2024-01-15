@@ -1,9 +1,12 @@
-[gd_scene load_steps=50 format=3 uid="uid://cd6retw663av0"]
+[gd_scene load_steps=53 format=3 uid="uid://cd6retw663av0"]
 
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
 [ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="2_lk0ei"]
+[ext_resource type="Resource" uid="uid://vndacp7gvurp" path="res://assets/resources/instances/exchangable/leshy/FourWayFire.tres" id="2_w004h"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_aq87j"]
+[ext_resource type="Resource" uid="uid://dg66auy72xda7" path="res://assets/resources/instances/exchangable/leshy/Pine Health.tres" id="3_r63ch"]
+[ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature Dash.tres" id="4_6umem"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="5_5gxfh"]
 [ext_resource type="Texture2D" uid="uid://c75lq4oa7yn2h" path="res://assets/sprites/particle/nature_particles.png" id="6_n7ykj"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="7_58vc7"]
@@ -1499,6 +1502,10 @@ collision_mask = 129
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_fbt6r")
+alignment = 1
+primary_attack = ExtResource("2_w004h")
+health_handle = ExtResource("3_r63ch")
+primary_movement = ExtResource("4_6umem")
 
 [node name="dash_particles" type="CPUParticles2D" parent="."]
 emitting = false

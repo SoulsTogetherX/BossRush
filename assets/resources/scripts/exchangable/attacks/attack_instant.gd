@@ -16,7 +16,15 @@ func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT)
 	if !results.is_empty():
 		# Hit Boss
 		playSound.emit(0);
-		results[0].collider.damage(delta, alignment);
+		var closest : Node2D;
+		var smallest : float = INF;
+		for result in results:
+			var dist : float = from.global_position.distance_squared_to(result.collider.global_position);
+			if dist < smallest:
+				smallest = dist;
+				closest = result.collider;
+			
+		closest.damage(delta, alignment);
 	
 	query.collision_mask = 1;
 	query.collide_with_areas = false;
@@ -27,3 +35,6 @@ func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT)
 	
 	# Hit air
 	playSound.emit(2);
+	
+	if from.has_method("handle_kickback"):
+		from.handle_kickback(_target);

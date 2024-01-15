@@ -42,6 +42,17 @@ func set_direction(animationType : String, angle : float) -> void:
 			_animationPlayer.seek(pos, true);
 		else:
 			last_ani_type = animationType;
+func change_direction(angle : float) -> void:
+	var animation : String;
+	if last_ani_type.is_empty():
+		animation = "idle_" + get_animation_modifer_4(angle, $main);
+	else:
+		animation = last_ani_type + get_animation_modifer_4(angle, $main);
+	 
+	if _animationPlayer.current_animation != animation:
+		var pos : float = _animationPlayer.current_animation_position;
+		_animationPlayer.play(animation);
+		_animationPlayer.seek(pos, true);
 
 func _on_hurt_box_hit(_hitbox: HitBox) -> void:
 	modulate = Color.RED;
@@ -54,6 +65,12 @@ func _on_hurt_box_hit(_hitbox: HitBox) -> void:
 	
 	TimeManager.instant_time_scale(0.2);
 	PlayerInfo.cam.shake_event(Vector3(0.3, 0.3, 0), Vector3(3., 3., 0));
+	
+	if PlayerInfo.hard_mode:
+		return;
+	$hurt_box/CollisionShape2D2.set_deferred("disabled", true);
+	await get_tree().create_timer(0.3).timeout;
+	$hurt_box/CollisionShape2D2.set_deferred("disabled", false);
 
 func died() -> void:
 	$HealthMonitor.update_health_no_signal(0);

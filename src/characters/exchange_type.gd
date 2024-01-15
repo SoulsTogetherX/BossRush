@@ -3,6 +3,7 @@ class_name ExchangeType extends CharacterBody2D
 @export var alignment : HurtBox.ALIGNMENT;
 @export var primary_attack : AttackExchangable;
 @export var secondary_attack : AttackExchangable;
+@export var tertiary_attack : AttackExchangable;
 
 @export var health_handle : HealthExchangable:
 	set(val):
@@ -171,3 +172,23 @@ func get_alignment() -> HurtBox.ALIGNMENT:
 
 func get_center() -> Vector2:
 	return _center.global_position;
+
+func get_center_local() -> Vector2:
+	return _center.position;
+
+func create_after_image(mod : Color = Color(1.0, 1.0, 1.0, 0.8), fade_time = 0.2) -> void:
+	var sprite : Sprite2D = Sprite2D.new();
+	add_child(sprite);
+	sprite.top_level = true;
+	sprite.global_transform = $Sprite2D.global_transform;
+	sprite.texture = $Sprite2D.texture;
+	sprite.flip_h = $Sprite2D.flip_h;
+	sprite.hframes = $Sprite2D.hframes;
+	sprite.frame = $Sprite2D.frame;
+	sprite.modulate = mod;
+	if velocity.y <= 0:
+		sprite.z_index = -1;
+	
+	var tw : Tween = create_tween();
+	tw.tween_property(sprite, "modulate:a", 0.0, fade_time);
+	tw.tween_callback(sprite.queue_free);
