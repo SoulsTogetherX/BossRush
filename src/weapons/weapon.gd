@@ -17,11 +17,17 @@ func set_follow(follow : ExchangeType, distance : float) -> void:
 	_follow = follow;
 	_follow_distance = distance;
 
+var _no_attack : bool = false;
 func handle_attack(_exch : Exchangable) -> void:
+	if _no_attack:
+		return;
+	
+	if delay > 0:
+		_no_attack = true;
+		await get_tree().create_timer(delay).timeout;
+		_no_attack = false;
 	_animation.stop();
 	_animation.play("attack");
-	if delay > 0:
-		await get_tree().create_timer(delay).timeout;
 
 func handle_kickback(dir : Vector2) -> void:
 	_follow.velocity += (dir - _follow.get_center()).normalized() * 200;

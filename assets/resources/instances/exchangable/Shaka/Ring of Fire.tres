@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BurstAttack" load_steps=5 format=3 uid="uid://v3t00nrs2cpa"]
+
+[ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="1_3c3vy"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_hmfw4"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/burstFire.gd" id="3_gidb7"]
+
+[sub_resource type="Resource" id="Resource_cl5a7"]
+script = ExtResource("2_hmfw4")
+protectile = ExtResource("1_3c3vy")
+fire_range = 1000.0
+speed = 400.0
+fade_after = -1.0
+
+[resource]
+script = ExtResource("3_gidb7")
+spawn_delay = 0.1
+projectiles = 6
+aimable = true
+launch = SubResource("Resource_cl5a7")
+offset = 10.0
+weapon_range = 0.0
+delta = -1
+cooldown = 2.5
+name = "Forwards Fire"
+symbol = 0

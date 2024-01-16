@@ -9,6 +9,7 @@ radius = 45.0
 [resource]
 script = ExtResource("1_cm4nl")
 shape = SubResource("CircleShape2D_t26mw")
+attack_num = 2
 weapon_scene = ExtResource("4_spbja")
 weapon_range = 16.0
 delta = -1

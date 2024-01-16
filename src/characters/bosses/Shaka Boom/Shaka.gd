@@ -2,9 +2,12 @@ extends Boss
 
 const CROSS_HAIR_TEXTURE : CompressedTexture2D = preload("res://assets/sprites/characters/bosses/shaka boom/cross_hairs.png");
 
+@export var tertiary_attack : AttackExchangable;
+
 @export var slime_summon_area : CollisionShape2D;
 @export var fly_nodes : Node;
 @export var center_node : Sprite2D;
+@export var door_hide : Node;
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -12,6 +15,10 @@ var _current_node : Sprite2D;
 var _waiting : bool = true;
 var _float_tween : Tween;
 var _cross_hair : Sprite2D;
+
+var _slime_count : int = 0;
+var _fitst_scared : bool = true;
+var _summoned_slimes : int;
 
 func _ready() -> void:
 	_current_node = center_node;
@@ -23,7 +30,7 @@ func _ready() -> void:
 		call_deferred("pick_float");
 		pass;
 	else:
-		_add_to_sequence(summon_slimes_start_check, 0.8 + 5);
+		_add_to_sequence(summon_slimes_start_check, INF);
 		_add_to_sequence(summon_slimes_end, 0.25);
 		_add_to_sequence(pick_float, 2.4);
 		_add_to_sequence(idle, 0.5);
@@ -38,10 +45,11 @@ func _ready() -> void:
 		_add_to_sequence(idle, 2.2);
 	
 	var tw = create_tween().set_loops();
-	tw.tween_property($Sprite2D.material, "shader_parameter/width", 1.0, 0.8);
-	tw.tween_property($Sprite2D.material, "shader_parameter/width", 4.0, 0.8);
+	tw.tween_property(_sprite.material, "shader_parameter/width", 1.0, 0.8);
+	tw.tween_property(_sprite.material, "shader_parameter/width", 4.0, 0.8);
 	
 	primary_attack.summoned.connect(register_slime);
+	up_shield();
 
 var _death : bool = false;
 func die() -> void:
@@ -56,16 +64,17 @@ func die() -> void:
 	_animation_player.queue("dead");
 
 func _on_hit(_hitbox: HitBox) -> void:
+	if _waiting:
+		_waiting = false;
+		door_hide.visible = false;
+	
+	$hurt.play_random();
 	$Confetti_hit.rotation = (global_position - PlayerInfo.player.global_position).angle();
 	$scared_timer.stop();
-	if _waiting:
-		_force_move(_play_hurt, 0.6, 0);
-		_waiting = false;
-		up_shield();
-	elif !_death:
-		$sequence_timer.stop();
-		_stun();
-		up_shield();
+	$sequence_timer.stop();
+	_stun();
+	up_shield();
+	_slime_count += 3;
 
 func _stun() -> void:
 	if !_death:
@@ -105,7 +114,7 @@ var float_height : float = 10;
 func _float_over(pos : Vector2) -> void:
 	$float_timer.start();
 	
-	pos += Vector2(0, 10);
+	pos += Vector2(0, 71);
 	
 	_animation_player.play("float_start");
 	if _float_tween:
@@ -124,7 +133,7 @@ func _float_over(pos : Vector2) -> void:
 	const down : Vector2 = Vector2(0, -36);
 	const stand : Vector2 = Vector2(0, -32);
 	
-	var sprite : Sprite2D = $Sprite2D;
+	var sprite : Sprite2D = _sprite;
 	var tween = create_tween();
 	tween.tween_property(sprite, "position", up, 0.2).set_delay(0.7);
 	tween.tween_property(sprite, "position", down, 0.2);
@@ -156,7 +165,7 @@ func spawn_crosshair() -> void:
 	_cross_hair.modulate = Color(1.0, 1.0, 1.0, 0.5);
 	PlayerInfo.player.add_child(_cross_hair);
 	
-	_cross_hair.position = Vector2.RIGHT.rotated(TAU * randf()) * 1000;
+	_cross_hair.position = (PlayerInfo.player.global_position - global_position).normalized() * 1000;
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(_cross_hair, "modulate", Color.WHITE, 0.7);
 	tw.tween_property(_cross_hair, "rotation_degrees", -360, 1.4);
@@ -165,6 +174,7 @@ func spawn_crosshair() -> void:
 	tw.tween_property(_cross_hair, "position", PlayerInfo.player.get_center_local(), 0.5);
 
 func summon_slimes_start() -> void:
+	_summoned_slimes = 0;
 	$slime_timer.start();
 	_animation_player.play("summoning_start");
 func summon_slimes() -> void:
@@ -191,10 +201,16 @@ var _slime_summoned : Array[ExchangeType] = [];
 func register_slime(slime : ExchangeType) -> void:
 	_slime_summoned.append(slime);
 	slime.killed.connect(slime_killed.bind(slime));
+	_summoned_slimes += 1;
+	if _summoned_slimes >= _slime_count && !_fitst_scared:
+		_sequence_timer.stop();
+		$slime_timer.stop();
+		await get_tree().create_timer($slime_timer.wait_time).timeout;
+		_next_sequence();
 func slime_killed(slime : ExchangeType) -> void:
 	_slime_summoned.erase(slime);
 	if _slime_summoned.size() == 0 && $slime_timer.is_stopped():
-		if !$float_timer.is_stopped():
+		if !$float_timer.is_stopped() || !$attack_timer.is_stopped():
 			_sequence_timer.timeout.connect(scared_start, CONNECT_ONE_SHOT);
 		else:
 			scared_start();
@@ -203,8 +219,17 @@ func summon_slimes_start_check() -> void:
 		summon_slimes_start();
 	else:
 		_next_sequence(1);
+func get_minons() -> Array[ExchangeType]:
+	return _slime_summoned.duplicate();
 
 func scared_start() -> void:
+	if _fitst_scared:
+		$scared_timer.wait_time = INF;
+		_fitst_scared = false;
+	else:
+		$scared_timer.wait_time = 3.0;
+	
+	
 	$sequence_timer.stop();
 	$scared_timer.start();
 	if !$attack_timer.is_stopped():
@@ -243,11 +268,11 @@ func burn_ground() -> void:
 	_current_node.rotation = TAU * randf();
 
 func lower_shield() -> void:
-	$Sprite2D.material.set_shader_parameter("color", Color("#60ffff00"));
+	_sprite.material.set_shader_parameter("color", Color("#60ffff00"));
 	$hurt_box.toggle_hurtbox(true);
 func up_shield() -> void:
 	var tw : Tween = create_tween();
-	tw.tween_property($Sprite2D.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
+	tw.tween_property(_sprite.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
 	$hurt_box.toggle_hurtbox(false);
 
 func _reset_all() -> void:

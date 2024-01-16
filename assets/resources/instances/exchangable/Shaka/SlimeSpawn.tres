@@ -4,8 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/Slime.tscn" id="2_pcfp6"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_wsret")
 spawn_entity = ExtResource("2_pcfp6")
+max_spawn = -1
 weapon_range = 0.0
 delta = -1
 cooldown = 0.0

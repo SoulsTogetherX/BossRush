@@ -8,6 +8,13 @@ func _ready() -> void:
 	super();
 	PlayerInfo.player = self;
 	damaged.connect(PlayerInfo.health_update);
+	
+	
+	# REMOVE THIS
+	if primary_attack is SpawnAttack:
+		primary_attack.summoned.connect(register_slime);
+	if secondary_attack is SpawnAttack:
+		secondary_attack.summoned.connect(register_slime);
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack1"):
@@ -15,7 +22,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			primary_attack.handle_attack((PlayerInfo.weapon as Node2D) if PlayerInfo.weapon else (self as Node2D), get_global_mouse_position(), alignment);
 	elif event.is_action_pressed("attack2"):
 		if secondary_attack:
-			secondary_attack.handle_attack((PlayerInfo.weapon as Node2D) if PlayerInfo.weapon else (self as Node2D), get_global_mouse_position(), alignment);
+			secondary_attack.handle_attack((self as Node2D), get_global_mouse_position(), alignment);
 
 func get_input() -> Vector2:
 	return Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized();
@@ -34,7 +41,7 @@ func set_health(amount : int) -> void:
 
 var last_ani_type : String = "";
 func set_direction(animationType : String, angle : float) -> void:
-	var animation : String = animationType + get_animation_modifer_4(angle, $main);
+	var animation : String = animationType + get_animation_modifer_4(angle);
 	if _animationPlayer.current_animation != animation:
 		var pos : float = _animationPlayer.current_animation_position;
 		_animationPlayer.play(animation);
@@ -45,9 +52,9 @@ func set_direction(animationType : String, angle : float) -> void:
 func change_direction(angle : float) -> void:
 	var animation : String;
 	if last_ani_type.is_empty():
-		animation = "idle_" + get_animation_modifer_4(angle, $main);
+		animation = "idle_" + get_animation_modifer_4(angle);
 	else:
-		animation = last_ani_type + get_animation_modifer_4(angle, $main);
+		animation = last_ani_type + get_animation_modifer_4(angle);
 	 
 	if _animationPlayer.current_animation != animation:
 		var pos : float = _animationPlayer.current_animation_position;
@@ -82,3 +89,15 @@ func play_step() -> void:
 			$dirt_step.play_random();
 		1:
 			$stone_step.play_random();
+
+func get_spawn_pos() -> Array[Vector2]:
+	return [global_position];
+
+var _slime_summoned : Array[ExchangeType] = [];
+func register_slime(slime : ExchangeType) -> void:
+	_slime_summoned.append(slime);
+	slime.killed.connect(slime_killed.bind(slime));
+func slime_killed(slime : ExchangeType) -> void:
+	_slime_summoned.erase(slime);
+func get_minons() -> Array[ExchangeType]:
+	return _slime_summoned;

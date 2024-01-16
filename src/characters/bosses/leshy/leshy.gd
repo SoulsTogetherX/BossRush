@@ -51,6 +51,7 @@ func _ready() -> void:
 	for bush in bushes.get_children():
 		bush.scale = Vector2.ZERO;
 		bush.visible = false;
+		bush.get_node("StaticBody2D").collision_layer = 0;
 	
 	before_swap.connect(before_change);
 	$light_holder.visible = false;
@@ -61,8 +62,8 @@ func _set_up_tweens() -> void:
 	tw.tween_property($light_holder, "scale", Vector2(1.1, 1.1), 1.5);
 	
 	tw = create_tween().set_loops();
-	tw.tween_property($Sprite2D.material, "shader_parameter/width", 1.0, 0.8);
-	tw.tween_property($Sprite2D.material, "shader_parameter/width", 4.0, 0.8);
+	tw.tween_property(_sprite.material, "shader_parameter/width", 1.0, 0.8);
+	tw.tween_property(_sprite.material, "shader_parameter/width", 4.0, 0.8);
 
 func _calculate_distance() -> void:
 	_dash_distance = primary_movement.speed * primary_movement.duration;
@@ -107,7 +108,7 @@ func hide_self(animate : String, delay : float) -> void:
 	var tw : Tween = create_tween().set_parallel();
 	for bush in _shown_bushed:
 		bush.visible = true;
-		
+		bush.get_node("StaticBody2D").collision_layer = 64;
 		tw.tween_property(bush, "scale", Vector2(1.0, 1.0), 0.2);
 	
 	self_pos.visible = true;
@@ -150,22 +151,23 @@ func hide_bushes() -> void:
 	
 	var tw : Tween = create_tween().set_parallel();
 	for bush in _shown_bushed:
+		bush.get_node("StaticBody2D").collision_layer = 0;
 		tw.tween_property(bush, "scale", Vector2(0.0, 0.0), 0.2);
 		tw.tween_property(bush, "visible", false, 0.0).set_delay(0.2)
 	
 	_shown_bushed.clear();
 
 func lower_shield() -> void:
-	$Sprite2D.material.set_shader_parameter("color", Color("#60ffff00"));
+	_sprite.material.set_shader_parameter("color", Color("#60ffff00"));
 	$hurt_box.toggle_hurtbox(true);
 
 func up_shield() -> void:
 	var tw : Tween = create_tween();
-	tw.tween_property($Sprite2D.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
+	tw.tween_property(_sprite.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
 	$hurt_box.toggle_hurtbox(false);
 
 func dash_hard() -> void:
-	$Sprite2D.material.set_shader_parameter("modulate", Color("#ffffff00"));
+	_sprite.material.set_shader_parameter("modulate", Color("#ffffff00"));
 	
 	var pos : Vector2 = PlayerInfo.player.global_position - global_position;
 	_move_direction = pos.normalized();
@@ -173,7 +175,7 @@ func dash_hard() -> void:
 	dash_base(_move_direction.angle());
 
 func dash() -> void:
-	$Sprite2D.material.set_shader_parameter("modulate", Color("#ffffffff"));
+	_sprite.material.set_shader_parameter("modulate", Color("#ffffffff"));
 	while true:
 		var rand : int = randi_range(0, 7);
 		_move_direction = Vector2.RIGHT.rotated((PI / 4) * rand);
@@ -187,7 +189,7 @@ func dash_base(angle : float) -> void:
 	$dash_timer.start();
 	$spin_particles.emitting = false;
 	
-	_animation_player.play("dash_" + get_animation_modifer_4(angle, $Sprite2D));
+	_animation_player.play("dash_" + get_animation_modifer_4(angle));
 	dash_sound.play_random();
 	set_physics_process(true);
 
@@ -218,6 +220,9 @@ func die() -> void:
 	$light_holder.visible = false;
 	$AnimationPlayer.play("die");
 	
+	$AnimatableBody2D/CollisionShape2D2.disabled = false;
+	$AnimatableBody2D/CollisionShape2D2.global_position = global_position;
+	
 	await get_tree().create_timer(2.5).timeout;
 	
 	primary_attack.reset();
@@ -229,6 +234,7 @@ func _on_hit(_hitbox: HitBox) -> void:
 	if _waiting:
 		_force_move(_stun, 0.5, 0);
 		$HealthMonitor.update_health_no_signal($HealthMonitor.max_health);
+		$AnimatableBody2D/CollisionShape2D2.disabled = true;
 		_waiting = false;
 	elif !_death:
 		_force_move(_stun, 0.5, (2 if get_sequence_index() == 8 else 1));
@@ -246,21 +252,21 @@ func _stun() -> void:
 	_animation_player.play("hurt");
 
 func set_light_at_flip(pos : Vector2) -> void:
-	pos.x *= -1 if $Sprite2D.flip_h else 1;
+	pos.x *= -1 if _sprite.flip_h else 1;
 	$light_holder.position = pos;
 
 func before_change() -> void:
 	_animation_player.play("RESET");
-	$Sprite2D.material.set_shader_parameter("modulate", Color("#ffffffff"));
+	_sprite.material.set_shader_parameter("modulate", Color("#ffffffff"));
 	$dash_timer.stop();
 	$spin_sound_continue.stop();
 
 func swap(toggle : bool) -> void:
-	$hurt_box/CollisionShape2D.disabled = toggle;
-	$hurt_box/CollisionShape2D2.disabled = !toggle;
+	$hurt_box/CollisionShape2D.set_deferred("disabled", toggle);
+	$hurt_box/CollisionShape2D2.set_deferred("disabled", !toggle);
 	
-	$hit_area/CollisionShape2D.disabled = toggle;
-	$hit_area/CollisionShape2D2.disabled = !toggle;
+	$hit_area/CollisionShape2D.set_deferred("disabled", toggle);
+	$hit_area/CollisionShape2D2.set_deferred("disabled", !toggle);
 
 func get_skills() -> Array[Exchangable]:
 	return [primary_attack, health_handle, load("res://assets/resources/instances/exchangable/leshy/Nature Dash_Reward.tres")]

@@ -1,10 +1,19 @@
 class_name AttackInstant extends AttackExchangable
 
 @export var shape : Shape2D;
+@export var attack_num : int = 1;
 
 signal playSound(sound : int);
 
+func _sort_distances(a : Array, b : Array) -> bool:
+	if a[0] < b[0]:
+		return true;
+	return false;
+
 func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+	if attack_num <= 0:
+		return;
+	
 	var physics : PhysicsDirectSpaceState2D = from.get_world_2d().direct_space_state;
 	var query = PhysicsShapeQueryParameters2D.new();
 	query.set_shape(shape);
@@ -16,15 +25,14 @@ func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT)
 	if !results.is_empty():
 		# Hit Boss
 		playSound.emit(0);
-		var closest : Node2D;
-		var smallest : float = INF;
+		
+		var sorted : Array[Array] = [];
 		for result in results:
-			var dist : float = from.global_position.distance_squared_to(result.collider.global_position);
-			if dist < smallest:
-				smallest = dist;
-				closest = result.collider;
-			
-		closest.damage(delta, alignment);
+			sorted.append([from.global_position.distance_squared_to(result.collider.global_position), result]);
+		sorted.sort_custom(_sort_distances);
+		
+		for idx in min(sorted.size(), attack_num):
+			results[idx].collider.damage(delta, alignment);
 	
 	query.collision_mask = 1;
 	query.collide_with_areas = false;

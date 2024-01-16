@@ -1,35 +1,32 @@
-[gd_scene load_steps=42 format=3 uid="uid://bql8akhayh121"]
+[gd_scene load_steps=38 format=3 uid="uid://biqw288dtjd3a"]
 
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Slime.gd" id="1_nbwbt"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_41e04"]
-[ext_resource type="Texture2D" uid="uid://k1iit618dj2h" path="res://assets/sprites/characters/bosses/shaka boom/Slime MegaSheet.png" id="3_3r83j"]
-[ext_resource type="Resource" uid="uid://2c0wuo38lug" path="res://assets/resources/instances/exchangable/Shaka/SlimeCrawl.tres" id="3_w3out"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_il4kr"]
-[ext_resource type="Texture2D" uid="uid://c8awle6sackfu" path="res://assets/sprites/characters/bosses/shaka boom/slime_trail.png" id="4_nr7cg"]
-[ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="5_oe48e"]
-[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="6_h85d6"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="8_y3rji"]
-[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="10_bymn8"]
-[ext_resource type="AudioStream" uid="uid://b67estg2bm20f" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 2.ogg" id="11_ajs0c"]
-[ext_resource type="AudioStream" uid="uid://xowbxil5um1m" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 3.ogg" id="12_b0404"]
-[ext_resource type="AudioStream" uid="uid://b5jo23j7wjsgd" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 4.ogg" id="13_022t6"]
-[ext_resource type="AudioStream" uid="uid://cu6ecl26t3408" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2.ogg" id="14_imv7n"]
-[ext_resource type="AudioStream" uid="uid://bn65o28uxgv4q" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 2.ogg" id="15_km3ks"]
-[ext_resource type="AudioStream" uid="uid://b5p685ccyafq7" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 3.ogg" id="16_q2mdo"]
-[ext_resource type="AudioStream" uid="uid://0wb6xdvseigv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 2.ogg" id="17_i7aqf"]
-[ext_resource type="AudioStream" uid="uid://6ldvea6e7mhv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 3.ogg" id="18_sbbtj"]
-[ext_resource type="AudioStream" uid="uid://bh5fnesmb6nns" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth.ogg" id="19_c3g7k"]
-[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="20_f6gjm"]
-[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="21_2rj54"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/spawn.gd" id="22_i3vki"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/idle.gd" id="22_i7tle"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/death.gd" id="23_s40jq"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/knock_back.gd" id="24_yml6j"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/move.gd" id="25_fjn8p"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Slime_fight_starter.gd" id="1_n6asj"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_h5ujy"]
+[ext_resource type="Texture2D" uid="uid://c8awle6sackfu" path="res://assets/sprites/characters/bosses/shaka boom/slime_trail.png" id="4_qirib"]
+[ext_resource type="Texture2D" uid="uid://k1iit618dj2h" path="res://assets/sprites/characters/bosses/shaka boom/Slime MegaSheet.png" id="5_txhk1"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="6_8almf"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="7_16ott"]
+[ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="8_cdrho"]
+[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="9_en4xq"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="10_asvce"]
+[ext_resource type="AudioStream" uid="uid://b67estg2bm20f" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 2.ogg" id="11_gi66x"]
+[ext_resource type="AudioStream" uid="uid://xowbxil5um1m" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 3.ogg" id="12_drejw"]
+[ext_resource type="AudioStream" uid="uid://b5jo23j7wjsgd" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 4.ogg" id="13_al47j"]
+[ext_resource type="AudioStream" uid="uid://cu6ecl26t3408" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2.ogg" id="14_24551"]
+[ext_resource type="AudioStream" uid="uid://bn65o28uxgv4q" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 2.ogg" id="15_gqqwk"]
+[ext_resource type="AudioStream" uid="uid://b5p685ccyafq7" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 3.ogg" id="16_bnc1m"]
+[ext_resource type="AudioStream" uid="uid://0wb6xdvseigv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 2.ogg" id="17_hgs7m"]
+[ext_resource type="AudioStream" uid="uid://6ldvea6e7mhv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 3.ogg" id="18_41v0p"]
+[ext_resource type="AudioStream" uid="uid://bh5fnesmb6nns" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth.ogg" id="19_lej33"]
+[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="20_clcod"]
+[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="21_jlo51"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/death.gd" id="22_aoich"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/idle_blank.gd" id="23_tt8e5"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/knock_back.gd" id="24_cuq2q"]
 
-[sub_resource type="Resource" id="Resource_v0xmn"]
-script = ExtResource("2_41e04")
-max_health = 3
+[sub_resource type="Resource" id="Resource_e2ape"]
+script = ExtResource("2_h5ujy")
+max_health = 1
 name = ""
 symbol = 0
 
@@ -46,8 +43,8 @@ radius = 12.0
 height = 38.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_57ax2"]
-radius = 2.99994
-height = 17.9996
+radius = 6.0
+height = 71.9979
 
 [sub_resource type="Animation" id="Animation_uuf0a"]
 length = 0.001
@@ -111,30 +108,6 @@ tracks/4/keys = {
 "update": 1,
 "values": [21]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CollisionShape2D2:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("hitbox/CollisionShape2D5:disabled")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_wejv6"]
 resource_name = "dead"
@@ -146,12 +119,9 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.705, 1.1),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0.705, 1.1),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
-"args": [false],
-"method": &"set_physics_process"
-}, {
 "args": [],
 "method": &"create_puddle"
 }, {
@@ -243,18 +213,6 @@ tracks/7/keys = {
 "update": 1,
 "values": [22, 14, 15, 16, 17, 18, 19]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("hitbox/CollisionShape2D5:disabled")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
 
 [sub_resource type="Animation" id="Animation_gi45i"]
 resource_name = "hurt"
@@ -313,47 +271,6 @@ tracks/2/keys = {
 "values": [Vector2(0, -19), Vector2(0, -17), Vector2(0, -22.12), Vector2(0, -22.0133), Vector2(0, -22.12), Vector2(0, -19)]
 }
 
-[sub_resource type="Animation" id="Animation_j4ij0"]
-resource_name = "idle_real"
-length = 1.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.5, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [9, 10, 11, 12]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.05, 0.958), Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.41, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -19), Vector2(0, -17), Vector2(0, -19)]
-}
-
 [sub_resource type="Animation" id="Animation_i34m0"]
 resource_name = "start"
 length = 1.5
@@ -393,39 +310,34 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(0, -19), Vector2(0, -19), Vector2(0, -23), Vector2(0, -23), Vector2(0, -19)]
 }
-tracks/3/type = "method"
+tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".")
+tracks/3/path = NodePath("CollisionShape2D2:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [false],
-"method": &"set_physics_process"
-}, {
-"args": [true],
-"method": &"set_physics_process"
-}]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D2:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0, 1.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(1, 1)]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("hurt_box/CollisionShape2D4:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("hurt_box/CollisionShape2D4:disabled")
+tracks/5/path = NodePath("hit_area/CollisionShape2D3:disabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -437,34 +349,22 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("hit_area/CollisionShape2D3:disabled")
+tracks/6/path = NodePath("explode_goop:emitting")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("explode_goop:emitting")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/8/type = "method"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath(".")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0, 1.2),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -475,18 +375,6 @@ tracks/8/keys = {
 "method": &"toggle_trail"
 }]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("hitbox/CollisionShape2D5:disabled")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_53jwu"]
 _data = {
@@ -494,29 +382,29 @@ _data = {
 "dead": SubResource("Animation_wejv6"),
 "hurt": SubResource("Animation_gi45i"),
 "idle": SubResource("Animation_shoj8"),
-"idle_real": SubResource("Animation_j4ij0"),
 "start": SubResource("Animation_i34m0")
 }
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_25pfh"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_entlr"]
 
-[sub_resource type="Gradient" id="Gradient_03wfy"]
-colors = PackedColorArray(0.721569, 0.721569, 0.721569, 0.0588235, 0.431373, 0.431373, 0.431373, 0)
+[sub_resource type="Gradient" id="Gradient_vqqie"]
+offsets = PackedFloat32Array(0.00338983, 1)
+colors = PackedColorArray(1, 0, 0, 0.0196078, 1, 1, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_la1nk"]
-gradient = SubResource("Gradient_03wfy")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m3tvw"]
+gradient = SubResource("Gradient_vqqie")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[node name="Slime" type="CharacterBody2D" node_paths=PackedStringArray("_sprite")]
+[node name="Slime_fight_starter" type="CharacterBody2D" node_paths=PackedStringArray("_sprite")]
 y_sort_enabled = true
-collision_layer = 256
+collision_layer = 768
 collision_mask = 257
-script = ExtResource("1_nbwbt")
+script = ExtResource("1_n6asj")
 _sprite = NodePath("Sprite2D")
-health_handle = SubResource("Resource_v0xmn")
-primary_movement = ExtResource("3_w3out")
+alignment = 1
+health_handle = SubResource("Resource_e2ape")
 
 [node name="trail" type="CPUParticles2D" parent="."]
 z_index = -2
@@ -524,7 +412,7 @@ position = Vector2(0, -10)
 emitting = false
 amount = 50
 lifetime = 5.0
-texture = ExtResource("4_nr7cg")
+texture = ExtResource("4_qirib")
 gravity = Vector2(0, 0)
 angle_min = -180.0
 angle_max = 180.0
@@ -542,7 +430,7 @@ amount = 10
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
-texture = ExtResource("4_nr7cg")
+texture = ExtResource("4_qirib")
 emission_shape = 2
 emission_sphere_radius = 10.0
 direction = Vector2(0, -1)
@@ -559,46 +447,43 @@ color_initial_ramp = SubResource("Gradient_eyydu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -19)
-texture = ExtResource("3_3r83j")
+texture = ExtResource("5_txhk1")
 hframes = 23
 frame = 21
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
-script = ExtResource("4_il4kr")
+script = ExtResource("6_8almf")
 health_monitor = NodePath("../HealthMonitor")
 alignment = 1
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="hurt_box"]
-position = Vector2(0, -10)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_bg2rr")
-
-[node name="hitbox" type="Area2D" parent="."]
-script = ExtResource("8_y3rji")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(0, -10)
+position = Vector2(0, -12)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bg2rr")
 disabled = true
 
+[node name="hitbox" type="Area2D" parent="."]
+script = ExtResource("7_16ott")
+
 [node name="hit_area" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("5_oe48e")
+script = ExtResource("8_cdrho")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="hit_area"]
-position = Vector2(0, -10)
+position = Vector2(0, -12)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bg2rr")
+disabled = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1.19209e-07)
+position = Vector2(0, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_57ax2")
+disabled = true
 
 [node name="HealthMonitor" type="Node" parent="."]
-script = ExtResource("6_h85d6")
+script = ExtResource("9_en4xq")
 _health = 10
 
 [node name="Center" type="Marker2D" parent="."]
@@ -608,63 +493,52 @@ position = Vector2(0, -23)
 libraries = {
 "": SubResource("AnimationLibrary_53jwu")
 }
-autoplay = "start"
+autoplay = "idle"
 next/hurt = &"idle"
 next/start = &"idle"
 
 [node name="death" type="AudioStreamPlayer" parent="."]
 bus = &"Sound"
-script = ExtResource("10_bymn8")
-audios = Array[AudioStream]([ExtResource("11_ajs0c"), ExtResource("12_b0404"), ExtResource("13_022t6"), ExtResource("14_imv7n")])
+script = ExtResource("10_asvce")
+audios = Array[AudioStream]([ExtResource("11_gi66x"), ExtResource("12_drejw"), ExtResource("13_al47j"), ExtResource("14_24551")])
 
 [node name="idle" type="AudioStreamPlayer" parent="."]
 bus = &"Sound"
-script = ExtResource("10_bymn8")
-audios = Array[AudioStream]([ExtResource("15_km3ks"), ExtResource("16_q2mdo")])
+script = ExtResource("10_asvce")
+audios = Array[AudioStream]([ExtResource("15_gqqwk"), ExtResource("16_bnc1m")])
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]
 bus = &"Sound"
-script = ExtResource("10_bymn8")
-audios = Array[AudioStream]([ExtResource("17_i7aqf"), ExtResource("18_sbbtj"), ExtResource("19_c3g7k")])
+script = ExtResource("10_asvce")
+audios = Array[AudioStream]([ExtResource("17_hgs7m"), ExtResource("18_41v0p"), ExtResource("19_lej33")])
 varation = 0.1
 
 [node name="glow" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_25pfh")
+material = SubResource("CanvasItemMaterial_entlr")
 position = Vector2(0, -1)
 scale = Vector2(10, 10)
-texture = SubResource("GradientTexture2D_la1nk")
+texture = SubResource("GradientTexture2D_m3tvw")
 
 [node name="StateOverhead" type="Node" parent="." node_paths=PackedStringArray("_actor")]
-script = ExtResource("20_f6gjm")
+script = ExtResource("20_clcod")
 _usesActor = true
 _actor = NodePath("..")
 _usesAnimationPlayer = false
 
 [node name="StateMachine" type="Node" parent="StateOverhead" node_paths=PackedStringArray("starting_state")]
-script = ExtResource("21_2rj54")
+script = ExtResource("21_jlo51")
 _name_id = "main"
-starting_state = NodePath("spawn")
-
-[node name="spawn" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle")]
-script = ExtResource("22_i3vki")
-idle = NodePath("../idle")
+starting_state = NodePath("idle")
 
 [node name="death" type="Node" parent="StateOverhead/StateMachine"]
-script = ExtResource("23_s40jq")
+script = ExtResource("22_aoich")
 
-[node name="idle" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move")]
-script = ExtResource("22_i7tle")
-move = NodePath("../move")
+[node name="idle" type="Node" parent="StateOverhead/StateMachine"]
+script = ExtResource("23_tt8e5")
 
-[node name="move" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle")]
-script = ExtResource("25_fjn8p")
-idle = NodePath("../idle")
-
-[node name="knock_back" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move")]
-script = ExtResource("24_yml6j")
-move = NodePath("../move")
+[node name="knock_back" type="Node" parent="StateOverhead/StateMachine"]
+script = ExtResource("24_cuq2q")
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]
 [connection signal="hit" from="hurt_box" to="hurt_box" method="_on_hit"]
-[connection signal="hit" from="hitbox" to="." method="_on_player_hit"]
 [connection signal="killed" from="HealthMonitor" to="." method="die"]

@@ -2,8 +2,6 @@ extends State
 
 @export var idle : State;
 
-@onready var main : Sprite2D = $"../../../main";
-
 var last_move : Vector2 = Vector2(0,0);
 
 func get_id():

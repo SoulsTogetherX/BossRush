@@ -1,9 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://dp324cpihdn7s"]
+[gd_scene load_steps=33 format=3 uid="uid://dp324cpihdn7s"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_6erxl"]
 [ext_resource type="Texture2D" uid="uid://d2l4g60ps0t60" path="res://assets/sprites/ground/Leshy/Floor 1 BG (Leshy Floor).png" id="1_erk7l"]
 [ext_resource type="PackedScene" uid="uid://cd6retw663av0" path="res://src/characters/bosses/leshy/leshy.tscn" id="3_qsitx"]
-[ext_resource type="Script" path="res://rooms/rooms/Leshy_Boss_room/Doors.gd" id="4_d7u0r"]
+[ext_resource type="Script" path="res://rooms/Doors.gd" id="4_d7u0r"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="4_mbe6u"]
 [ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="4_xd7kx"]
 [ext_resource type="Texture2D" uid="uid://chn1tqoq7k4jg" path="res://assets/sprites/ground/Leshy/Floor 1 door-1.png" id="4_y1tg4"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="9_pks3f"]
 [ext_resource type="Texture2D" uid="uid://djb1qsiodkqtb" path="res://assets/sprites/ground/Leshy/Floor 1-walls.png" id="9_xpu01"]
 [ext_resource type="Texture2D" uid="uid://b7g6nxlyapyws" path="res://assets/sprites/ground/Leshy/Floor 1 -walls-second-layer.png" id="10_lfjar"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="12_yb5iw"]
+[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/Slime.tscn" id="13_3r2jt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l21ms"]
 size = Vector2(155.25, 25)
@@ -53,6 +55,17 @@ size = Vector2(26, 167)
 radius = 28.0
 height = 70.0
 
+[sub_resource type="Resource" id="Resource_b0x4c"]
+resource_local_to_scene = true
+script = ExtResource("12_yb5iw")
+spawn_entity = ExtResource("13_3r2jt")
+max_spawn = 1
+weapon_range = 0.0
+delta = -1
+cooldown = 0.0
+name = ""
+symbol = 0
+
 [sub_resource type="Gradient" id="Gradient_8md3c"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
@@ -71,19 +84,24 @@ size = Vector2(677.5, 36.25)
 size = Vector2(29.75, 476)
 
 [node name="Leshy_room" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_6erxl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -2
+z_index = -99
 texture = ExtResource("1_erk7l")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture = ExtResource("9_xpu01")
 
-[node name="Doors" type="Node" parent="."]
+[node name="Doors" type="Node" parent="." node_paths=PackedStringArray("enter", "exit")]
 script = ExtResource("4_d7u0r")
+enter = NodePath("Door_up")
+exit = NodePath("Door_left")
 
 [node name="Door_up" type="StaticBody2D" parent="Doors"]
+modulate = Color(1, 1, 1, 0)
+collision_layer = 0
 collision_mask = 0
 
 [node name="Sprite2D5" type="Sprite2D" parent="Doors/Door_up"]
@@ -95,8 +113,6 @@ position = Vector2(-3.625, -263.5)
 shape = SubResource("RectangleShape2D_l21ms")
 
 [node name="Door_left" type="StaticBody2D" parent="Doors"]
-modulate = Color(1, 1, 1, 0)
-collision_layer = 0
 collision_mask = 0
 
 [node name="Sprite2D4" type="Sprite2D" parent="Doors/Door_left"]
@@ -172,13 +188,20 @@ shape = SubResource("RectangleShape2D_58m6h")
 
 [node name="exit" parent="." instance=ExtResource("4_xd7kx")]
 position = Vector2(322, -33)
-move_to = "2"
-scene_path = "res://rooms/test_room/test_room.tscn"
+move_to = "4"
+scene_path = "res://rooms/rooms/Shaka_room/Shaka_room.tscn"
 location_id = "3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="exit"]
 position = Vector2(42, 5.5)
 shape = SubResource("RectangleShape2D_tq3ux")
+
+[node name="enter" parent="." instance=ExtResource("4_xd7kx")]
+position = Vector2(-7, -270)
+move_to = "4"
+scene_path = "res://rooms/rooms/Shaka_room/Shaka_room.tscn"
+location_id = "3"
+direction = 3
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 top_level = true
@@ -200,7 +223,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_1"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_1/StaticBody2D"]
@@ -219,7 +242,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_2"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_2/StaticBody2D"]
@@ -238,7 +261,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_3"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_3/StaticBody2D"]
@@ -257,7 +280,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_4"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_4/StaticBody2D"]
@@ -276,7 +299,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_5"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_5/StaticBody2D"]
@@ -295,7 +318,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_6"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_6/StaticBody2D"]
@@ -314,7 +337,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_7"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_7/StaticBody2D"]
@@ -333,7 +356,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_8"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_8/StaticBody2D"]
@@ -352,7 +375,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_9"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_9/StaticBody2D"]
@@ -371,7 +394,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_10"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_10/StaticBody2D"]
@@ -390,7 +413,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_11"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_11/StaticBody2D"]
@@ -409,7 +432,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_12"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_12/StaticBody2D"]
@@ -428,7 +451,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_13"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_13/StaticBody2D"]
@@ -447,7 +470,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_14"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_14/StaticBody2D"]
@@ -466,7 +489,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_15"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_15/StaticBody2D"]
@@ -485,7 +508,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_16"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_16/StaticBody2D"]
@@ -504,7 +527,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_17"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_17/StaticBody2D"]
@@ -523,7 +546,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_20"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_20/StaticBody2D"]
@@ -542,7 +565,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_21"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_21/StaticBody2D"]
@@ -561,7 +584,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_18"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_18/StaticBody2D"]
@@ -580,7 +603,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_19"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_19/StaticBody2D"]
@@ -599,7 +622,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_22"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_22/StaticBody2D"]
@@ -618,7 +641,7 @@ hframes = 49
 frame = 28
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Bushes/Bush_23"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bushes/Bush_23/StaticBody2D"]
@@ -628,6 +651,7 @@ shape = SubResource("CapsuleShape2D_0lp45")
 
 [node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
 position = Vector2(318, -23)
+secondary_attack = SubResource("Resource_b0x4c")
 
 [node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "_reward_manager") instance=ExtResource("3_qsitx")]
 position = Vector2(-17, -3)
@@ -638,6 +662,7 @@ _reward_manager = NodePath("../Reward_manager")
 texture = ExtResource("10_lfjar")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(23, -35)
 energy = 0.4
 blend_mode = 1
 texture = SubResource("GradientTexture2D_4vpcj")

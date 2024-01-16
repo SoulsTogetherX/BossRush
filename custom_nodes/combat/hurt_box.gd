@@ -54,4 +54,4 @@ func toggle_hurtbox(toggle : bool) -> void:
 	else:
 		if queue_on:
 			_incincible_queue += 1;
-		monitoring = false;
+		set_deferred("monitoring", false);

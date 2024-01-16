@@ -29,13 +29,10 @@ func _next_sequence(skip : int = 0) -> void:
 	if _sequence.is_empty():
 		return;
 	
-	if _sequence_idx >= _sequence.size():
-		_sequence_idx = 0;
-	
 	before_swap.emit();
 	
 	_sequence_idx += skip;
-	var action : _Boss_Action = _sequence[_sequence_idx];
+	var action : _Boss_Action = _sequence[_sequence_idx % _sequence.size()];
 	_call_at(action.call_fuc, action.delay);
 	_sequence_idx += 1;
 	
@@ -46,9 +43,11 @@ func _reset_sequence() -> void:
 	_next_sequence();
 
 func _call_at(call_fuc : Callable, time : float) -> void:
-	call_fuc.call();
+	_sequence_timer.stop()
 	_sequence_timer.wait_time = time;
 	_sequence_timer.start();
+	
+	call_fuc.call();
 
 func _force_move(call_fuc : Callable, time : float, skip : int = 1) -> void:
 	call_fuc.call();
@@ -72,3 +71,9 @@ func die() -> void:
 
 func get_sequence_index() -> int:
 	return _sequence_idx;
+
+func get_minons() -> Array[ExchangeType]:
+	return [];
+
+func hitable() -> bool:
+	return $hurt_box.monitoring;

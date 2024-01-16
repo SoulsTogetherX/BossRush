@@ -1,44 +1,25 @@
-[gd_scene load_steps=47 format=3 uid="uid://bxtp8uggorlqb"]
+[gd_scene load_steps=46 format=3 uid="uid://bxtp8uggorlqb"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Shaka.gd" id="1_g7w81"]
 [ext_resource type="Resource" uid="uid://uu34agn4p5h2" path="res://assets/resources/instances/exchangable/Shaka/SlimeSpawn.tres" id="2_5vtxt"]
+[ext_resource type="Resource" uid="uid://blg63wyo4fjm5" path="res://assets/resources/instances/exchangable/Shaka/Fireforward.tres" id="2_jinin"]
 [ext_resource type="Texture2D" uid="uid://ccyhhg33dls4l" path="res://assets/sprites/characters/bosses/shaka boom/Shaka Boom MEGASHEET.png" id="3_5lotg"]
-[ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="3_deke8"]
+[ext_resource type="Resource" uid="uid://b5fqyujx7sk7p" path="res://assets/resources/instances/exchangable/Shaka/FireWave.tres" id="3_lv8ki"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="3_p85wp"]
-[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="4_7vklv"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_bqvej"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="4_vtaru"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/fourwayShoot.gd" id="5_1mk4u"]
 [ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="5_1s86t"]
-[ext_resource type="Resource" uid="uid://blg63wyo4fjm5" path="res://assets/resources/instances/exchangable/Shaka/Fireforward.tres" id="6_i6ebv"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="6_u6ngt"]
 [ext_resource type="Texture2D" uid="uid://y7x2t0ikfm5a" path="res://assets/sprites/characters/bosses/shaka boom/confetti.png" id="13_iscfk"]
 [ext_resource type="AudioStream" uid="uid://bmoxov8qfn7iq" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka Hit v2.ogg" id="14_ko83a"]
 [ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="15_5735m"]
 [ext_resource type="AudioStream" uid="uid://4hdqgv7w80bf" path="res://assets/sounds/effects/boss/shaka/shaka/other/Shaka Point Up.ogg" id="15_tui00"]
+[ext_resource type="AudioStream" uid="uid://csc8rqk3h807x" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka voice hit 1.ogg" id="16_ber6f"]
+[ext_resource type="AudioStream" uid="uid://bk3v43jdsqbrq" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka voice hit 2.ogg" id="17_lutdt"]
 [ext_resource type="AudioStream" uid="uid://bnifnj37wo6a0" path="res://assets/sounds/effects/boss/shaka/shaka/voice/anger/Shaka Angry 1.ogg" id="17_w52jq"]
+[ext_resource type="AudioStream" uid="uid://dd7oa74ypcvjg" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka voice hit 3.ogg" id="18_5hsi6"]
 [ext_resource type="AudioStream" uid="uid://xl7bushu5b3b" path="res://assets/sounds/effects/boss/shaka/shaka/voice/anger/Shaka Angry 2 fixed.ogg" id="18_gd640"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="19_bmu3j"]
-
-[sub_resource type="Resource" id="Resource_7gwc8"]
-script = ExtResource("4_7vklv")
-protectile = ExtResource("3_deke8")
-fire_range = 300.0
-speed = 200.0
-fade_after = 250.0
-
-[sub_resource type="Resource" id="Resource_j2keq"]
-script = ExtResource("5_1mk4u")
-spawn_delay = 0.1
-ring_count = 3
-projectiles = 50
-launch = SubResource("Resource_7gwc8")
-offset = 10.0
-weapon_range = 0.0
-delta = -1
-cooldown = 0.0
-name = ""
-symbol = 0
 
 [sub_resource type="Resource" id="Resource_gvvjl"]
 script = ExtResource("4_vtaru")
@@ -51,7 +32,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -63,7 +44,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -75,7 +56,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -87,19 +68,19 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:skew")
+tracks/3/path = NodePath("Node2D/Sprite2D:skew")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-0.0610865]
+"values": [0.0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D:flip_h")
+tracks/4/path = NodePath("Node2D/Sprite2D:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -107,6 +88,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Node2D/Sprite2D:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_mh75w"]
@@ -116,7 +109,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -128,7 +121,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -140,7 +133,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -171,7 +164,7 @@ loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -183,7 +176,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -195,7 +188,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -211,7 +204,7 @@ length = 10.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -223,7 +216,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -235,7 +228,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -247,7 +240,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:flip_h")
+tracks/3/path = NodePath("Node2D/Sprite2D:flip_h")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -328,6 +321,18 @@ tracks/9/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Node2D/Sprite2D:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(1.7),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_auxi3"]
 resource_name = "float_end"
@@ -336,7 +341,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -348,7 +353,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/path = NodePath("Node2D/Sprite2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -360,7 +365,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/path = NodePath("Node2D/Sprite2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -376,7 +381,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -388,7 +393,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/path = NodePath("Node2D/Sprite2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -400,7 +405,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/path = NodePath("Node2D/Sprite2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -417,7 +422,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -429,7 +434,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -441,7 +446,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:skew")
+tracks/2/path = NodePath("Node2D/Sprite2D:skew")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -453,7 +458,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:scale")
+tracks/3/path = NodePath("Node2D/Sprite2D:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -465,7 +470,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D:flip_h")
+tracks/4/path = NodePath("Node2D/Sprite2D:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -494,7 +499,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -506,7 +511,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -518,7 +523,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:skew")
+tracks/2/path = NodePath("Node2D/Sprite2D:skew")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -530,7 +535,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:scale")
+tracks/3/path = NodePath("Node2D/Sprite2D:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -542,7 +547,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D:flip_h")
+tracks/4/path = NodePath("Node2D/Sprite2D:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -571,7 +576,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -583,7 +588,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -595,7 +600,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -612,7 +617,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -624,7 +629,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -640,7 +645,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -652,7 +657,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -664,7 +669,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -682,7 +687,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -694,7 +699,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -706,7 +711,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -723,7 +728,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -735,7 +740,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -747,7 +752,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -764,7 +769,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Node2D/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -776,7 +781,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/path = NodePath("Node2D/Sprite2D:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -788,7 +793,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/path = NodePath("Node2D/Sprite2D:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -873,33 +878,38 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="Gradient" id="Gradient_k0yyx"]
 colors = PackedColorArray(0.537011, 0.537011, 0.537011, 1, 1, 1, 1, 1)
 
-[node name="Shaka" type="CharacterBody2D"]
+[node name="Shaka" type="CharacterBody2D" node_paths=PackedStringArray("_sprite")]
 y_sort_enabled = true
 collision_layer = 520
 script = ExtResource("1_g7w81")
+tertiary_attack = ExtResource("2_jinin")
+_sprite = NodePath("Node2D/Sprite2D")
 alignment = 1
 primary_attack = ExtResource("2_5vtxt")
-secondary_attack = SubResource("Resource_j2keq")
-tertiary_attack = ExtResource("6_i6ebv")
+secondary_attack = ExtResource("3_lv8ki")
 health_handle = SubResource("Resource_gvvjl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_i8fv3")
 }
+autoplay = "idle"
 next/float_end = &"idle"
 next/scared_start = &"scared"
 next/summoning_start = &"summoning"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, -61)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 material = SubResource("ShaderMaterial_w45ml")
 position = Vector2(0, -32)
-skew = -0.0610865
 texture = ExtResource("3_5lotg")
 hframes = 58
 frame = 48
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
+position = Vector2(0, -61)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("4_bqvej")
@@ -911,6 +921,7 @@ position = Vector2(0, -26)
 shape = SubResource("CapsuleShape2D_iaj17")
 
 [node name="hit_area" type="Area2D" parent="."]
+position = Vector2(0, -61)
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("5_1s86t")
@@ -920,16 +931,17 @@ position = Vector2(0, -26)
 shape = SubResource("CapsuleShape2D_iaj17")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -5)
+position = Vector2(-1, -66)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_s1k48")
+disabled = true
 
 [node name="HealthMonitor" type="Node" parent="."]
 script = ExtResource("6_u6ngt")
 _health = 10
 
 [node name="Center" type="Marker2D" parent="."]
-position = Vector2(0, -23)
+position = Vector2(0, -84)
 
 [node name="sequence_timer" type="Timer" parent="."]
 one_shot = true
@@ -950,6 +962,7 @@ wait_time = 0.02
 
 [node name="Confetti" type="CPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_vv4fq")
+position = Vector2(0, -61)
 emitting = false
 amount = 40
 lifetime = 8.0
@@ -978,7 +991,7 @@ anim_speed_curve = SubResource("Curve_escy1")
 
 [node name="Confetti_hit" type="CPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_vv4fq")
-position = Vector2(0, -25)
+position = Vector2(0, -86)
 emitting = false
 amount = 10
 lifetime = 2.0
@@ -1009,6 +1022,7 @@ anim_speed_curve = SubResource("Curve_escy1")
 [node name="Confetti_floor" type="CPUParticles2D" parent="."]
 z_index = -2
 material = SubResource("CanvasItemMaterial_vv4fq")
+position = Vector2(0, -61)
 emitting = false
 amount = 10
 lifetime = 9.22337e+18
@@ -1034,6 +1048,7 @@ anim_offset_max = 1.0
 
 [node name="land_particles" type="CPUParticles2D" parent="."]
 z_index = -1
+position = Vector2(0, -61)
 emitting = false
 amount = 16
 lifetime = 0.5
@@ -1067,6 +1082,13 @@ bus = &"Sound"
 bus = &"Sound"
 script = ExtResource("15_5735m")
 audios = Array[AudioStream]([ExtResource("17_w52jq"), ExtResource("18_gd640")])
+
+[node name="hurt" type="AudioStreamPlayer" parent="."]
+pitch_scale = 0.7
+bus = &"Sound"
+script = ExtResource("15_5735m")
+audios = Array[AudioStream]([ExtResource("16_ber6f"), ExtResource("17_lutdt"), ExtResource("18_5hsi6")])
+varation = 0.1
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]
 [connection signal="hit" from="hurt_box" to="hurt_box" method="_on_hit"]

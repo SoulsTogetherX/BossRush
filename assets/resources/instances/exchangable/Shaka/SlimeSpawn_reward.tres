@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SpawnAttack" load_steps=3 format=3 uid="uid://lm4b0m5tgkup"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="1_dmfso"]
+[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/Slime.tscn" id="2_qx7ro"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_dmfso")
+spawn_entity = ExtResource("2_qx7ro")
+max_spawn = 2
+weapon_range = 0.0
+delta = -1
+cooldown = 0.3
+name = "Slime Summon"
+symbol = 0

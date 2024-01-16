@@ -1,24 +1,28 @@
-extends ExchangeType
+class_name Slime_Shaka extends ExchangeType
+
+const PUDDLE : CompressedTexture2D = preload("res://assets/sprites/characters/bosses/shaka boom/slime_trail.png");
 
 @export var attack_speed : float = 0.5;
 
-@onready var _animation_player: AnimationPlayer = $AnimationPlayer
+@warning_ignore("unused_private_class_variable")
+@onready var _animation_player: AnimationPlayer = $AnimationPlayer;
+@onready var _knock_back : Node = $StateOverhead/StateMachine/knock_back;
 
 var _target : ExchangeType;
 var _dead : bool = false;
-var _knock_back : Vector2;
-var _knockback_tween : Tween;
-
-const PUDDLE : CompressedTexture2D = preload("res://assets/sprites/characters/bosses/shaka boom/slime_trail.png");
+var _base_color : Color;
 
 func _ready() -> void:
 	super();
 	
 	if alignment == HurtBox.ALIGNMENT.ENEMY:
 		_target = PlayerInfo.player;
+		_base_color = Color.WHITE;
 	else:
 		_target = PlayerInfo.boss;
+		_base_color = Color(1.0, 1.0, 0, 1.0);
 	
+	modulate = _base_color;
 	$hurt_box.alignment = alignment;
 	$hitbox.alignment = alignment;
 
@@ -26,12 +30,18 @@ func die() -> void:
 	if $trail == null:
 		return;
 	
+	var glow : Sprite2D = $glow;
+	glow.reparent(get_tree().current_scene);
+	var tw : Tween = glow.create_tween();
+	tw.tween_property(glow, "modulate", Color(1.0, 1.0, 1.0, 0.0), 2.0);
+	tw.tween_callback(glow.queue_free);
+	
 	var particle : CPUParticles2D = $trail;
 	particle.reparent(get_tree().current_scene);
 	get_tree().create_timer(5.0).timeout.connect(particle.queue_free);
 	particle.emitting = false;
 	
-	_animation_player.play("dead");
+	$StateOverhead.change_state("main", "dead");
 	_dead = true;
 
 func toggle_trail(toggle : bool) -> void:
@@ -57,46 +67,15 @@ func create_puddle() -> void:
 	puddle2.rotation = randf() * TAU;
 	
 	var tw : Tween = puddle1.create_tween();
-	tw.tween_property(puddle1, "modulate", Color(1, 1, 1, 0), 3.0);
+	tw.tween_property(puddle1, "modulate:a", 0.0, 3.0);
 	tw.tween_callback(puddle1.queue_free);
 	
 	tw = puddle2.create_tween();
-	tw.tween_property(puddle2, "modulate", Color(1, 1, 1, 0), 3.0);
+	tw.tween_property(puddle2, "modulate:a", 0.0, 3.0);
 	tw.tween_callback(puddle2.queue_free);
 
 func _on_hit(hitbox: HitBox) -> void:
-	if !_dead:
-		if _animation_player.current_animation != "hurt":
-			_animation_player.play("hurt");
-			set_physics_process(true);
-	
-	var target_pos : Vector2 = _target.global_position if hitbox == null else hitbox.global_position;
-	var dir : Vector2 = (global_position - target_pos).normalized();
-	_knock_back = dir * 100;
-	
-	if _knockback_tween:
-		_knockback_tween.kill();
-	_knockback_tween = create_tween().set_parallel();
-	
-	_knockback_tween.tween_property($Sprite2D, "modulate", Color.RED, 0.15);
-	_knockback_tween.tween_property($Sprite2D, "modulate", Color.WHITE, 0.05).set_delay(0.15);
-	
-	_knockback_tween.tween_property($Sprite2D, "scale", Vector2(0.5, 0.5), 0.1);
-	_knockback_tween.tween_property($Sprite2D, "scale", Vector2(1.0, 1.0), 0.1).set_delay(0.1);
-	
-	_knockback_tween.chain().tween_callback(stop_knockback);
-
-func stop_knockback() -> void:
-	_knock_back = Vector2.ZERO;
-
-func _physics_process(delta: float) -> void:
-	if _knock_back == Vector2.ZERO:
-		_handle_movement(delta, self, global_position, (_target.global_position - global_position).normalized());
-		if !velocity.is_zero_approx():
-			$Sprite2D.flip_h = (velocity.x >= 0);
-	else:
-		velocity = _knock_back;
-		move_and_slide();
+	_knock_back.set_knock_back(hitbox, _target, _dead);
 
 func _on_player_hit(_hurtbox: HurtBox) -> void:
 	var box : HitBox = $hitbox;

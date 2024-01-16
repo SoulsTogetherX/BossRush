@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="FourWayAttack" load_steps=5 format=3 uid="uid://bccf61ffuoqrx"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/fourwayShoot.gd" id="1_cacy6"]
+[ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="1_ll6s7"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_owpex"]
+
+[sub_resource type="Resource" id="Resource_wu74y"]
+script = ExtResource("2_owpex")
+protectile = ExtResource("1_ll6s7")
+fire_range = 300.0
+speed = 200.0
+fade_after = 200.0
+
+[resource]
+script = ExtResource("1_cacy6")
+spawn_delay = 0.0
+ring_count = 1
+projectiles = 30
+launch = SubResource("Resource_wu74y")
+offset = 0.0
+weapon_range = 0.0
+delta = -1
+cooldown = 5.0
+name = "Ring of Fire"
+symbol = 0

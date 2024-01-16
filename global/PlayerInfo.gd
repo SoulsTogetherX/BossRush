@@ -48,8 +48,13 @@ func assign_player_moves() -> void:
 	if primary_attack:
 		player.primary_attack = primary_attack.duplicate();
 		weapon_settup(player.primary_attack);
+		if primary_attack is SpawnAttack:
+			primary_attack.summoned.connect(player.register_slime);
+		
 	if secondary_attack:
 		player.secondary_attack = secondary_attack.duplicate();
+		if secondary_attack is SpawnAttack:
+			secondary_attack.summoned.connect(player.register_slime);
 	
 	if health_handle:
 		player.health_handle = health_handle.duplicate();
@@ -67,12 +72,16 @@ func replace(idx : int, with : Exchangable) -> void:
 		if idx == 0:
 			primary_attack = with;
 			player.primary_attack = primary_attack.duplicate();
+			if primary_attack is SpawnAttack:
+				primary_attack.summoned.connect(player.register_slime);
 			
-			print("hello?")
 			weapon_settup(player.primary_attack);
 		else:
 			secondary_attack = with;
 			player.secondary_attack = secondary_attack.duplicate();
+			if secondary_attack is SpawnAttack:
+				secondary_attack.summoned.connect(player.register_slime);
+			
 	elif with is HealthExchangable:
 		if idx == 0:
 			health_handle = with;

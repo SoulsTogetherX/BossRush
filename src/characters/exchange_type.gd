@@ -1,9 +1,10 @@
 class_name ExchangeType extends CharacterBody2D
 
+@export var _sprite : Sprite2D;
+
 @export var alignment : HurtBox.ALIGNMENT;
 @export var primary_attack : AttackExchangable;
 @export var secondary_attack : AttackExchangable;
-@export var tertiary_attack : AttackExchangable;
 
 @export var health_handle : HealthExchangable:
 	set(val):
@@ -150,7 +151,7 @@ func get_animation_modifer_8(angle : float) -> String:
 			return "up_left";
 	return "";
 
-func get_animation_modifer_4(angle : float, _sprite : Sprite2D) -> String:
+func get_animation_modifer_4(angle : float) -> String:
 	var dir = wrapi(int(snapped(angle, PI/2) / (PI/2)), 0, 4);
 	match dir:
 		0:
@@ -180,11 +181,11 @@ func create_after_image(mod : Color = Color(1.0, 1.0, 1.0, 0.8), fade_time = 0.2
 	var sprite : Sprite2D = Sprite2D.new();
 	add_child(sprite);
 	sprite.top_level = true;
-	sprite.global_transform = $Sprite2D.global_transform;
-	sprite.texture = $Sprite2D.texture;
-	sprite.flip_h = $Sprite2D.flip_h;
-	sprite.hframes = $Sprite2D.hframes;
-	sprite.frame = $Sprite2D.frame;
+	sprite.global_transform = _sprite.global_transform;
+	sprite.texture = _sprite.texture;
+	sprite.flip_h = _sprite.flip_h;
+	sprite.hframes = _sprite.hframes;
+	sprite.frame = _sprite.frame;
 	sprite.modulate = mod;
 	if velocity.y <= 0:
 		sprite.z_index = -1;

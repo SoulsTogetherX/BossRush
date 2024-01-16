@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_6g3pm")
-speed = 150
+speed = 140
 friction = 0.05
 animation = "walk"
 name = "Slime Crawl"

@@ -19,6 +19,7 @@ func clear_timers() -> void:
 func _on_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if ring_count <= 0 || projectiles <= 0:
 		return;
+	clear_timers();
 	
 	var angle : float = (target - from.get_center()).angle();
 	var angle_offset : float = (0.0 if (projectiles == 1) else (PI / projectiles));
