@@ -13,7 +13,7 @@ class_name ExchangeType extends CharacterBody2D
 		
 		if health_handle:
 			_health_monitor.damage_taken.disconnect(_damage_callable);
-			health_handle.toggle_hitable.disconnect($hurt_box.toggle_hurtbox);
+			health_handle.toggle_hitable.disconnect(toggle_shield);
 		if val:
 			_damage_callable = val._on_damage.bind(self);
 			
@@ -21,7 +21,7 @@ class_name ExchangeType extends CharacterBody2D
 			_health_monitor.update_health_no_signal(val.health);
 			
 			_health_monitor.damage_taken.connect(_damage_callable);
-			val.toggle_hitable.connect($hurt_box.toggle_hurtbox);
+			val.toggle_hitable.connect(toggle_shield);
 		health_handle = val;
 
 @export var primary_movement : MovementExchangable:
@@ -53,6 +53,8 @@ var _damage_callable: Callable;
 
 signal damaged(amount : int);
 signal killed;
+
+signal change_hit_status;
 
 func _ready() -> void:
 	_health_monitor.damage_taken.connect(_signal_damaged);
@@ -193,3 +195,14 @@ func create_after_image(mod : Color = Color(1.0, 1.0, 1.0, 0.8), fade_time = 0.2
 	var tw : Tween = create_tween();
 	tw.tween_property(sprite, "modulate:a", 0.0, fade_time);
 	tw.tween_callback(sprite.queue_free);
+
+func toggle_shield(_toggle : bool) -> void:
+	pass;
+func lower_shield() -> void:
+	$hurt_box.toggle_hurtbox(true);
+	change_hit_status.emit();
+func up_shield() -> void:
+	$hurt_box.toggle_hurtbox(false);
+	change_hit_status.emit();
+func hitable() -> bool:
+	return $hurt_box.monitoring;

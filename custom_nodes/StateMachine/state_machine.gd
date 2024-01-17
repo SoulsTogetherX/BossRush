@@ -22,8 +22,10 @@ var _states                 : Array[State];
 var _animate_interval_timer : Array[SafeOneshot];
 var _current_animate_length : float;
 var _current_mode           : Animation.LoopMode
+var _update_lock            : bool = false;
 
 signal state_changed;
+signal _unlocked;
 
 ## Initializes this [StateMachine] by giving each attached child [StateBase] a reference
 ## to the actor object it belongs to, then enters the default [member starting_state].
@@ -70,8 +72,10 @@ func process_frame(delta: float) -> void:
 	if new_state:
 		_change_state(new_state);
 
-
 func update() -> void:
+	if _update_lock:
+		await _unlocked;
+	
 	var new_state = _current_state.update();
 	if new_state:
 		_change_state(new_state);
@@ -101,6 +105,7 @@ func _animate_interval_end() -> void:
 				_connect_all_pinpong_settup();
 
 func _change_state(new_state: State) -> void:
+	_update_lock = true;
 	if _current_state:
 		_current_state.exit();
 	
@@ -112,6 +117,8 @@ func _change_state(new_state: State) -> void:
 	
 	state_changed.emit();
 	_current_state._stateOverhead.state_changed.emit(get_id());
+	_update_lock = false;
+	_unlocked.emit();
 
 func _disconnect_all_settup() -> void:
 	for timer in _animate_interval_timer:

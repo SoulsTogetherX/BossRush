@@ -47,7 +47,7 @@ func force_handle_attack(from : Node2D, target : Vector2, alignment : HurtBox.AL
 	_on_attack(from, target, alignment);
 
 func _cooldown_check(scene : SceneTree) -> bool:
-	if _on_cooldown:
+	if _on_cooldown || !scene:
 		return false;
 	
 	_on_cooldown = true;

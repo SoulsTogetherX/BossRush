@@ -93,7 +93,9 @@ script = ExtResource("1_e0qy1")
 
 [node name="trail" type="Line2D" parent="." node_paths=PackedStringArray("follow")]
 show_behind_parent = true
+top_level = true
 z_index = -1
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 width = 5.0
 width_curve = SubResource("Curve_jptal")
 script = ExtResource("2_ks0nh")

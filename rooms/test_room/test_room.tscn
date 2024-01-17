@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://d1625avtkbbq3"]
+[gd_scene load_steps=33 format=3 uid="uid://d1625avtkbbq3"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_1tg0k"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="1_vynos"]
@@ -19,6 +19,7 @@
 [ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature Dash.tres" id="14_ygkil"]
 [ext_resource type="Resource" uid="uid://dg66auy72xda7" path="res://assets/resources/instances/exchangable/leshy/Pine Health.tres" id="17_peyvy"]
 [ext_resource type="Script" path="res://rooms/test_room/dialog_test.gd" id="18_2f2fh"]
+[ext_resource type="PackedScene" uid="uid://ccdpw62ond2wb" path="res://src/level_objects/Arrow/Arrow.tscn" id="20_4o187"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lgyr6"]
 size = Vector2(130.832, 119.386)
@@ -28,6 +29,7 @@ script = ExtResource("5_ai1bo")
 protectile = ExtResource("14_dqaky")
 fire_range = 1000.0
 speed = 100.0
+fade_after = -1.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3c164"]
 load_path = "res://.godot/imported/Doggo Sword.png-0c3cfe9192fd02650c30273bfc13bc74.ctex"
@@ -229,5 +231,9 @@ position = Vector2(349, 219)
 script = ExtResource("2_5duej")
 follow = NodePath("../Doggo")
 auto_follow = true
+
+[node name="Arrow" parent="." node_paths=PackedStringArray("follow") instance=ExtResource("20_4o187")]
+position = Vector2(515, 404)
+follow = NodePath("../Reward_manager/Orb")
 
 [connection signal="body_entered" from="dialog_test" to="dialog_test" method="_on_body_entered"]

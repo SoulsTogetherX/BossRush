@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bql8akhayh121"]
+[gd_scene load_steps=48 format=3 uid="uid://bql8akhayh121"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Slime.gd" id="1_nbwbt"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_41e04"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/death.gd" id="23_s40jq"]
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/knock_back.gd" id="24_yml6j"]
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/move.gd" id="25_fjn8p"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/follow_leader.gd" id="26_ecfsr"]
 
 [sub_resource type="Resource" id="Resource_v0xmn"]
 script = ExtResource("2_41e04")
@@ -38,8 +39,27 @@ _data = [Vector2(0.00626959, 1), 0.0, 0.0, 0, 0, Vector2(0.862069, 1), 0.0, 0.0,
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_eyydu"]
-offsets = PackedFloat32Array(0, 0.914089, 1)
+offsets = PackedFloat32Array(0, 0.872852, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_feqm7"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_vlc48"]
+_data = [Vector2(0.00626959, 1), 0.0, 0.0, 0, 0, Vector2(0.862069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_iif5r"]
+offsets = PackedFloat32Array(0, 0.762887, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_fr56l"]
+offsets = PackedFloat32Array(0.00687285, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_3ow1e"]
+offsets = PackedFloat32Array(0.00687285, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.581033, 0.581033, 0.581033, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bg2rr"]
 radius = 12.0
@@ -122,18 +142,6 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("hitbox/CollisionShape2D5:disabled")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_wejv6"]
@@ -242,18 +250,6 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [22, 14, 15, 16, 17, 18, 19]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("hitbox/CollisionShape2D5:disabled")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_gi45i"]
@@ -475,18 +471,6 @@ tracks/8/keys = {
 "method": &"toggle_trail"
 }]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("hitbox/CollisionShape2D5:disabled")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_53jwu"]
 _data = {
@@ -501,7 +485,7 @@ _data = {
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_25pfh"]
 
 [sub_resource type="Gradient" id="Gradient_03wfy"]
-colors = PackedColorArray(0.721569, 0.721569, 0.721569, 0.0588235, 0.431373, 0.431373, 0.431373, 0)
+colors = PackedColorArray(0.721569, 0.721569, 0.721569, 0.0784314, 0.431373, 0.431373, 0.431373, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_la1nk"]
 gradient = SubResource("Gradient_03wfy")
@@ -514,6 +498,7 @@ y_sort_enabled = true
 collision_layer = 256
 collision_mask = 257
 script = ExtResource("1_nbwbt")
+follow_distance = 7000.0
 _sprite = NodePath("Sprite2D")
 health_handle = SubResource("Resource_v0xmn")
 primary_movement = ExtResource("3_w3out")
@@ -555,7 +540,54 @@ scale_amount_min = 0.1
 scale_amount_max = 0.2
 scale_amount_curve = SubResource("Curve_fp5lu")
 color = Color(0.788235, 0.788235, 0.788235, 1)
-color_initial_ramp = SubResource("Gradient_eyydu")
+color_ramp = SubResource("Gradient_feqm7")
+
+[node name="hit_goop" type="CPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(0, -22)
+emitting = false
+amount = 10
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("4_nr7cg")
+emission_shape = 2
+emission_sphere_radius = 10.0
+spread = 15.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 400.0
+initial_velocity_max = 600.0
+damping_min = 1000.0
+damping_max = 1000.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_vlc48")
+color = Color(0.890196, 0.890196, 0.890196, 1)
+color_ramp = SubResource("Gradient_iif5r")
+
+[node name="hit_towards_part" type="CPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(0, -10)
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+emission_shape = 4
+emission_points = PackedVector2Array(23, 0)
+emission_colors = PackedColorArray()
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 110.0
+damping_min = 300.0
+damping_max = 300.0
+angle_max = 360.0
+color = Color(1, 1, 0.533333, 1)
+color_ramp = SubResource("Gradient_fr56l")
+color_initial_ramp = SubResource("Gradient_3ow1e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -19)
@@ -652,13 +684,20 @@ idle = NodePath("../idle")
 [node name="death" type="Node" parent="StateOverhead/StateMachine"]
 script = ExtResource("23_s40jq")
 
-[node name="idle" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move")]
+[node name="idle" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move", "follow_leader")]
 script = ExtResource("22_i7tle")
 move = NodePath("../move")
+follow_leader = NodePath("../follow_leader")
 
-[node name="move" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle")]
+[node name="move" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle", "follow_leader")]
 script = ExtResource("25_fjn8p")
 idle = NodePath("../idle")
+follow_leader = NodePath("../follow_leader")
+
+[node name="follow_leader" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move", "idle")]
+script = ExtResource("26_ecfsr")
+move = NodePath("../move")
+idle = NodePath(".")
 
 [node name="knock_back" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move")]
 script = ExtResource("24_yml6j")

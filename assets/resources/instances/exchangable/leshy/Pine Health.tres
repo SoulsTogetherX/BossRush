@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://assets/resources/scripts/extra/invincibility.gd" id="1_va7d0"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_cu5jj"]
 
-[sub_resource type="Resource" id="Resource_8r0mk"]
+[sub_resource type="Resource" id="Resource_bxpp8"]
 script = ExtResource("1_va7d0")
 i_frames = 1.0
 
 [resource]
 script = ExtResource("2_cu5jj")
 max_health = 5
-_incincible = SubResource("Resource_8r0mk")
+_incincible = SubResource("Resource_bxpp8")
 name = "Pine Health"
 symbol = 0

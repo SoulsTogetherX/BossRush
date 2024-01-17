@@ -74,6 +74,3 @@ func get_sequence_index() -> int:
 
 func get_minons() -> Array[ExchangeType]:
 	return [];
-
-func hitable() -> bool:
-	return $hurt_box.monitoring;

@@ -72,12 +72,6 @@ func _on_hurt_box_hit(_hitbox: HitBox) -> void:
 	
 	TimeManager.instant_time_scale(0.2);
 	PlayerInfo.cam.shake_event(Vector3(0.3, 0.3, 0), Vector3(3., 3., 0));
-	
-	if PlayerInfo.hard_mode:
-		return;
-	$hurt_box/CollisionShape2D2.set_deferred("disabled", true);
-	await get_tree().create_timer(0.3).timeout;
-	$hurt_box/CollisionShape2D2.set_deferred("disabled", false);
 
 func died() -> void:
 	$HealthMonitor.update_health_no_signal(0);
@@ -91,7 +85,7 @@ func play_step() -> void:
 			$stone_step.play_random();
 
 func get_spawn_pos() -> Array[Vector2]:
-	return [global_position];
+	return [global_position + Vector2(0, 15)];
 
 var _slime_summoned : Array[ExchangeType] = [];
 func register_slime(slime : ExchangeType) -> void:

@@ -159,12 +159,11 @@ func hide_bushes() -> void:
 
 func lower_shield() -> void:
 	_sprite.material.set_shader_parameter("color", Color("#60ffff00"));
-	$hurt_box.toggle_hurtbox(true);
-
+	super();
 func up_shield() -> void:
 	var tw : Tween = create_tween();
 	tw.tween_property(_sprite.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
-	$hurt_box.toggle_hurtbox(false);
+	super();
 
 func dash_hard() -> void:
 	_sprite.material.set_shader_parameter("modulate", Color("#ffffff00"));
@@ -230,7 +229,7 @@ func die() -> void:
 	$hurt_box.visible = false;
 	$hit_area.visible = false;
 
-func _on_hit(_hitbox: HitBox) -> void:
+func _on_hit(hitbox: HitBox) -> void:
 	if _waiting:
 		_force_move(_stun, 0.5, 0);
 		$HealthMonitor.update_health_no_signal($HealthMonitor.max_health);

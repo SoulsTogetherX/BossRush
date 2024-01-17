@@ -8,6 +8,7 @@ const CROSS_HAIR_TEXTURE : CompressedTexture2D = preload("res://assets/sprites/c
 @export var fly_nodes : Node;
 @export var center_node : Sprite2D;
 @export var door_hide : Node;
+@export var door : Node;
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -62,14 +63,27 @@ func die() -> void:
 	
 	_play_hurt();
 	_animation_player.queue("dead");
+	
+	await get_tree().create_timer(1.33 + 0.6).timeout;
+	
+	door_hide.visible = true;
+	door.open_doors();
+	
+	primary_attack.reset();
+	secondary_attack.reset();
+	tertiary_attack.reset();
+	_reward_manager._spawn_orbs(self);
 
-func _on_hit(_hitbox: HitBox) -> void:
+func _on_hit(hitbox: HitBox) -> void:
 	if _waiting:
 		_waiting = false;
 		door_hide.visible = false;
+		door.close_doors();
+		$HealthMonitor.update_health_no_signal($HealthMonitor.max_health);
 	
 	$hurt.play_random();
-	$Confetti_hit.rotation = (global_position - PlayerInfo.player.global_position).angle();
+	$Confetti_hit.global_rotation = (global_position - PlayerInfo.player.global_position).angle();
+	
 	$scared_timer.stop();
 	$sequence_timer.stop();
 	_stun();
@@ -125,7 +139,7 @@ func _float_over(pos : Vector2) -> void:
 	_float_tween.tween_property(self, "global_position", global_position + (Vector2.UP * float_height), 0.5);
 	_float_tween.tween_property(self, "global_position", pos + (Vector2.UP * float_height), 1.0).set_delay(0.2);
 	_float_tween.tween_property(self, "global_position", pos, 0.5).set_delay(0.2);
-	_float_tween.tween_callback(_animation_player.play.bind("float_end"));
+	_float_tween.tween_callback(_play_float_end);
 	_float_tween.tween_callback($float_timer.stop);
 	_float_tween.tween_property($land_particles, "emitting", true, 0.0).set_delay(0.2);
 	
@@ -142,6 +156,11 @@ func _float_over(pos : Vector2) -> void:
 	tween.tween_property(sprite, "position", up, 0.2);
 	tween.tween_property(sprite, "position", down, 0.2);
 	tween.tween_property(sprite, "position", stand, 0.5);
+
+func _play_float_end() -> void:
+	_animation_player.play("float_end");
+	if !$scared_timer.is_stopped():
+		_animation_player.queue("scared_start");
 
 func forward_atttack_start() -> void:
 	if !$scared_timer.is_stopped():
@@ -269,11 +288,11 @@ func burn_ground() -> void:
 
 func lower_shield() -> void:
 	_sprite.material.set_shader_parameter("color", Color("#60ffff00"));
-	$hurt_box.toggle_hurtbox(true);
+	super();
 func up_shield() -> void:
 	var tw : Tween = create_tween();
 	tw.tween_property(_sprite.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
-	$hurt_box.toggle_hurtbox(false);
+	super();
 
 func _reset_all() -> void:
 	$slime_timer.stop();
@@ -284,4 +303,4 @@ func _reset_all() -> void:
 	_reset_sequence();
 
 func get_skills() -> Array[Exchangable]:
-	return [primary_attack, health_handle, load("res://assets/resources/instances/exchangable/leshy/Nature Dash_Reward.tres")]
+	return [health_handle, preload("res://assets/resources/instances/exchangable/Shaka/Fireforward_reward.tres"), preload("res://assets/resources/instances/exchangable/Shaka/FireWave_reward.tres"), preload("res://assets/resources/instances/exchangable/Shaka/SlimeSpawn_reward.tres")]

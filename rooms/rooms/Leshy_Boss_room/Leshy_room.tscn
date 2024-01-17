@@ -55,7 +55,7 @@ size = Vector2(26, 167)
 radius = 28.0
 height = 70.0
 
-[sub_resource type="Resource" id="Resource_b0x4c"]
+[sub_resource type="Resource" id="Resource_f6wr6"]
 resource_local_to_scene = true
 script = ExtResource("12_yb5iw")
 spawn_entity = ExtResource("13_3r2jt")
@@ -651,7 +651,7 @@ shape = SubResource("CapsuleShape2D_0lp45")
 
 [node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
 position = Vector2(318, -23)
-secondary_attack = SubResource("Resource_b0x4c")
+secondary_attack = SubResource("Resource_f6wr6")
 
 [node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "_reward_manager") instance=ExtResource("3_qsitx")]
 position = Vector2(-17, -3)

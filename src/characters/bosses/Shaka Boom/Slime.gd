@@ -3,12 +3,18 @@ class_name Slime_Shaka extends ExchangeType
 const PUDDLE : CompressedTexture2D = preload("res://assets/sprites/characters/bosses/shaka boom/slime_trail.png");
 
 @export var attack_speed : float = 0.5;
+@export var follow_distance : float = 500:
+	get:
+		return sqrt(follow_distance);
+	set(val):
+		follow_distance = val * val;
 
 @warning_ignore("unused_private_class_variable")
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer;
 @onready var _knock_back : Node = $StateOverhead/StateMachine/knock_back;
 
 var _target : ExchangeType;
+var _leader : ExchangeType;
 var _dead : bool = false;
 var _base_color : Color;
 
@@ -17,9 +23,11 @@ func _ready() -> void:
 	
 	if alignment == HurtBox.ALIGNMENT.ENEMY:
 		_target = PlayerInfo.player;
+		_leader = PlayerInfo.boss;
 		_base_color = Color.WHITE;
 	else:
 		_target = PlayerInfo.boss;
+		_leader = PlayerInfo.player;
 		_base_color = Color(1.0, 1.0, 0, 1.0);
 	
 	modulate = _base_color;
@@ -76,6 +84,11 @@ func create_puddle() -> void:
 
 func _on_hit(hitbox: HitBox) -> void:
 	_knock_back.set_knock_back(hitbox, _target, _dead);
+	$hit_goop.global_rotation = (global_position - _target.global_position).angle();
+	$hit_goop.emitting = true;
+	
+	$hit_towards_part.global_rotation = (_target.global_position - global_position).angle();
+	$hit_towards_part.emitting = true;
 
 func _on_player_hit(_hurtbox: HurtBox) -> void:
 	var box : HitBox = $hitbox;

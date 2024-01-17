@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bxtp8uggorlqb"]
+[gd_scene load_steps=47 format=3 uid="uid://bxtp8uggorlqb"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Shaka.gd" id="1_g7w81"]
 [ext_resource type="Resource" uid="uid://uu34agn4p5h2" path="res://assets/resources/instances/exchangable/Shaka/SlimeSpawn.tres" id="2_5vtxt"]
@@ -7,8 +7,8 @@
 [ext_resource type="Resource" uid="uid://b5fqyujx7sk7p" path="res://assets/resources/instances/exchangable/Shaka/FireWave.tres" id="3_lv8ki"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="3_p85wp"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_bqvej"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="4_vtaru"]
 [ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="5_1s86t"]
+[ext_resource type="Resource" uid="uid://ca2myvsaqo8ww" path="res://assets/resources/instances/exchangable/Shaka/Heated Health.tres" id="5_y5xu3"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="6_u6ngt"]
 [ext_resource type="Texture2D" uid="uid://y7x2t0ikfm5a" path="res://assets/sprites/characters/bosses/shaka boom/confetti.png" id="13_iscfk"]
 [ext_resource type="AudioStream" uid="uid://bmoxov8qfn7iq" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka Hit v2.ogg" id="14_ko83a"]
@@ -20,12 +20,6 @@
 [ext_resource type="AudioStream" uid="uid://dd7oa74ypcvjg" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka voice hit 3.ogg" id="18_5hsi6"]
 [ext_resource type="AudioStream" uid="uid://xl7bushu5b3b" path="res://assets/sounds/effects/boss/shaka/shaka/voice/anger/Shaka Angry 2 fixed.ogg" id="18_gd640"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="19_bmu3j"]
-
-[sub_resource type="Resource" id="Resource_gvvjl"]
-script = ExtResource("4_vtaru")
-max_health = 6
-name = ""
-symbol = 0
 
 [sub_resource type="Animation" id="Animation_o7wyk"]
 length = 0.001
@@ -201,6 +195,7 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_ivxd4"]
 resource_name = "dead"
 length = 10.0
+step = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -878,6 +873,14 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="Gradient" id="Gradient_k0yyx"]
 colors = PackedColorArray(0.537011, 0.537011, 0.537011, 1, 1, 1, 1, 1)
 
+[sub_resource type="Gradient" id="Gradient_r0kjr"]
+offsets = PackedFloat32Array(0.00687285, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_0rc0m"]
+offsets = PackedFloat32Array(0.00687285, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.581033, 0.581033, 0.581033, 1)
+
 [node name="Shaka" type="CharacterBody2D" node_paths=PackedStringArray("_sprite")]
 y_sort_enabled = true
 collision_layer = 520
@@ -887,7 +890,7 @@ _sprite = NodePath("Node2D/Sprite2D")
 alignment = 1
 primary_attack = ExtResource("2_5vtxt")
 secondary_attack = ExtResource("3_lv8ki")
-health_handle = SubResource("Resource_gvvjl")
+health_handle = ExtResource("5_y5xu3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1068,6 +1071,29 @@ scale_amount_min = 0.3
 scale_amount_max = 0.5
 color_ramp = SubResource("Gradient_3ene5")
 color_initial_ramp = SubResource("Gradient_k0yyx")
+
+[node name="hit_towards_part" type="CPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(0, -86)
+scale = Vector2(1, 0.5)
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+emission_shape = 4
+emission_points = PackedVector2Array(23, 0)
+emission_colors = PackedColorArray()
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 110.0
+damping_min = 300.0
+damping_max = 300.0
+angle_max = 360.0
+color = Color(1, 1, 0.533333, 1)
+color_ramp = SubResource("Gradient_r0kjr")
+color_initial_ramp = SubResource("Gradient_0rc0m")
 
 [node name="hurt_background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_ko83a")

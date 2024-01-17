@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="AttackRange" load_steps=5 format=3 uid="uid://dfn4fxb1f48cj"]
+[gd_resource type="Resource" script_class="BurstAttack" load_steps=5 format=3 uid="uid://dry72kptj2vv0"]
 
 [ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="1_2dtpc"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/burstFire.gd" id="1_bvipn"]
 [ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_ec0w6"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_range.gd" id="3_2m1qq"]
 
-[sub_resource type="Resource" id="Resource_5obuq"]
+[sub_resource type="Resource" id="Resource_51qva"]
 script = ExtResource("2_ec0w6")
 protectile = ExtResource("1_2dtpc")
 fire_range = 1000.0
@@ -12,11 +12,14 @@ speed = 400.0
 fade_after = -1.0
 
 [resource]
-script = ExtResource("3_2m1qq")
-launch = SubResource("Resource_5obuq")
-offset = 5.0
+script = ExtResource("1_bvipn")
+spawn_delay = 0.1
+projectiles = 6
+aimable = true
+launch = SubResource("Resource_51qva")
+offset = 0.0
 weapon_range = 0.0
 delta = -1
-cooldown = 0.1
-name = "Forward Fire"
+cooldown = 0.0
+name = "Fire Gatling"
 symbol = 0

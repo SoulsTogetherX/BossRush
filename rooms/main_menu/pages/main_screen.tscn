@@ -1,11 +1,77 @@
-[gd_scene load_steps=2 format=3 uid="uid://pafu0lxpcl8w"]
+[gd_scene load_steps=11 format=3 uid="uid://pafu0lxpcl8w"]
 
 [ext_resource type="Script" path="res://rooms/main_menu/pages/main_screen.gd" id="1_qqh0d"]
+[ext_resource type="Texture2D" uid="uid://brytgnlcey3yv" path="res://assets/sprites/menu_screen/Start Screen.png" id="2_b0bbt"]
+[ext_resource type="Shader" path="res://assets/shaders/dark_boarders.gdshader" id="2_kui23"]
+[ext_resource type="Script" path="res://custom_nodes/AnimatedTextureRect/TextureRect.gd" id="2_x20kv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kcare"]
+shader = ExtResource("2_kui23")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qej31"]
+atlas = ExtResource("2_b0bbt")
+region = Rect2(2560, 0, 1280, 720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1onna"]
+atlas = ExtResource("2_b0bbt")
+region = Rect2(0, 0, 1280, 720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qifrp"]
+atlas = ExtResource("2_b0bbt")
+region = Rect2(1280, 0, 1280, 720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ksbg"]
+atlas = ExtResource("2_b0bbt")
+region = Rect2(3840, 0, 1280, 720)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0vkd8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1onna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qifrp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qej31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ksbg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
 
 [node name="MainScreen" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_qqh0d")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_kcare")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_qej31")
+expand_mode = 2
+stretch_mode = 1
+script = ExtResource("2_x20kv")
+sprites = SubResource("SpriteFrames_0vkd8")
+autoplay = true
+Animation = "default"
+Frame = 2
+"Speed Scale" = 1.0
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0

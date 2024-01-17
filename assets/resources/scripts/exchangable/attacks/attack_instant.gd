@@ -31,8 +31,10 @@ func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT)
 			sorted.append([from.global_position.distance_squared_to(result.collider.global_position), result]);
 		sorted.sort_custom(_sort_distances);
 		
+		var ret : Array[Node2D] = [];
 		for idx in min(sorted.size(), attack_num):
-			results[idx].collider.damage(delta, alignment);
+			ret.append(results[idx].collider);
+			ret.back().damage(delta, alignment);
 	
 	query.collision_mask = 1;
 	query.collide_with_areas = false;

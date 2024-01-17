@@ -1,10 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://6wo1ybgdo3ao"]
+[gd_scene load_steps=14 format=3 uid="uid://6wo1ybgdo3ao"]
 
-[ext_resource type="Script" path="res://src/weapons/weapon.gd" id="1_p3bvg"]
+[ext_resource type="Script" path="res://src/weapons/sword.gd" id="1_0rltq"]
 [ext_resource type="Texture2D" uid="uid://dmn4krji7uk2a" path="res://assets/sprites/weapons/Doggo Sword.png" id="2_lqugk"]
 [ext_resource type="AudioStream" uid="uid://bsdnc6ie8lqs" path="res://assets/sounds/effects/weapon/sword/Sword_swipe.wav" id="3_pmjit"]
 [ext_resource type="AudioStream" uid="uid://bfaromemu3x8g" path="res://assets/sounds/effects/weapon/sword/Sword_hit_person.wav" id="4_id4k8"]
 [ext_resource type="AudioStream" uid="uid://dyvtnf8gfbo51" path="res://assets/sounds/effects/weapon/sword/Sword_hit.wav" id="5_hau5x"]
+[ext_resource type="Script" path="res://custom_nodes/trail/trail.gd" id="6_ldpvk"]
+
+[sub_resource type="Curve" id="Curve_x8vsy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.65861, 0.752086), 1.38081, 1.38081, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_paawi"]
+offsets = PackedFloat32Array(0.00343643, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="Animation" id="Animation_7tvti"]
 resource_name = "RESET"
@@ -30,13 +39,37 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(14, -1.5)]
+"values": [Vector2(27, -6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("trail_emiter:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(33, -23)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("trail:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_78t0i"]
 resource_name = "attack"
 length = 0.25
-step = 0.05
+step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -61,6 +94,30 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(27, -8.5), Vector2(33, -12.5), Vector2(49, -15.5), Vector2(37, -5.5), Vector2(27, -8.5)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("trail_emiter:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.075, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(33, -23), Vector2(39, -27), Vector2(55, -11), Vector2(55, 9), Vector2(43, 19), Vector2(33, 16)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("trail:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_b64qb"]
 resource_name = "idle"
@@ -76,6 +133,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(27, -6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("trail:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ln6qv"]
 _data = {
@@ -84,13 +165,29 @@ _data = {
 "idle": SubResource("Animation_b64qb")
 }
 
+[sub_resource type="Gradient" id="Gradient_u8lu2"]
+offsets = PackedFloat32Array(0, 0.487972, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("sounds")]
 z_index = 1
-script = ExtResource("1_p3bvg")
+script = ExtResource("1_0rltq")
 sounds = [NodePath("hit_person"), NodePath("hit_wall"), NodePath("swipe")]
 
+[node name="trail" type="Line2D" parent="." node_paths=PackedStringArray("follow")]
+show_behind_parent = true
+top_level = true
+z_index = -1
+width = 20.0
+width_curve = SubResource("Curve_x8vsy")
+gradient = SubResource("Gradient_paawi")
+script = ExtResource("6_ldpvk")
+follow = NodePath("../trail_emiter")
+trailLength = 6
+emitting = false
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(14, -1.5)
+position = Vector2(27, -6)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_lqugk")
 hframes = 8
@@ -104,10 +201,6 @@ next/attack = &"idle"
 [node name="Center" type="Marker2D" parent="."]
 position = Vector2(28, 0)
 
-[node name="swipe" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_pmjit")
-bus = &"Sound"
-
 [node name="hit_person" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_id4k8")
 bus = &"Sound"
@@ -115,3 +208,36 @@ bus = &"Sound"
 [node name="hit_wall" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_hau5x")
 bus = &"Sound"
+
+[node name="swipe" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pmjit")
+bus = &"Sound"
+
+[node name="trail_emiter" type="Marker2D" parent="."]
+position = Vector2(33, -23)
+
+[node name="hit_particle" type="CPUParticles2D" parent="."]
+position = Vector2(40, 0)
+emitting = false
+amount = 25
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+spread = 30.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 120.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+orbit_velocity_min = -1.0
+orbit_velocity_max = 1.0
+radial_accel_min = -20.0
+radial_accel_max = 20.0
+damping_min = 300.0
+damping_max = 300.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+color = Color(0.341176, 0.341176, 0.341176, 1)
+color_ramp = SubResource("Gradient_u8lu2")

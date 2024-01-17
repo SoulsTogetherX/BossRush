@@ -8,17 +8,17 @@ var _knockback_tween : Tween;
 func get_id():
 	return "knock_back";
 
-func update() -> State:
-	_knock_back = Vector2.ZERO;
-	if _actor.alignment == HurtBox.ALIGNMENT.ENEMY:
-		return move;
-	return move;
-
 func process_physics(_delta: float) -> State:
 	_actor.velocity = _knock_back;
 	_actor.move_and_slide();
 	
 	return null;
+
+func update() -> State:
+	_knock_back = Vector2.ZERO;
+	if _actor.alignment == HurtBox.ALIGNMENT.ENEMY:
+		return move;
+	return move;
 
 func set_knock_back(at : Node2D, from : Node2D, dead : bool) -> void:
 	if _knockback_tween:

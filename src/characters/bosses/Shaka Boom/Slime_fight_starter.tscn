@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://biqw288dtjd3a"]
+[gd_scene load_steps=42 format=3 uid="uid://biqw288dtjd3a"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Slime_fight_starter.gd" id="1_n6asj"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_h5ujy"]
@@ -37,6 +37,22 @@ point_count = 3
 [sub_resource type="Gradient" id="Gradient_eyydu"]
 offsets = PackedFloat32Array(0, 0.914089, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_2838f"]
+_data = [Vector2(0.00626959, 1), 0.0, 0.0, 0, 0, Vector2(0.862069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_e8wvp"]
+offsets = PackedFloat32Array(0, 0.762887, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_kjed6"]
+offsets = PackedFloat32Array(0.00687285, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_sexbq"]
+offsets = PackedFloat32Array(0.00687285, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.581033, 0.581033, 0.581033, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bg2rr"]
 radius = 12.0
@@ -445,6 +461,53 @@ scale_amount_curve = SubResource("Curve_fp5lu")
 color = Color(0.788235, 0.788235, 0.788235, 1)
 color_initial_ramp = SubResource("Gradient_eyydu")
 
+[node name="hit_goop" type="CPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(0, -22)
+emitting = false
+amount = 10
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("4_qirib")
+emission_shape = 2
+emission_sphere_radius = 10.0
+spread = 15.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 400.0
+initial_velocity_max = 600.0
+damping_min = 1000.0
+damping_max = 1000.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_2838f")
+color = Color(0.890196, 0.890196, 0.890196, 1)
+color_ramp = SubResource("Gradient_e8wvp")
+
+[node name="hit_towards_part" type="CPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(0, -10)
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+emission_shape = 4
+emission_points = PackedVector2Array(23, 0)
+emission_colors = PackedColorArray()
+spread = 15.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 110.0
+damping_min = 300.0
+damping_max = 300.0
+angle_max = 360.0
+color = Color(1, 1, 0.533333, 1)
+color_ramp = SubResource("Gradient_kjed6")
+color_initial_ramp = SubResource("Gradient_sexbq")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -19)
 texture = ExtResource("5_txhk1")
@@ -463,6 +526,10 @@ shape = SubResource("CapsuleShape2D_bg2rr")
 disabled = true
 
 [node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("7_16ott")
 
 [node name="hit_area" type="Area2D" parent="."]

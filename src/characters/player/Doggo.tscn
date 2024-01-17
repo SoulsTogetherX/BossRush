@@ -1,7 +1,6 @@
-[gd_scene load_steps=44 format=3 uid="uid://g022ma38jmtk"]
+[gd_scene load_steps=43 format=3 uid="uid://g022ma38jmtk"]
 
 [ext_resource type="Script" path="res://src/characters/player/Doggo.gd" id="1_621w4"]
-[ext_resource type="Resource" uid="uid://lm4b0m5tgkup" path="res://assets/resources/instances/exchangable/Shaka/SlimeSpawn_reward.tres" id="2_oc8nr"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="2_rfwko"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="3_bejcr"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_h4e8u"]
@@ -774,7 +773,6 @@ collision_mask = 577
 motion_mode = 1
 script = ExtResource("1_621w4")
 _sprite = NodePath("Node2D/main")
-secondary_attack = ExtResource("2_oc8nr")
 
 [node name="dash_particles" type="CPUParticles2D" parent="."]
 position = Vector2(0, 10)
