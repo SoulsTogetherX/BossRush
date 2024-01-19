@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://cd6retw663av0"]
+[gd_scene load_steps=61 format=3 uid="uid://cd6retw663av0"]
 
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
 [ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
@@ -29,6 +29,32 @@
 [ext_resource type="AudioStream" uid="uid://pr5v3y3ovf21" path="res://assets/sounds/effects/player/footsteps/player/old/step_1.ogg" id="24_5ih3q"]
 [ext_resource type="AudioStream" uid="uid://b8joqu2onjulo" path="res://assets/sounds/effects/player/footsteps/player/old/step_2.ogg" id="25_ku33r"]
 [ext_resource type="AudioStream" uid="uid://dsqxrqh6xciyq" path="res://assets/sounds/effects/player/footsteps/player/old/step_3.ogg" id="26_6aamk"]
+
+[sub_resource type="Gradient" id="Gradient_mms7y"]
+offsets = PackedFloat32Array(0, 0.462366, 1)
+colors = PackedColorArray(0, 0.541176, 0, 1, 0, 0.360784, 0, 0.67451, 0, 0.14902, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1506l"]
+gradient = SubResource("Gradient_mms7y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5olhk"]
+particle_flag_disable_z = true
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 600.0
+initial_velocity_max = 1000.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 500.0
+damping_max = 500.0
+attractor_interaction_enabled = false
+scale_min = 2.0
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_1506l")
+turbulence_noise_strength = 20.0
 
 [sub_resource type="Gradient" id="Gradient_g7otn"]
 offsets = PackedFloat32Array(0, 0.690722, 1)
@@ -1579,6 +1605,15 @@ primary_attack = ExtResource("2_w004h")
 health_handle = ExtResource("3_r63ch")
 primary_movement = ExtResource("4_6umem")
 
+[node name="hit_particles" type="GPUParticles2D" parent="."]
+top_level = true
+position = Vector2(0, -34)
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_5olhk")
+one_shot = true
+explosiveness = 1.0
+
 [node name="dash_particles" type="CPUParticles2D" parent="."]
 z_index = -1
 emitting = false
@@ -1817,5 +1852,6 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_sc68m")
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]
+[connection signal="hit" from="hitbox" to="." method="_on_player_hit"]
 [connection signal="killed" from="HealthMonitor" to="." method="die"]
 [connection signal="timeout" from="sequence_timer" to="." method="_next_sequence"]

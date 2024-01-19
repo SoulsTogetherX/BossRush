@@ -422,6 +422,10 @@ _sprite = NodePath("Sprite2D")
 alignment = 1
 health_handle = SubResource("Resource_e2ape")
 
+[node name="hit_particles" type="GPUParticles2D" parent="."]
+top_level = true
+emitting = false
+
 [node name="trail" type="CPUParticles2D" parent="."]
 z_index = -2
 position = Vector2(0, -10)

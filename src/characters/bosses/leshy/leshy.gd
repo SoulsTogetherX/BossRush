@@ -269,3 +269,8 @@ func swap(toggle : bool) -> void:
 
 func get_skills() -> Array[Exchangable]:
 	return [primary_attack, health_handle, load("res://assets/resources/instances/exchangable/leshy/Nature Dash_Reward.tres")]
+
+func _on_player_hit(_hurtbox: HurtBox) -> void:
+	$hit_particles.restart();
+	$hit_particles.global_position = PlayerInfo.player.global_position;
+	$hit_particles.emitting = true;

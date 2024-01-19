@@ -54,6 +54,10 @@ func die() -> void:
 	
 	$StateOverhead.change_state("main", "dead");
 	_dead = true;
+	
+	if $hit_particles.emitting:
+		$hit_particles.finished.connect($hit_particles.queue_free, CONNECT_ONE_SHOT);
+		$hit_particles.reparent(get_tree().current_scene);
 
 func toggle_trail(toggle : bool) -> void:
 	$trail.emitting = toggle;
@@ -97,3 +101,7 @@ func _on_player_hit(_hurtbox: HurtBox) -> void:
 	var box : HitBox = $hitbox;
 	remove_child(box);
 	get_tree().create_timer(attack_speed).timeout.connect(add_child.bind(box));
+	
+	$hit_particles.restart();
+	$hit_particles.global_position = PlayerInfo.player.global_position;
+	$hit_particles.emitting = true;

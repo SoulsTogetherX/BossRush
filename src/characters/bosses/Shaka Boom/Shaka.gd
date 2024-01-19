@@ -65,7 +65,50 @@ func _ready() -> void:
 	up_shield();
 
 func _normal_mode_stage_1() -> void:
-	_slime_count = 4 + _health_monitor.health_missing() * 3;
+	_slime_count = 6 + _health_monitor.health_missing() * 3;
+	$slime_timer.wait_time = 0.1;
+	_clear_sequence();
+	_add_to_sequence(summon_slimes_start_hard, INF);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.RANDOM, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_start, 0.7);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.RANDOM, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_start, 0.7);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(idle, 0.5);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.INNER, 0.25), 2.4 * 0.25);
+	_add_to_sequence(idle, 0.5);
+	_add_to_sequence(fourway_atttack_start, 3.0);
+	_add_to_sequence(fourway_atttack_end, 0.01);
+
+	_add_to_sequence(idle, 0.5);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.RANDOM, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_start, 0.7);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.RANDOM, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_start, 0.7);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(idle, 0.5);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.RANDOM, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_start, 0.7);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.RANDOM, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_start, 0.7);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(idle, 0.5);
+
+func _normal_mode_stage_2() -> void:
+	_slime_count = 6 + _health_monitor.health_missing() * 3;
 	$slime_timer.wait_time = 0.25;
 	_clear_sequence();
 	_add_to_sequence(summon_slimes_start_hard, INF);
@@ -73,33 +116,35 @@ func _normal_mode_stage_1() -> void:
 	
 	_add_to_sequence(idle, 1.0);
 	
-	_add_to_sequence(forward_atttack_start, 0.7);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.5), 2.4 * 0.5);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.5), 2.4 * 0.5);
+	_add_to_sequence(forward_atttack_start.bind(true), 0.7);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(idle, 2.0);
+	
+	_add_to_sequence(forward_atttack_start.bind(true), 0.7);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.25), 2.4 * 0.25);
+	_add_to_sequence(forward_atttack_end, 0.01);
+	
+	_add_to_sequence(idle, 2.0);
+	
+	_add_to_sequence(forward_atttack_start.bind(true), 0.7);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
 	_add_to_sequence(forward_atttack_end, 0.01);
 	
 	_add_to_sequence(idle, 1.0);
-	
-	_add_to_sequence(forward_atttack_start, 0.7);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.5), 2.4 * 0.5);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.5), 2.4 * 0.5);
-	_add_to_sequence(forward_atttack_end, 0.01);
 	
 	_add_to_sequence(pick_float.bind(FLOAT_PICK.INNER, 0.25), 2.4 * 0.25);
-	_add_to_sequence(idle, 1.0);
-	_add_to_sequence(fourway_atttack_start, 4.0);
+	_add_to_sequence(idle, 0.5);
+	_add_to_sequence(fourway_atttack_start, 3.0);
 	_add_to_sequence(fourway_atttack_end, 0.01);
-	
-	_add_to_sequence(forward_atttack_start, 0.01);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.5), 2.4 * 0.5);
-	_add_to_sequence(forward_atttack_end, 0.01);
-	
-	_add_to_sequence(idle, 1.0);
 
-func _normal_mode_stage_2() -> void:
-	_slime_count = _health_monitor.health_missing() * 3;
-	$slime_timer.wait_time = 2;
-	
+	_add_to_sequence(idle, 2.0);
 	
 
 func _hard_mode_stage_1() -> void:
@@ -560,7 +605,7 @@ func scared_start() -> void:
 		$scared_timer.wait_time = INF;
 		_fitst_scared = false;
 	else:
-		$scared_timer.wait_time = 3.0 - (1.0 * float(PlayerInfo.hard_mode != PlayerInfo.DIFFICULTY.EASY));
+		$scared_timer.wait_time = 3.0 - (0.5 * float(PlayerInfo.hard_mode));
 	
 	if add_arrow:
 		summon_arrow();

@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bql8akhayh121"]
+[gd_scene load_steps=51 format=3 uid="uid://bql8akhayh121"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.gd" id="1_adhuu"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_nbk6d"]
@@ -33,6 +33,32 @@ script = ExtResource("2_nbk6d")
 max_health = 3
 name = ""
 symbol = 0
+
+[sub_resource type="Gradient" id="Gradient_tpru6"]
+offsets = PackedFloat32Array(0, 0.426523, 1)
+colors = PackedColorArray(0.137255, 0.827451, 0.188235, 1, 0, 0.403922, 0, 0.67451, 0, 0.196078, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u6q03"]
+gradient = SubResource("Gradient_tpru6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_22da3"]
+particle_flag_disable_z = true
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 600.0
+initial_velocity_max = 1000.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 500.0
+damping_max = 500.0
+attractor_interaction_enabled = false
+scale_min = 2.0
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_u6q03")
+turbulence_noise_strength = 20.0
 
 [sub_resource type="Curve" id="Curve_fp5lu"]
 _data = [Vector2(0.00626959, 1), 0.0, 0.0, 0, 0, Vector2(0.862069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -502,6 +528,14 @@ follow_distance = 7000.0
 _sprite = NodePath("Sprite2D")
 health_handle = SubResource("Resource_v0xmn")
 primary_movement = ExtResource("3_q6q2o")
+
+[node name="hit_particles" type="GPUParticles2D" parent="."]
+top_level = true
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_22da3")
+one_shot = true
+explosiveness = 1.0
 
 [node name="trail" type="CPUParticles2D" parent="."]
 z_index = -2

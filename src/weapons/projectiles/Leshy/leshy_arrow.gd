@@ -13,7 +13,7 @@ func set_alignment(allign : HurtBox.ALIGNMENT) -> void:
 func on_collide(_hurtbox : HurtBox) -> void:
 	if $hit_particles:
 		$hit_particles.emitting = true;
-		$wall_hit_particles.finished.connect($wall_hit_particles.queue_free, CONNECT_ONE_SHOT);
+		$hit_particles.finished.connect($hit_particles.queue_free, CONNECT_ONE_SHOT);
 		$hit_particles.reparent(get_tree().current_scene);
 	await _sound();
 	super(_hurtbox);
