@@ -15,14 +15,18 @@ func _ready() -> void:
 		primary_attack.summoned.connect(register_slime);
 	if secondary_attack is SpawnAttack:
 		secondary_attack.summoned.connect(register_slime);
+	
+	$StateOverhead.set_process_unhandled_input(false);
+	$StateOverhead.set_process(false);
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack1"):
 		if primary_attack:
-			primary_attack.handle_attack((PlayerInfo.weapon as Node2D) if PlayerInfo.weapon else (self as Node2D), get_global_mouse_position(), alignment);
+			var fire_pos : Node2D = (PlayerInfo.weapon as Node2D) if PlayerInfo.weapon else (self as Node2D);
+			primary_attack.handle_attack(fire_pos, fire_pos.get_center(), get_global_mouse_position(), alignment);
 	elif event.is_action_pressed("attack2"):
 		if secondary_attack:
-			secondary_attack.handle_attack((self as Node2D), get_global_mouse_position(), alignment);
+			secondary_attack.handle_attack((self as Node2D), get_center(), get_global_mouse_position(), alignment);
 
 func get_input() -> Vector2:
 	return Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized();

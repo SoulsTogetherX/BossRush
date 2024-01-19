@@ -33,6 +33,9 @@ func _ready() -> void:
 	modulate = _base_color;
 	$hurt_box.alignment = alignment;
 	$hitbox.alignment = alignment;
+	
+	$StateOverhead.set_process_unhandled_input(false);
+	$StateOverhead.set_process(false);
 
 func die() -> void:
 	if $trail == null:
@@ -93,5 +96,4 @@ func _on_hit(hitbox: HitBox) -> void:
 func _on_player_hit(_hurtbox: HurtBox) -> void:
 	var box : HitBox = $hitbox;
 	remove_child(box);
-	await get_tree().create_timer(attack_speed).timeout;
-	add_child(box);
+	get_tree().create_timer(attack_speed).timeout.connect(add_child.bind(box));

@@ -10,12 +10,13 @@ protectile = ExtResource("1_vfp6g")
 fire_range = 300.0
 speed = 200.0
 fade_after = 250.0
+fade_before = -1.0
 
 [resource]
 script = ExtResource("1_3u301")
 spawn_delay = 0.1
 ring_count = 2
-projectiles = 30
+projectiles = 60
 launch = SubResource("Resource_7gwc8")
 offset = 10.0
 weapon_range = 0.0

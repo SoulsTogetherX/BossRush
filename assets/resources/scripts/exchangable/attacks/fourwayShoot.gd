@@ -16,31 +16,35 @@ func clear_timers() -> void:
 			timer.timeout.disconnect(four_fire);
 	timers.clear();
 
-func _on_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+func _on_attack(from : Node2D, start : Vector2, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if ring_count <= 0 || projectiles <= 0:
 		return;
 	clear_timers();
 	
-	var angle : float = (target - from.get_center()).angle();
+	var angle : float = (target - start).angle();
 	var angle_offset : float = (0.0 if (projectiles == 1) else (PI / projectiles));
 	
 	if spawn_delay > 0:
 		var delay : float = 0;
 		for idx in ring_count:
 			timers.append(from.get_tree().create_timer(delay));
-			timers.back().timeout.connect(four_fire.bind(from.get_tree().current_scene, from.get_center(), angle, alignment));
+			timers.back().timeout.connect(four_fire.bind(from.get_tree().current_scene, start, angle, alignment));
 			delay += spawn_delay;
 			angle += angle_offset;
 	else:
-		four_fire(from.get_tree().current_scene, from.get_center(), angle, alignment);
+		four_fire(from.get_tree().current_scene, start, angle, alignment);
 		if ring_count > 1:
-			four_fire(from.get_tree().current_scene, from.get_center(), angle + offset, alignment);
+			four_fire(from.get_tree().current_scene, start, angle + offset, alignment);
 
 func four_fire(parent : Node2D, pos : Vector2, angle : float, alignment : HurtBox.ALIGNMENT) -> void:
-	var angle_offset : float = 0.0 if projectiles <= 0 else TAU / projectiles;
+	var angle_offset : float = 0.0 if projectiles <= 0 else (TAU / projectiles);
 	for idx in projectiles:
 		var pro := launch.fire_protectile(parent, pos, offset, angle, true);
 		pro.set_alignment(alignment);
 		pro.set_delta(delta);
 		pro.activate();
+		
+		projectile_launched.emit(pro);
+		pro.destroyed.connect(_signal_projectil_destroyed, CONNECT_ONE_SHOT);
+		
 		angle += angle_offset;

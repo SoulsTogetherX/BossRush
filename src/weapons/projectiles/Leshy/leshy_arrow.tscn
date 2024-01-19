@@ -1,15 +1,38 @@
-[gd_scene load_steps=16 format=3 uid="uid://bs00uwofbh6wm"]
+[gd_scene load_steps=19 format=3 uid="uid://bs00uwofbh6wm"]
 
 [ext_resource type="Script" path="res://src/weapons/projectiles/Leshy/leshy_arrow.gd" id="1_e0qy1"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="2_aglto"]
 [ext_resource type="Texture2D" uid="uid://b17fqxh8qbi8i" path="res://assets/sprites/characters/bosses/leshy/Leshy Arow.png" id="2_erjfe"]
 [ext_resource type="Script" path="res://custom_nodes/trail/trail.gd" id="2_ks0nh"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_xldus"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="6_qabxc"]
 [ext_resource type="AudioStream" uid="uid://derni41h3vnwc" path="res://assets/sounds/effects/boss/leshy/arrow/Leshy Arrow Impact.ogg" id="7_xdlu4"]
 
 [sub_resource type="Curve" id="Curve_jptal"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.362538, 0.651371), 1.38081, 1.38081, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_36nhk"]
+offsets = PackedFloat32Array(0, 0.687296, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0uot6"]
+particle_flag_disable_z = true
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 600.0
+initial_velocity_max = 1000.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 500.0
+damping_max = 500.0
+attractor_interaction_enabled = false
+scale_min = 2.0
+scale_max = 10.0
+turbulence_noise_strength = 20.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uybh0"]
 resource_local_to_scene = true
@@ -102,6 +125,33 @@ script = ExtResource("2_ks0nh")
 follow = NodePath("..")
 trailLength = 16
 
+[node name="wall_hit_particles" type="CPUParticles2D" parent="."]
+position = Vector2(-7, 0)
+emitting = false
+amount = 25
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(-1, 0)
+spread = 60.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 350.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+damping_min = 200.0
+damping_max = 200.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_max = 4.0
+color_ramp = SubResource("Gradient_36nhk")
+
+[node name="hit_particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_0uot6")
+one_shot = true
+explosiveness = 1.0
+
 [node name="sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_uybh0")
 position = Vector2(3, 0)
@@ -133,6 +183,7 @@ scale = Vector2(1, 0.6)
 energy = 0.5
 texture = SubResource("GradientTexture2D_5rw6o")
 texture_scale = 5.0
+script = ExtResource("6_qabxc")
 
 [node name="impact" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_xdlu4")

@@ -1,6 +1,9 @@
 class_name HealthExchangable extends Exchangable
 
-@export var max_health : int = 15;
+@export var max_health : int = 15:
+	set(val):
+		max_health = val;
+		health = clampi(health, 0, max_health);
 var health : int = max_health;
 @export var _incincible : Invincibility = null:
 	set(val):

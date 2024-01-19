@@ -1,19 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://cvrfi64eypl2d"]
+[gd_scene load_steps=8 format=3 uid="uid://cvrfi64eypl2d"]
 
 [ext_resource type="Script" path="res://src/GUI/GUI.gd" id="1_qxsjj"]
 [ext_resource type="Script" path="res://src/GUI/Health_Display.gd" id="2_0xwye"]
-[ext_resource type="PackedScene" uid="uid://bfaf0bfxaldi7" path="res://src/GUI/player_exchanges.tscn" id="2_tqow3"]
+[ext_resource type="Shader" path="res://assets/shaders/blur_screen.gdshader" id="2_ce87h"]
 [ext_resource type="Texture2D" uid="uid://cpu1ltj78m2o1" path="res://assets/sprites/GUI/Health.png" id="3_fowhc"]
-[ext_resource type="Shader" path="res://assets/shaders/border_shader.gdshader" id="5_7bw31"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tldr2"]
-shader = ExtResource("5_7bw31")
+shader = ExtResource("2_ce87h")
+shader_parameter/amount = 0.0
+shader_parameter/darken = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ef6ag"]
+bg_color = Color(1, 1, 1, 0.313726)
+corner_radius_top_left = 100
+corner_radius_top_right = 25
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_oqwu3"]
+font_size = 50
 
 [node name="GUI" type="CanvasLayer"]
+process_mode = 3
 follow_viewport_enabled = true
 script = ExtResource("1_qxsjj")
 
-[node name="Control" type="Control" parent="."]
+[node name="PlayerGUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="borders" type="ColorRect" parent="Control"]
+[node name="borders" type="ColorRect" parent="PlayerGUI"]
 material = SubResource("ShaderMaterial_tldr2")
 layout_mode = 1
 anchors_preset = 15
@@ -33,7 +45,19 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.439216, 0.439216, 0.439216, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="darken" type="ColorRect" parent="PlayerGUI"]
+material = SubResource("ShaderMaterial_tldr2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="blur" type="ColorRect" parent="PlayerGUI"]
+material = SubResource("ShaderMaterial_tldr2")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,22 +66,84 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Top" type="Control" parent="Control/VBoxContainer"]
+[node name="PauseScreen" type="VBoxContainer" parent="PlayerGUI"]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopPadding" type="Control" parent="PlayerGUI/PauseScreen"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="MidSection" type="HBoxContainer" parent="PlayerGUI/PauseScreen"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeftPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="MainPanel" type="PanelContainer" parent="PlayerGUI/PauseScreen/MidSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_ef6ag")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="PlayerGUI/PauseScreen/MidSection/MainPanel"]
+layout_mode = 2
+
+[node name="TopPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.25
+
+[node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "The Game is Paused"
+label_settings = SubResource("LabelSettings_oqwu3")
+horizontal_alignment = 1
+
+[node name="RightPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="BottomPadding" type="Control" parent="PlayerGUI/PauseScreen"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="GameGUI" type="VBoxContainer" parent="PlayerGUI"]
+process_mode = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Top" type="Control" parent="PlayerGUI/GameGUI"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 20.0
 mouse_filter = 2
 
-[node name="PlayerExchanges" parent="Control/VBoxContainer/Top" instance=ExtResource("2_tqow3")]
-layout_mode = 1
-
-[node name="Bottom" type="Control" parent="Control/VBoxContainer"]
+[node name="Bottom" type="Control" parent="PlayerGUI/GameGUI"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_vertical = 10
 mouse_filter = 2
 
-[node name="Health_Display" type="Control" parent="Control/VBoxContainer/Bottom"]
+[node name="Health_Display" type="Control" parent="PlayerGUI/GameGUI/Bottom"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -66,7 +152,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_0xwye")
 
-[node name="Health_Back" type="TextureRect" parent="Control/VBoxContainer/Bottom/Health_Display"]
+[node name="Health_Back" type="TextureRect" parent="PlayerGUI/GameGUI/Bottom/Health_Display"]
 modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
@@ -78,7 +164,7 @@ texture = ExtResource("3_fowhc")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="Health" type="TextureRect" parent="Control/VBoxContainer/Bottom/Health_Display"]
+[node name="Health" type="TextureRect" parent="PlayerGUI/GameGUI/Bottom/Health_Display"]
 layout_mode = 1
 offset_right = 32.0
 offset_bottom = 32.0

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FlowMovement" load_steps=2 format=3 uid="uid://bxgo20ieyi1f7"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/movements/flow_movement.gd" id="1_t2487"]
+
+[resource]
+script = ExtResource("1_t2487")
+speed = 180
+friction = 0.05
+animation = "walk"
+name = "Fast Slime Crawl"
+symbol = 0

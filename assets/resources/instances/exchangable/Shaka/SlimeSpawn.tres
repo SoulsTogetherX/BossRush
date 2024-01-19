@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SpawnAttack" load_steps=3 format=3 uid="uid://uu34agn4p5h2"]
 
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="1_wsret"]
-[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/Slime.tscn" id="2_pcfp6"]
+[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.tscn" id="2_pcfp6"]
 
 [resource]
 resource_local_to_scene = true

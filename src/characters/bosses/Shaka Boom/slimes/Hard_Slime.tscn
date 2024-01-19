@@ -1,35 +1,35 @@
-[gd_scene load_steps=48 format=3 uid="uid://bql8akhayh121"]
+[gd_scene load_steps=48 format=3 uid="uid://fbb01ybfw24e"]
 
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Slime.gd" id="1_nbwbt"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_41e04"]
-[ext_resource type="Texture2D" uid="uid://k1iit618dj2h" path="res://assets/sprites/characters/bosses/shaka boom/Slime MegaSheet.png" id="3_3r83j"]
-[ext_resource type="Resource" uid="uid://2c0wuo38lug" path="res://assets/resources/instances/exchangable/Shaka/SlimeCrawl.tres" id="3_w3out"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_il4kr"]
-[ext_resource type="Texture2D" uid="uid://c8awle6sackfu" path="res://assets/sprites/characters/bosses/shaka boom/slime_trail.png" id="4_nr7cg"]
-[ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="5_oe48e"]
-[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="6_h85d6"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="8_y3rji"]
-[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="10_bymn8"]
-[ext_resource type="AudioStream" uid="uid://b67estg2bm20f" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 2.ogg" id="11_ajs0c"]
-[ext_resource type="AudioStream" uid="uid://xowbxil5um1m" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 3.ogg" id="12_b0404"]
-[ext_resource type="AudioStream" uid="uid://b5jo23j7wjsgd" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 4.ogg" id="13_022t6"]
-[ext_resource type="AudioStream" uid="uid://cu6ecl26t3408" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2.ogg" id="14_imv7n"]
-[ext_resource type="AudioStream" uid="uid://bn65o28uxgv4q" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 2.ogg" id="15_km3ks"]
-[ext_resource type="AudioStream" uid="uid://b5p685ccyafq7" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 3.ogg" id="16_q2mdo"]
-[ext_resource type="AudioStream" uid="uid://0wb6xdvseigv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 2.ogg" id="17_i7aqf"]
-[ext_resource type="AudioStream" uid="uid://6ldvea6e7mhv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 3.ogg" id="18_sbbtj"]
-[ext_resource type="AudioStream" uid="uid://bh5fnesmb6nns" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth.ogg" id="19_c3g7k"]
-[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="20_f6gjm"]
-[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="21_2rj54"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/spawn.gd" id="22_i3vki"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/idle.gd" id="22_i7tle"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/death.gd" id="23_s40jq"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/knock_back.gd" id="24_yml6j"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/move.gd" id="25_fjn8p"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/follow_leader.gd" id="26_ecfsr"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.gd" id="1_p6ep8"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_nyqqa"]
+[ext_resource type="Resource" uid="uid://bxgo20ieyi1f7" path="res://assets/resources/instances/exchangable/Shaka/Hard_Slime_Crawl.tres" id="3_4povy"]
+[ext_resource type="Texture2D" uid="uid://c8awle6sackfu" path="res://assets/sprites/characters/bosses/shaka boom/slime_trail.png" id="4_ldag2"]
+[ext_resource type="Texture2D" uid="uid://k1iit618dj2h" path="res://assets/sprites/characters/bosses/shaka boom/Slime MegaSheet.png" id="5_241sa"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="6_hhr82"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="7_3ueuu"]
+[ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="8_vu3c6"]
+[ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="9_hyms7"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="10_dlbon"]
+[ext_resource type="AudioStream" uid="uid://b67estg2bm20f" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 2.ogg" id="11_8asna"]
+[ext_resource type="AudioStream" uid="uid://xowbxil5um1m" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 3.ogg" id="12_v33be"]
+[ext_resource type="AudioStream" uid="uid://b5jo23j7wjsgd" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 4.ogg" id="13_ujs2h"]
+[ext_resource type="AudioStream" uid="uid://cu6ecl26t3408" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2.ogg" id="14_ymsj8"]
+[ext_resource type="AudioStream" uid="uid://bn65o28uxgv4q" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 2.ogg" id="15_lj8gl"]
+[ext_resource type="AudioStream" uid="uid://b5p685ccyafq7" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 3.ogg" id="16_ql6ee"]
+[ext_resource type="AudioStream" uid="uid://0wb6xdvseigv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 2.ogg" id="17_03vwo"]
+[ext_resource type="AudioStream" uid="uid://6ldvea6e7mhv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 3.ogg" id="18_aeheu"]
+[ext_resource type="AudioStream" uid="uid://bh5fnesmb6nns" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth.ogg" id="19_vj4sc"]
+[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="20_vewt2"]
+[ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="21_uagw0"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/spawn.gd" id="22_k4nh6"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/death.gd" id="23_qqbe6"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/idle.gd" id="24_hpes2"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/move.gd" id="25_mmqsg"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/follow_leader.gd" id="26_6fop4"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/knock_back.gd" id="27_smqig"]
 
 [sub_resource type="Resource" id="Resource_v0xmn"]
-script = ExtResource("2_41e04")
+script = ExtResource("2_nyqqa")
 max_health = 3
 name = ""
 symbol = 0
@@ -264,7 +264,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [22]
 }
 
@@ -497,11 +497,11 @@ fill_to = Vector2(0.5, 0)
 y_sort_enabled = true
 collision_layer = 256
 collision_mask = 257
-script = ExtResource("1_nbwbt")
+script = ExtResource("1_p6ep8")
 follow_distance = 7000.0
 _sprite = NodePath("Sprite2D")
 health_handle = SubResource("Resource_v0xmn")
-primary_movement = ExtResource("3_w3out")
+primary_movement = ExtResource("3_4povy")
 
 [node name="trail" type="CPUParticles2D" parent="."]
 z_index = -2
@@ -509,7 +509,7 @@ position = Vector2(0, -10)
 emitting = false
 amount = 50
 lifetime = 5.0
-texture = ExtResource("4_nr7cg")
+texture = ExtResource("4_ldag2")
 gravity = Vector2(0, 0)
 angle_min = -180.0
 angle_max = 180.0
@@ -527,7 +527,7 @@ amount = 10
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
-texture = ExtResource("4_nr7cg")
+texture = ExtResource("4_ldag2")
 emission_shape = 2
 emission_sphere_radius = 10.0
 direction = Vector2(0, -1)
@@ -550,7 +550,7 @@ amount = 10
 lifetime = 0.6
 one_shot = true
 explosiveness = 1.0
-texture = ExtResource("4_nr7cg")
+texture = ExtResource("4_ldag2")
 emission_shape = 2
 emission_sphere_radius = 10.0
 spread = 15.0
@@ -591,12 +591,12 @@ color_initial_ramp = SubResource("Gradient_3ow1e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -19)
-texture = ExtResource("3_3r83j")
+texture = ExtResource("5_241sa")
 hframes = 23
 frame = 21
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
-script = ExtResource("4_il4kr")
+script = ExtResource("6_hhr82")
 health_monitor = NodePath("../HealthMonitor")
 alignment = 1
 
@@ -606,7 +606,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bg2rr")
 
 [node name="hitbox" type="Area2D" parent="."]
-script = ExtResource("8_y3rji")
+script = ExtResource("7_3ueuu")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(0, -10)
@@ -617,7 +617,7 @@ disabled = true
 [node name="hit_area" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 0
-script = ExtResource("5_oe48e")
+script = ExtResource("8_vu3c6")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="hit_area"]
 position = Vector2(0, -10)
@@ -630,7 +630,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_57ax2")
 
 [node name="HealthMonitor" type="Node" parent="."]
-script = ExtResource("6_h85d6")
+script = ExtResource("9_hyms7")
 _health = 10
 
 [node name="Center" type="Marker2D" parent="."]
@@ -646,18 +646,18 @@ next/start = &"idle"
 
 [node name="death" type="AudioStreamPlayer" parent="."]
 bus = &"Sound"
-script = ExtResource("10_bymn8")
-audios = Array[AudioStream]([ExtResource("11_ajs0c"), ExtResource("12_b0404"), ExtResource("13_022t6"), ExtResource("14_imv7n")])
+script = ExtResource("10_dlbon")
+audios = Array[AudioStream]([ExtResource("11_8asna"), ExtResource("12_v33be"), ExtResource("13_ujs2h"), ExtResource("14_ymsj8")])
 
 [node name="idle" type="AudioStreamPlayer" parent="."]
 bus = &"Sound"
-script = ExtResource("10_bymn8")
-audios = Array[AudioStream]([ExtResource("15_km3ks"), ExtResource("16_q2mdo")])
+script = ExtResource("10_dlbon")
+audios = Array[AudioStream]([ExtResource("15_lj8gl"), ExtResource("16_ql6ee")])
 
 [node name="spawn" type="AudioStreamPlayer" parent="."]
 bus = &"Sound"
-script = ExtResource("10_bymn8")
-audios = Array[AudioStream]([ExtResource("17_i7aqf"), ExtResource("18_sbbtj"), ExtResource("19_c3g7k")])
+script = ExtResource("10_dlbon")
+audios = Array[AudioStream]([ExtResource("17_03vwo"), ExtResource("18_aeheu"), ExtResource("19_vj4sc")])
 varation = 0.1
 
 [node name="glow" type="Sprite2D" parent="."]
@@ -667,40 +667,40 @@ scale = Vector2(10, 10)
 texture = SubResource("GradientTexture2D_la1nk")
 
 [node name="StateOverhead" type="Node" parent="." node_paths=PackedStringArray("_actor")]
-script = ExtResource("20_f6gjm")
+script = ExtResource("20_vewt2")
 _usesActor = true
 _actor = NodePath("..")
 _usesAnimationPlayer = false
 
 [node name="StateMachine" type="Node" parent="StateOverhead" node_paths=PackedStringArray("starting_state")]
-script = ExtResource("21_2rj54")
+script = ExtResource("21_uagw0")
 _name_id = "main"
 starting_state = NodePath("spawn")
 
 [node name="spawn" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle")]
-script = ExtResource("22_i3vki")
+script = ExtResource("22_k4nh6")
 idle = NodePath("../idle")
 
 [node name="death" type="Node" parent="StateOverhead/StateMachine"]
-script = ExtResource("23_s40jq")
+script = ExtResource("23_qqbe6")
 
 [node name="idle" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move", "follow_leader")]
-script = ExtResource("22_i7tle")
+script = ExtResource("24_hpes2")
 move = NodePath("../move")
 follow_leader = NodePath("../follow_leader")
 
 [node name="move" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("idle", "follow_leader")]
-script = ExtResource("25_fjn8p")
+script = ExtResource("25_mmqsg")
 idle = NodePath("../idle")
 follow_leader = NodePath("../follow_leader")
 
 [node name="follow_leader" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move", "idle")]
-script = ExtResource("26_ecfsr")
+script = ExtResource("26_6fop4")
 move = NodePath("../move")
-idle = NodePath(".")
+idle = NodePath("../idle")
 
 [node name="knock_back" type="Node" parent="StateOverhead/StateMachine" node_paths=PackedStringArray("move")]
-script = ExtResource("24_yml6j")
+script = ExtResource("27_smqig")
 move = NodePath("../move")
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]

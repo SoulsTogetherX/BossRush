@@ -13,8 +13,10 @@ var boss : Boss;
 var saved_health : int;
 
 var _fade_tween : Tween;
+var lights_on : bool = false;
 
-var hard_mode : bool = false;
+enum DIFFICULTY {EASY, NORMAL, BARKMODE};
+var hard_mode : DIFFICULTY = DIFFICULTY.NORMAL;
 
 signal max_health_changed(amount : int);
 signal health_changed(amount : int);

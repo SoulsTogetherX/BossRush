@@ -35,6 +35,9 @@ func _get_property_list():
 	
 	return properties;
 
+func health_missing() -> int:
+	return max_health - health;
+
 func toggle_invincible(toggle : bool) -> void:
 	_invincible = toggle;
 

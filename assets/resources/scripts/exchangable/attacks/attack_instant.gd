@@ -10,7 +10,7 @@ func _sort_distances(a : Array, b : Array) -> bool:
 		return true;
 	return false;
 
-func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+func _on_attack(from : Node2D, start : Vector2, _target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if attack_num <= 0:
 		return;
 	
@@ -20,7 +20,7 @@ func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT)
 	query.collision_mask = 16;
 	query.collide_with_areas = true;
 	query.collide_with_bodies = false;
-	query.transform = Transform2D(0, Vector2(1.,1.), 0, from.get_center());
+	query.transform = Transform2D(0, Vector2(1.,1.), 0, start);
 	var results = physics.intersect_shape(query);
 	if !results.is_empty():
 		# Hit Boss

@@ -1,13 +1,16 @@
-[gd_scene load_steps=47 format=3 uid="uid://bxtp8uggorlqb"]
+[gd_scene load_steps=50 format=3 uid="uid://bxtp8uggorlqb"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Shaka.gd" id="1_g7w81"]
 [ext_resource type="Resource" uid="uid://uu34agn4p5h2" path="res://assets/resources/instances/exchangable/Shaka/SlimeSpawn.tres" id="2_5vtxt"]
 [ext_resource type="Resource" uid="uid://blg63wyo4fjm5" path="res://assets/resources/instances/exchangable/Shaka/Fireforward.tres" id="2_jinin"]
 [ext_resource type="Texture2D" uid="uid://ccyhhg33dls4l" path="res://assets/sprites/characters/bosses/shaka boom/Shaka Boom MEGASHEET.png" id="3_5lotg"]
 [ext_resource type="Resource" uid="uid://b5fqyujx7sk7p" path="res://assets/resources/instances/exchangable/Shaka/FireWave.tres" id="3_lv8ki"]
+[ext_resource type="Resource" uid="uid://bqmhbopiuwhxm" path="res://assets/resources/instances/exchangable/Shaka/FireCross.tres" id="3_o1sfl"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="3_p85wp"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="4_bqvej"]
+[ext_resource type="Resource" uid="uid://bocvrb4muc2e3" path="res://assets/resources/instances/exchangable/Shaka/off_scene_fire.tres" id="4_ngo16"]
 [ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="5_1s86t"]
+[ext_resource type="Resource" uid="uid://drbo75wpys52s" path="res://assets/resources/instances/exchangable/Shaka/Limit_Bans.tres" id="5_7fv5p"]
 [ext_resource type="Resource" uid="uid://ca2myvsaqo8ww" path="res://assets/resources/instances/exchangable/Shaka/Heated Health.tres" id="5_y5xu3"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="6_u6ngt"]
 [ext_resource type="Texture2D" uid="uid://y7x2t0ikfm5a" path="res://assets/sprites/characters/bosses/shaka boom/confetti.png" id="13_iscfk"]
@@ -423,7 +426,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.15, 0.25, 0.35, 0.45, 0.55),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [45, 46, 47, 46, 47, 46, 0]
 }
 tracks/1/type = "value"
@@ -486,6 +489,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Confetti_hit_opp:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ceq08"]
 resource_name = "hurt_right"
@@ -500,7 +515,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.05, 0.15, 0.25, 0.35, 0.45, 0.6, 0.65),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [45, 46, 47, 46, 47, 46, 0, 0]
 }
 tracks/1/type = "value"
@@ -558,6 +573,18 @@ tracks/5/path = NodePath("Confetti_hit:emitting")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Confetti_hit_opp:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -804,7 +831,7 @@ tracks/3/path = NodePath("point_up")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.6),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0.0],
@@ -886,6 +913,9 @@ y_sort_enabled = true
 collision_layer = 520
 script = ExtResource("1_g7w81")
 tertiary_attack = ExtResource("2_jinin")
+quaternary_attack = ExtResource("3_o1sfl")
+fifth_attack = ExtResource("4_ngo16")
+six_attack = ExtResource("5_7fv5p")
 _sprite = NodePath("Node2D/Sprite2D")
 alignment = 1
 primary_attack = ExtResource("2_5vtxt")
@@ -897,7 +927,6 @@ libraries = {
 "": SubResource("AnimationLibrary_i8fv3")
 }
 autoplay = "idle"
-next/float_end = &"idle"
 next/scared_start = &"scared"
 next/summoning_start = &"summoning"
 
@@ -963,6 +992,8 @@ one_shot = true
 [node name="float_timer" type="Timer" parent="."]
 wait_time = 0.02
 
+[node name="off_scene_shoot" type="Timer" parent="."]
+
 [node name="Confetti" type="CPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_vv4fq")
 position = Vector2(0, -61)
@@ -996,7 +1027,7 @@ anim_speed_curve = SubResource("Curve_escy1")
 material = SubResource("CanvasItemMaterial_vv4fq")
 position = Vector2(0, -86)
 emitting = false
-amount = 10
+amount = 30
 lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
@@ -1004,9 +1035,39 @@ texture = ExtResource("13_iscfk")
 emission_shape = 2
 emission_sphere_radius = 15.0
 spread = 30.0
-gravity = Vector2(0, 450)
+gravity = Vector2(0, 0)
 initial_velocity_min = 250.0
 initial_velocity_max = 500.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+orbit_velocity_min = -0.02
+orbit_velocity_max = 0.02
+damping_min = 300.0
+damping_max = 300.0
+angle_max = 360.0
+scale_amount_min = 0.2
+scale_amount_max = 0.6
+color_ramp = SubResource("Gradient_hb1bq")
+color_initial_ramp = SubResource("Gradient_53l4o")
+anim_speed_min = 10.0
+anim_speed_max = 10.0
+anim_speed_curve = SubResource("Curve_escy1")
+
+[node name="Confetti_hit_opp" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_vv4fq")
+position = Vector2(0, -86)
+emitting = false
+amount = 7
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource("13_iscfk")
+emission_shape = 2
+emission_sphere_radius = 15.0
+spread = 90.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 250.0
 angular_velocity_min = -360.0
 angular_velocity_max = 360.0
 orbit_velocity_min = -0.02
@@ -1121,5 +1182,5 @@ varation = 0.1
 [connection signal="killed" from="HealthMonitor" to="." method="die"]
 [connection signal="timeout" from="sequence_timer" to="." method="_next_sequence"]
 [connection signal="timeout" from="slime_timer" to="." method="summon_slimes"]
-[connection signal="timeout" from="attack_timer" to="." method="forward_atttack"]
 [connection signal="timeout" from="scared_timer" to="." method="end_scared"]
+[connection signal="timeout" from="off_scene_shoot" to="." method="off_scene_shoot"]

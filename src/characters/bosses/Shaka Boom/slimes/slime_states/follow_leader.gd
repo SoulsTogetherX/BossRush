@@ -3,6 +3,7 @@ extends State
 @export var move : State;
 @export var idle : State;
 
+@warning_ignore("unused_private_class_variable")
 var _target : ExchangeType;
 
 func get_id():

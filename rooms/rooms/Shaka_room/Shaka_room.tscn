@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ckg7jtsjjc2tm"]
+[gd_scene load_steps=34 format=3 uid="uid://ckg7jtsjjc2tm"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_0u52g"]
 [ext_resource type="Texture2D" uid="uid://cgelphdxxdcqo" path="res://assets/sprites/ground/Shaka/Floor 2 Circus-walls.png" id="2_rlj6g"]
@@ -13,8 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://bbk8hr8rh0ayh" path="res://assets/sprites/characters/bosses/shaka boom/burn-marks.png" id="7_mlp8g"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="8_dn73q"]
 [ext_resource type="PackedScene" uid="uid://bxtp8uggorlqb" path="res://src/characters/bosses/Shaka Boom/Shaka.tscn" id="8_hwx5n"]
-[ext_resource type="PackedScene" uid="uid://biqw288dtjd3a" path="res://src/characters/bosses/Shaka Boom/Slime_fight_starter.tscn" id="8_llaf3"]
-[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/Slime.tscn" id="9_pr67h"]
+[ext_resource type="PackedScene" uid="uid://biqw288dtjd3a" path="res://src/characters/bosses/Shaka Boom/slimes/Slime_fight_starter.tscn" id="8_llaf3"]
+[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.tscn" id="9_pr67h"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="16_70agv"]
+[ext_resource type="PackedScene" uid="uid://ccdpw62ond2wb" path="res://src/level_objects/Arrow/Arrow.tscn" id="16_s1rw0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3rv43"]
 size = Vector2(35, 162)
@@ -141,13 +143,6 @@ debug_color = Color(0, 0.643137, 0.321569, 0.419608)
 
 [node name="Reward_manager" parent="." instance=ExtResource("4_t7au6")]
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
-top_level = true
-position = Vector2(248, -6.99999)
-script = ExtResource("5_ldcvy")
-follow = NodePath("../Doggo")
-auto_follow = true
-
 [node name="enter" parent="." instance=ExtResource("6_dkoa0")]
 position = Vector2(-337, -29)
 move_to = "2"
@@ -158,15 +153,23 @@ direction = 2
 [node name="Doggo" parent="." instance=ExtResource("6_51n6a")]
 position = Vector2(228, -7)
 
-[node name="Shaka" parent="." node_paths=PackedStringArray("slime_summon_area", "fly_nodes", "center_node", "door_hide", "door", "_reward_manager") instance=ExtResource("8_hwx5n")]
+[node name="Shaka" parent="." node_paths=PackedStringArray("slime_summon_area", "fly_nodes", "center_node", "arrow", "door_hide", "door", "_reward_manager") instance=ExtResource("8_hwx5n")]
 position = Vector2(0, 61)
 slime_summon_area = NodePath("../Slime_Summon_Area")
 fly_nodes = NodePath("../Fly Pos")
 center_node = NodePath("../Center")
+arrow = NodePath("../Arrow")
 door_hide = NodePath("../door_hide")
 door = NodePath("../door")
 _reward_manager = NodePath("../Reward_manager")
 primary_attack = SubResource("Resource_7k1bm")
+
+[node name="cam" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
+top_level = true
+position = Vector2(248, -6.99999)
+script = ExtResource("5_ldcvy")
+follow = NodePath("../Doggo")
+auto_follow = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -270,6 +273,7 @@ energy = 0.8
 blend_mode = 1
 texture = SubResource("GradientTexture2D_1o1br")
 texture_scale = 10.0
+script = ExtResource("16_70agv")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-160.817, -144.909)
@@ -278,6 +282,7 @@ energy = 1.2
 blend_mode = 2
 texture = SubResource("GradientTexture2D_ec7ik")
 texture_scale = 12.0
+script = ExtResource("16_70agv")
 
 [node name="PointLight2D3" type="PointLight2D" parent="."]
 position = Vector2(185, -127)
@@ -286,6 +291,7 @@ energy = 1.2
 blend_mode = 2
 texture = SubResource("GradientTexture2D_ec7ik")
 texture_scale = 12.0
+script = ExtResource("16_70agv")
 
 [node name="PointLight2D4" type="PointLight2D" parent="."]
 position = Vector2(167, 149)
@@ -294,6 +300,7 @@ energy = 1.2
 blend_mode = 2
 texture = SubResource("GradientTexture2D_ec7ik")
 texture_scale = 12.0
+script = ExtResource("16_70agv")
 
 [node name="PointLight2D5" type="PointLight2D" parent="."]
 position = Vector2(-163, 152)
@@ -302,3 +309,11 @@ energy = 1.2
 blend_mode = 2
 texture = SubResource("GradientTexture2D_ec7ik")
 texture_scale = 12.0
+script = ExtResource("16_70agv")
+
+[node name="Arrow" parent="." node_paths=PackedStringArray("follow") instance=ExtResource("16_s1rw0")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-198, 52)
+follow = NodePath("../Shaka")
+offset = Vector2(0, -61)
+auto_start = false

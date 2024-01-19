@@ -10,6 +10,7 @@ protectile = ExtResource("1_md0lo")
 fire_range = 1000.0
 speed = 400.0
 fade_after = -1.0
+fade_before = -1.0
 
 [resource]
 script = ExtResource("3_b6d4a")

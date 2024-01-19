@@ -1,21 +1,75 @@
-[gd_scene load_steps=13 format=3 uid="uid://bvlv7rwah6txw"]
+[gd_scene load_steps=19 format=3 uid="uid://bvlv7rwah6txw"]
 
-[ext_resource type="Script" path="res://src/weapons/projectiles/projectile.gd" id="1_m0cbk"]
+[ext_resource type="Script" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.gd" id="1_w7pja"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="5_q7q7a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nw5y4"]
-radius = 4.0
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qka5p"]
-radius = 9.0
-
-[sub_resource type="Curve" id="Curve_3ueme"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.562889), 0.0, 0.0, 0, 0]
-point_count = 2
+radius = 8.0
 
 [sub_resource type="Gradient" id="Gradient_k2smn"]
 offsets = PackedFloat32Array(0, 0.714777, 1)
 colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p5rcy"]
+gradient = SubResource("Gradient_k2smn")
+
+[sub_resource type="Curve" id="Curve_lswwb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.81759, 0.29661), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_u3hd2"]
+curve = SubResource("Curve_lswwb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3a2dd"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, -1, 0)
+spread = 15.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 100.0
+linear_accel_max = 300.0
+scale_min = 5.0
+scale_max = 10.0
+scale_over_velocity_max = 250.0
+scale_over_velocity_curve = SubResource("CurveTexture_u3hd2")
+color_ramp = SubResource("GradientTexture1D_p5rcy")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+turbulence_noise_strength = 0.1
+turbulence_noise_scale = 0.0
+
+[sub_resource type="Gradient" id="Gradient_vqnor"]
+offsets = PackedFloat32Array(0, 0.426523, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.596078, 0, 0.67451, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_11usj"]
+gradient = SubResource("Gradient_vqnor")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80yns"]
+particle_flag_disable_z = true
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 600.0
+initial_velocity_max = 1000.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+damping_min = 500.0
+damping_max = 500.0
+attractor_interaction_enabled = false
+scale_min = 2.0
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_11usj")
+turbulence_noise_strength = 20.0
 
 [sub_resource type="Animation" id="Animation_d37by"]
 length = 0.001
@@ -45,7 +99,7 @@ fill_to = Vector2(0.5, 0)
 
 [node name="ShakaFire" type="Node2D"]
 z_index = 3
-script = ExtResource("1_m0cbk")
+script = ExtResource("1_w7pja")
 
 [node name="hitbox" type="Area2D" parent="."]
 collision_layer = 2
@@ -62,25 +116,17 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collide_detect"]
 shape = SubResource("CircleShape2D_qka5p")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 amount = 60
+process_material = SubResource("ParticleProcessMaterial_3a2dd")
 lifetime = 0.4
-emission_shape = 1
-emission_sphere_radius = 8.0
-direction = Vector2(0, -1)
-spread = 15.0
-gravity = Vector2(0, -490)
-initial_velocity_max = 100.0
-linear_accel_min = -30.0
-linear_accel_max = 30.0
-damping_min = 100.0
-damping_max = 100.0
-angle_min = -180.0
-angle_max = 180.0
-scale_amount_min = 2.0
-scale_amount_max = 10.0
-scale_amount_curve = SubResource("Curve_3ueme")
-color_ramp = SubResource("Gradient_k2smn")
+
+[node name="hit_particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_80yns")
+one_shot = true
+explosiveness = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

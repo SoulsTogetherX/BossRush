@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdhgjj1qmlii"]
+
+[ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="1_0ers2"]
+[ext_resource type="Script" path="res://src/weapons/projectiles/Shaka Boom/shaka_fire_circle.gd" id="2_cttp2"]
+
+[node name="ShakaFire" instance=ExtResource("1_0ers2")]
+script = ExtResource("2_cttp2")

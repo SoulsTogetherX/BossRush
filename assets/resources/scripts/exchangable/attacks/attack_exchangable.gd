@@ -30,21 +30,21 @@ func _set_up_sprite(actor : Node2D, distance : float) -> Weapon:
 	
 	return _weapon;
 
-func _on_attack(_from : Node2D, _target : Vector2, _alignment : HurtBox.ALIGNMENT) -> void:
+func _on_attack(_from : Node2D, _start : Vector2, _target : Vector2, _alignment : HurtBox.ALIGNMENT) -> void:
 	pass;
 
-func handle_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+func handle_attack(from : Node2D, start : Vector2, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if !_cooldown_check(from.get_tree()):
 		return;
-	force_handle_attack(from, target, alignment);
+	force_handle_attack(from, start, target, alignment);
 
-func force_handle_attack(from : Node2D, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+func force_handle_attack(from : Node2D, start : Vector2, target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	if self is AttackInstant && from == _weapon:
 		self.playSound.connect(_weapon.play_sound, CONNECT_ONE_SHOT);
 	
 	if from == _weapon:
-		await _weapon.handle_attack(self);
-	_on_attack(from, target, alignment);
+		_weapon.handle_attack(self);
+	_on_attack(from, start, target, alignment);
 
 func _cooldown_check(scene : SceneTree) -> bool:
 	if _on_cooldown || !scene:

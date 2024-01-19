@@ -1,13 +1,83 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccdpw62ond2wb"]
+[gd_scene load_steps=6 format=3 uid="uid://ccdpw62ond2wb"]
 
 [ext_resource type="Texture2D" uid="uid://cv4kfvfyqk4b3" path="res://assets/sprites/characters/bosses/shaka boom/arrow.png" id="1_iboov"]
 [ext_resource type="Script" path="res://src/level_objects/Arrow/Arrow.gd" id="2_lr6vw"]
 
+[sub_resource type="Animation" id="Animation_l2pd1"]
+resource_name = "pointing"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 0.8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-14, 0), Vector2(-20, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wgftv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-14, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kxgsv"]
+_data = {
+"RESET": SubResource("Animation_wgftv"),
+"pointing": SubResource("Animation_l2pd1")
+}
+
 [node name="Arrow" type="Node2D"]
+z_index = 4096
+z_as_relative = false
 script = ExtResource("2_lr6vw")
-distance = 60.0
+auto_start = null
 
 [node name="Sprite" type="Sprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(-60, 0)
+position = Vector2(-14, 0)
 texture = ExtResource("1_iboov")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kxgsv")
+}
+autoplay = "pointing"

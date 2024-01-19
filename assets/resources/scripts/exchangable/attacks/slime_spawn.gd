@@ -13,7 +13,7 @@ var _spawned : int = 0;
 func _dec_count() -> void:
 	_spawned -= 1;
 
-func _on_attack(from : Node2D, _target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
+func _on_attack(from : Node2D, _start : Vector2, _target : Vector2, alignment : HurtBox.ALIGNMENT) -> void:
 	var spawn_poses : Array[Vector2] = [];
 	if from.has_method("get_spawn_pos"):
 		spawn_poses = from.get_spawn_pos();

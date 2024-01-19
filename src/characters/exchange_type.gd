@@ -196,8 +196,11 @@ func create_after_image(mod : Color = Color(1.0, 1.0, 1.0, 0.8), fade_time = 0.2
 	tw.tween_property(sprite, "modulate:a", 0.0, fade_time);
 	tw.tween_callback(sprite.queue_free);
 
-func toggle_shield(_toggle : bool) -> void:
-	pass;
+func toggle_shield(toggle : bool) -> void:
+	if toggle:
+		lower_shield();
+		return;
+	up_shield();
 func lower_shield() -> void:
 	$hurt_box.toggle_hurtbox(true);
 	change_hit_status.emit();

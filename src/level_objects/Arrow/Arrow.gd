@@ -5,26 +5,17 @@ extends Node2D
 
 @export var follow : Node2D;
 @export var offset : Vector2;
-@export var distance : float = 15:
-	set(val):
-		if !is_node_ready():
-			await ready;
-		
-		if val < 0:
-			val = 0;
-		$Sprite.position = Vector2(-val, 0);
-		distance = val;
+@export var auto_start : bool = false;
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
+	if Engine.is_editor_hint() || !auto_start:
 		set_process(false);
 
-func _process(delta: float) -> void:
-	var viewport_rect : Rect2 = get_viewport_rect() * get_viewport_transform();
-	
-	global_rotation = (follow.global_position + offset - viewport_rect.get_center()).angle();
-	
-	point_to(PlayerInfo.player.global_position, (follow.global_position + offset), 0, 0);
+func toggle_arrow(toggle : bool) -> void:
+	set_process(toggle);
+
+func _process(_delta: float) -> void:
+	point_to(PlayerInfo.player.global_position, (follow.global_position + offset), 40, 10);
 
 func point_to(src : Vector2, dst : Vector2, inner : float, pad : float) -> void:
 	var viewport_rect : Rect2 = get_viewport_rect() * get_viewport_transform();
@@ -50,3 +41,4 @@ func point_to(src : Vector2, dst : Vector2, inner : float, pad : float) -> void:
 		vl = min(vl, ((viewport_rect.end.x - pad) - src.x) / vector_coords.x);
 	
 	global_position = src + (vector_coords * vl);
+	global_rotation = src.angle_to_point(dst);

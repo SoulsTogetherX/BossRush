@@ -9,7 +9,7 @@ i_frames = 1.0
 
 [resource]
 script = ExtResource("2_cu5jj")
-max_health = 5
+max_health = 6
 _incincible = SubResource("Resource_bxpp8")
 name = "Pine Health"
 symbol = 0

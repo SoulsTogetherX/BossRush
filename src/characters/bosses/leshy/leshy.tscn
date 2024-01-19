@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://cd6retw663av0"]
+[gd_scene load_steps=58 format=3 uid="uid://cd6retw663av0"]
 
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
 [ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
@@ -12,6 +12,7 @@
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="7_58vc7"]
 [ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="7_vtdju"]
 [ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="9_80pgw"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="9_hh5tb"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="11_je2ls"]
 [ext_resource type="AudioStream" uid="uid://clhpnegfe67sf" path="res://assets/sounds/effects/boss/leshy/dash/LeshyDash1.ogg" id="13_f17ma"]
 [ext_resource type="AudioStream" uid="uid://du3mj38kmfx3p" path="res://assets/sounds/effects/boss/leshy/dash/LeshyDash2.ogg" id="14_4w7sk"]
@@ -1704,8 +1705,10 @@ position = Vector2(-12, -90)
 scale = Vector2(1.5, 1.5)
 
 [node name="PointLight2D" type="PointLight2D" parent="light_holder"]
+scale = Vector2(1e-05, 1e-05)
 texture = SubResource("GradientTexture2D_u8w1c")
 texture_scale = 4.0
+script = ExtResource("9_hh5tb")
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
 position = Vector2(0, -74)

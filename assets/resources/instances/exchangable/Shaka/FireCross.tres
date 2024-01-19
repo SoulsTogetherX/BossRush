@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="FourWayAttack" load_steps=5 format=3 uid="uid://bqmhbopiuwhxm"]
+
+[ext_resource type="PackedScene" uid="uid://bvlv7rwah6txw" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.tscn" id="1_xkl4n"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/LinearLaunch.gd" id="2_bgmjx"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/fourwayShoot.gd" id="3_vc0km"]
+
+[sub_resource type="Resource" id="Resource_3rboc"]
+script = ExtResource("2_bgmjx")
+protectile = ExtResource("1_xkl4n")
+fire_range = 500.0
+speed = 200.0
+fade_after = 450.0
+fade_before = -1.0
+
+[resource]
+script = ExtResource("3_vc0km")
+spawn_delay = 0.0
+ring_count = 1
+projectiles = 4
+launch = SubResource("Resource_3rboc")
+offset = 0.0
+weapon_range = 0.0
+delta = -1
+cooldown = 0.0
+name = ""
+symbol = 0

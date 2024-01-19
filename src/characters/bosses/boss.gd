@@ -22,6 +22,10 @@ func _ready() -> void:
 	super();
 	PlayerInfo.boss = self;
 
+func _clear_sequence() -> void:
+	_sequence.clear();
+	_sequence_idx = 0;
+
 func _add_to_sequence(call_fuc : Callable, time : float) -> void:
 	_sequence.append(_Boss_Action.new(call_fuc, time));
 
@@ -68,6 +72,9 @@ func aim_at_player() -> float:
 func die() -> void:
 	_sequence_timer.stop();
 	_reward_manager._spawn_orbs(self);
+
+func toggle_shield(_toggle : bool) -> void:
+	pass;
 
 func get_sequence_index() -> int:
 	return _sequence_idx;

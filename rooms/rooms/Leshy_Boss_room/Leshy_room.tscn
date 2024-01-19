@@ -1,8 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://dp324cpihdn7s"]
+[gd_scene load_steps=33 format=3 uid="uid://vwuw6iktoxwg"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_6erxl"]
 [ext_resource type="Texture2D" uid="uid://d2l4g60ps0t60" path="res://assets/sprites/ground/Leshy/Floor 1 BG (Leshy Floor).png" id="1_erk7l"]
+[ext_resource type="Texture2D" uid="uid://luclir2kbpf8" path="res://assets/sprites/ground/Leshy/Floor 1-walls-outer-back.png" id="3_7uj76"]
 [ext_resource type="PackedScene" uid="uid://cd6retw663av0" path="res://src/characters/bosses/leshy/leshy.tscn" id="3_qsitx"]
+[ext_resource type="Texture2D" uid="uid://c6c3ockxb6tjx" path="res://assets/sprites/ground/Leshy/Floor 1-walls-outer.png" id="4_ciupx"]
 [ext_resource type="Script" path="res://rooms/Doors.gd" id="4_d7u0r"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="4_mbe6u"]
 [ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="4_xd7kx"]
@@ -11,10 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="5_sv2ph"]
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="8_ff4pi"]
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="9_pks3f"]
-[ext_resource type="Texture2D" uid="uid://djb1qsiodkqtb" path="res://assets/sprites/ground/Leshy/Floor 1-walls.png" id="9_xpu01"]
 [ext_resource type="Texture2D" uid="uid://b7g6nxlyapyws" path="res://assets/sprites/ground/Leshy/Floor 1 -walls-second-layer.png" id="10_lfjar"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="12_yb5iw"]
-[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/Slime.tscn" id="13_3r2jt"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="15_o4ah7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l21ms"]
 size = Vector2(155.25, 25)
@@ -26,12 +26,16 @@ size = Vector2(42.5, 146)
 size = Vector2(607, 417)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_my4nl"]
-radius = 14.0
-height = 56.0
+radius = 23.1336
+height = 69.5581
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6h3"]
-radius = 15.0
-height = 56.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_884ar"]
+radius = 19.8255
+height = 69.5581
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0ldwk"]
+radius = 21.371
+height = 74.8647
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wpcp5"]
 size = Vector2(279, 39)
@@ -54,17 +58,6 @@ size = Vector2(26, 167)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0lp45"]
 radius = 28.0
 height = 70.0
-
-[sub_resource type="Resource" id="Resource_f6wr6"]
-resource_local_to_scene = true
-script = ExtResource("12_yb5iw")
-spawn_entity = ExtResource("13_3r2jt")
-max_spawn = 1
-weapon_range = 0.0
-delta = -1
-cooldown = 0.0
-name = ""
-symbol = 0
 
 [sub_resource type="Gradient" id="Gradient_8md3c"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -91,8 +84,12 @@ script = ExtResource("1_6erxl")
 z_index = -99
 texture = ExtResource("1_erk7l")
 
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+z_index = -2
+texture = ExtResource("3_7uj76")
+
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-texture = ExtResource("9_xpu01")
+texture = ExtResource("4_ciupx")
 
 [node name="Doors" type="Node" parent="." node_paths=PackedStringArray("enter", "exit")]
 script = ExtResource("4_d7u0r")
@@ -137,20 +134,23 @@ debug_color = Color(0.772549, 0.14902, 1, 0.419608)
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-94, -268)
+position = Vector2(-97, -272)
+rotation = -0.340339
 shape = SubResource("CapsuleShape2D_my4nl")
 
 [node name="CollisionShape2D10" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(77, -272)
-shape = SubResource("CapsuleShape2D_my4nl")
+position = Vector2(80, -273)
+rotation = 0.205949
+shape = SubResource("CapsuleShape2D_884ar")
 
 [node name="CollisionShape2D11" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(343, -114)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ux6h3")
+position = Vector2(353, -118)
+rotation = 1.35787
+shape = SubResource("CapsuleShape2D_0ldwk")
 
 [node name="CollisionShape2D12" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(340, 47)
+z_index = 4096
+position = Vector2(351, 51)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_my4nl")
 
@@ -159,7 +159,7 @@ position = Vector2(-221.5, -274.5)
 shape = SubResource("RectangleShape2D_wpcp5")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(206, -274)
+position = Vector2(209, -273)
 shape = SubResource("RectangleShape2D_wpcp5")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
@@ -205,7 +205,7 @@ direction = 3
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 top_level = true
-position = Vector2(298, -23)
+position = Vector2(-51, -236)
 script = ExtResource("8_ff4pi")
 follow = NodePath("../Doggo")
 auto_follow = true
@@ -650,8 +650,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0lp45")
 
 [node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
-position = Vector2(318, -23)
-secondary_attack = SubResource("Resource_f6wr6")
+position = Vector2(-31, -236)
 
 [node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "_reward_manager") instance=ExtResource("3_qsitx")]
 position = Vector2(-17, -3)
@@ -667,6 +666,7 @@ energy = 0.4
 blend_mode = 1
 texture = SubResource("GradientTexture2D_4vpcj")
 texture_scale = 50.0
+script = ExtResource("15_o4ah7")
 
 [node name="No_Boss" type="StaticBody2D" parent="."]
 collision_layer = 128

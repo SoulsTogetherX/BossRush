@@ -14,7 +14,9 @@ var _waiting : bool = true;
 func _ready() -> void:
 	super();
 	set_physics_process(false);
-	if PlayerInfo.hard_mode:
+	if PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.BARKMODE:
+		pass
+	elif PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.NORMAL:
 		_add_to_sequence(dash_hard, 0.6);
 		_add_to_sequence(dash_hard, 0.6);
 		_add_to_sequence(dash_hard, 0.6);
@@ -30,7 +32,7 @@ func _ready() -> void:
 		
 		$dash_timer.timeout.connect(create_after_image.bind(Color(1.0, 1.0, 1.0, 0.1)));
 		$hitbox/CollisionShape2D.disabled = false;
-	else:
+	elif PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.EASY:
 		_add_to_sequence(dash, 0.6);
 		_add_to_sequence(dash, 0.6);
 		_add_to_sequence(dash, 0.6);
@@ -73,20 +75,17 @@ func dance() -> void:
 
 func spin_attack_hard() -> void:
 	spin_attack_base();
-	primary_attack.handle_attack(self, PlayerInfo.player.global_position, get_alignment());
+	primary_attack.handle_attack(self, get_center(), PlayerInfo.player.global_position, get_alignment());
 
 func spin_attack() -> void:
 	spin_attack_base();
-	primary_attack.handle_attack(self, global_position + Vector2.LEFT, get_alignment());
+	primary_attack.handle_attack(self, get_center(), global_position + Vector2.LEFT, get_alignment());
 
 func spin_attack_base() -> void:
 	$hurt_box.toggle_hurtbox(false);
 	_animation_player.play("spin_start");
 	$spin_sound_start.play();
-	await get_tree().create_timer(0.2).timeout;
-	$spin_sound_continue.play();
-	
-	await get_tree().create_timer(0.3).timeout;
+	get_tree().create_timer(0.2).timeout.connect($spin_sound_continue.play, CONNECT_ONE_SHOT);
 
 var _shown_bushed : Array[Node2D] = []
 func hide_self(animate : String, delay : float) -> void:
@@ -229,14 +228,15 @@ func die() -> void:
 	$hurt_box.visible = false;
 	$hit_area.visible = false;
 
-func _on_hit(hitbox: HitBox) -> void:
+func _on_hit(_hitbox: HitBox) -> void:
 	if _waiting:
 		_force_move(_stun, 0.5, 0);
-		$HealthMonitor.update_health_no_signal($HealthMonitor.max_health);
 		$AnimatableBody2D/CollisionShape2D2.disabled = true;
 		_waiting = false;
 	elif !_death:
 		_force_move(_stun, 0.5, (2 if get_sequence_index() == 8 else 1));
+	
+	$hit_leave_particles.emitting = true;
 	
 	if !_death:
 		$light_holder.visible = true;

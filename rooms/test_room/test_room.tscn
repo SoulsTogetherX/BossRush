@@ -235,5 +235,6 @@ auto_follow = true
 [node name="Arrow" parent="." node_paths=PackedStringArray("follow") instance=ExtResource("20_4o187")]
 position = Vector2(515, 404)
 follow = NodePath("../Reward_manager/Orb")
+auto_start = null
 
 [connection signal="body_entered" from="dialog_test" to="dialog_test" method="_on_body_entered"]

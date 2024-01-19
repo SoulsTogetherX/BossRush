@@ -1,6 +1,6 @@
 [gd_scene load_steps=42 format=3 uid="uid://biqw288dtjd3a"]
 
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Slime_fight_starter.gd" id="1_n6asj"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/Slime_fight_starter.gd" id="1_n6asj"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_h5ujy"]
 [ext_resource type="Texture2D" uid="uid://c8awle6sackfu" path="res://assets/sprites/characters/bosses/shaka boom/slime_trail.png" id="4_qirib"]
 [ext_resource type="Texture2D" uid="uid://k1iit618dj2h" path="res://assets/sprites/characters/bosses/shaka boom/Slime MegaSheet.png" id="5_txhk1"]
@@ -20,9 +20,9 @@
 [ext_resource type="AudioStream" uid="uid://bh5fnesmb6nns" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth.ogg" id="19_lej33"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="20_clcod"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="21_jlo51"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/death.gd" id="22_aoich"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/idle_blank.gd" id="23_tt8e5"]
-[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slime_states/knock_back.gd" id="24_cuq2q"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/death.gd" id="22_aoich"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/idle_blank.gd" id="23_tt8e5"]
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/knock_back.gd" id="24_cuq2q"]
 
 [sub_resource type="Resource" id="Resource_e2ape"]
 script = ExtResource("2_h5ujy")
@@ -242,7 +242,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [22]
 }
 

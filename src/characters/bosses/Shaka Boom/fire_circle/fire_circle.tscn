@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://xvggn40jwix8"]
+
+[ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/fire_circle/fire_circle.gd" id="1_t8h6j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jr7s5"]
+resource_local_to_scene = true
+
+[node name="FireCircle" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_t8h6j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jr7s5")
+
+[connection signal="body_exited" from="." to="." method="_on_player_exited"]
