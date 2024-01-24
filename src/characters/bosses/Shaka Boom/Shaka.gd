@@ -117,15 +117,15 @@ func _normal_mode_stage_2() -> void:
 	_add_to_sequence(idle, 1.0);
 	
 	_add_to_sequence(forward_atttack_start.bind(true), 0.7);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.3), 2.4 * 0.3);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.3), 2.4 * 0.3);
 	_add_to_sequence(forward_atttack_end, 0.01);
 	
 	_add_to_sequence(idle, 2.0);
 	
 	_add_to_sequence(forward_atttack_start.bind(true), 0.7);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
-	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.25), 2.4 * 0.25);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.3), 2.4 * 0.3);
+	_add_to_sequence(pick_float.bind(FLOAT_PICK.TOWARDS, 0.3), 2.4 * 0.3);
 	_add_to_sequence(forward_atttack_end, 0.01);
 	
 	_add_to_sequence(idle, 2.0);
@@ -225,7 +225,7 @@ func _hard_mode_stage_3() -> void:
 	_add_to_sequence(idle, 1.0);
 	_add_to_sequence(sides_ban, 0.01);
 	
-	_add_to_sequence(fire_surround, 1.4);
+	_add_to_sequence(fire_surround, 1.7);
 	_add_to_sequence(pick_float.bind(FLOAT_PICK.AWAY, 0.25), 2.4 * 0.25);
 	_add_to_sequence(summon_slimes_start_hard, INF);
 	_add_to_sequence(idle, 0.5);
@@ -591,7 +591,7 @@ func summon_slimes_start_check() -> void:
 		summon_slimes_start();
 	else:
 		_next_sequence(1);
-func get_minons() -> Array[ExchangeType]:
+func get_minons() -> Array[Node2D]:
 	return _slime_summoned.duplicate();
 
 func scared_start() -> void:

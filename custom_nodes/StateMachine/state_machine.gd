@@ -21,11 +21,9 @@ var _current_state          : State;
 var _states                 : Array[State];
 var _animate_interval_timer : Array[SafeOneshot];
 var _current_animate_length : float;
-var _current_mode           : Animation.LoopMode
-var _update_lock            : bool = false;
+var _current_mode           : Animation.LoopMode;
 
 signal state_changed;
-signal _unlocked;
 
 ## Initializes this [StateMachine] by giving each attached child [StateBase] a reference
 ## to the actor object it belongs to, then enters the default [member starting_state].
@@ -73,13 +71,9 @@ func process_frame(delta: float) -> void:
 		_change_state(new_state);
 
 func update() -> void:
-	if _update_lock:
-		await _unlocked;
-	
 	var new_state = _current_state.update();
 	if new_state:
 		_change_state(new_state);
-
 
 func _animate_interval(interval : float) -> void:
 	if not _current_state is AnimateState:
@@ -105,7 +99,6 @@ func _animate_interval_end() -> void:
 				_connect_all_pinpong_settup();
 
 func _change_state(new_state: State) -> void:
-	_update_lock = true;
 	if _current_state:
 		_current_state.exit();
 	
@@ -116,9 +109,7 @@ func _change_state(new_state: State) -> void:
 	_current_state.enter();
 	
 	state_changed.emit();
-	_current_state._stateOverhead.state_changed.emit(get_id());
-	_update_lock = false;
-	_unlocked.emit();
+	get_parent().state_changed.emit(get_id());
 
 func _disconnect_all_settup() -> void:
 	for timer in _animate_interval_timer:
@@ -184,6 +175,9 @@ func change_state(new_state_name: String) -> void:
 ## Returns this [StateMachine] object's name identifier.
 func get_id() -> String:
 	return _name_id;
+
+func get_current_state() -> String:
+	return _current_state.get_id();
 
 ## Returns the ids of all attached [State] objects.
 func get_state_ids() -> Array[String]:

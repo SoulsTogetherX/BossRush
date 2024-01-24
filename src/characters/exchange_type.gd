@@ -59,7 +59,8 @@ signal change_hit_status;
 func _ready() -> void:
 	_health_monitor.damage_taken.connect(_signal_damaged);
 	_health_monitor.killed.connect(_signal_killed);
-	$hurt_box.alignment = alignment;
+	if get_node_or_null("hurt_box") != null:
+		$hurt_box.alignment = alignment;
 	_reset();
 
 func _reset() -> void:

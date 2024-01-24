@@ -865,6 +865,7 @@ shader_parameter/width = 1.0
 shader_parameter/pattern = 0
 shader_parameter/inside = false
 shader_parameter/add_margins = true
+shader_parameter/white_out = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iaj17"]
 radius = 13.0

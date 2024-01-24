@@ -35,7 +35,7 @@ func update() -> State:
 		if _target.change_hit_status.is_connected(_stateOverhead.update):
 			_target.change_hit_status.disconnect(_stateOverhead.update);
 	
-	var targets : Array[ExchangeType] = _actor._target.get_minons();
+	var targets : Array[Node2D] = _actor._target.get_minons();
 	if _actor._target.hitable():
 		targets.append(_actor._target);
 	if targets.is_empty():

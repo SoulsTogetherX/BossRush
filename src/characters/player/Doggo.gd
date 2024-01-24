@@ -74,6 +74,8 @@ func _on_hurt_box_hit(_hitbox: HitBox) -> void:
 	t.tween_interval(0.3);
 	t.tween_property(self, "modulate", Color.WHITE, 0.2);
 	
+	$hit.play();
+	
 	TimeManager.instant_time_scale(0.2);
 	PlayerInfo.cam.shake_event(Vector3(0.3, 0.3, 0), Vector3(3., 3., 0));
 

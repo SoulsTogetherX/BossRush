@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://g022ma38jmtk"]
+[gd_scene load_steps=44 format=3 uid="uid://g022ma38jmtk"]
 
 [ext_resource type="Script" path="res://src/characters/player/Doggo.gd" id="1_621w4"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="2_rfwko"]
@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://baiwckrpmvtca" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep5.ogg" id="15_y1y14"]
 [ext_resource type="AudioStream" uid="uid://imc7snfhoyk0" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep6.ogg" id="16_20jaj"]
 [ext_resource type="AudioStream" uid="uid://blcygsw1ru4fj" path="res://assets/sounds/effects/player/footsteps/player/new/StainStep7.ogg" id="17_wrlwp"]
+[ext_resource type="AudioStream" uid="uid://dvhn8oacqprtb" path="res://assets/sounds/effects/player/hit/Stain Hit.ogg" id="21_hxyqj"]
 
 [sub_resource type="Gradient" id="Gradient_a0khv"]
 offsets = PackedFloat32Array(0, 0.213058, 1)
@@ -958,6 +959,10 @@ volume_db = -10.0
 bus = &"Sound"
 script = ExtResource("9_donoc")
 audios = Array[AudioStream]([ExtResource("11_6vs6g"), ExtResource("12_44kf1"), ExtResource("13_hwiht"), ExtResource("14_ykcdi"), ExtResource("15_y1y14"), ExtResource("16_20jaj"), ExtResource("17_wrlwp")])
+
+[node name="hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_hxyqj")
+bus = &"Sound"
 
 [node name="GUI" parent="." instance=ExtResource("14_yex3s")]
 follow_viewport_enabled = false

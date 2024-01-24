@@ -14,3 +14,4 @@ func set_amount(amt : int) -> void:
 
 func toggle_hitbox(toggle : bool) -> void:
 	monitorable = toggle;
+	get_child(0).disabled = !toggle;

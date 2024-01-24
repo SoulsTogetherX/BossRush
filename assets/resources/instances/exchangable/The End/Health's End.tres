@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HealthExchangable" load_steps=2 format=3 uid="uid://b25c1vnffilvl"]
+
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="1_1gwcd"]
+
+[resource]
+script = ExtResource("1_1gwcd")
+max_health = 15
+name = ""
+symbol = 0

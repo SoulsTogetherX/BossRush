@@ -79,5 +79,5 @@ func toggle_shield(_toggle : bool) -> void:
 func get_sequence_index() -> int:
 	return _sequence_idx;
 
-func get_minons() -> Array[ExchangeType]:
+func get_minons() -> Array[Node2D]:
 	return [];

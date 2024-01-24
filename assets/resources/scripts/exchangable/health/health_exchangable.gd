@@ -1,3 +1,4 @@
+@tool
 class_name HealthExchangable extends Exchangable
 
 @export var max_health : int = 15:

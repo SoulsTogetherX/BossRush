@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://dboeavc243luk"]
+
+[ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="1_eanwp"]
+[ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/float_obj.gd" id="1_fw7jk"]
+[ext_resource type="Texture2D" uid="uid://oq4ktmgric1x" path="res://assets/sprites/characters/bosses/The End/floaty-bit_boss3.png" id="2_km5yf"]
+[ext_resource type="Script" path="res://src/characters/bosses/The End/float.gd" id="3_6m1yw"]
+[ext_resource type="Texture2D" uid="uid://bgu21i22c32v" path="res://assets/sprites/characters/bosses/The End/Hallo.png" id="4_idswk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lmose"]
+shader = ExtResource("1_eanwp")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/white_out = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oorq1"]
+shader = ExtResource("1_eanwp")
+shader_parameter/color = Color(0.333333, 1, 1, 0)
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/white_out = 0.0
+
+[sub_resource type="Gradient" id="Gradient_h8tvw"]
+offsets = PackedFloat32Array(0, 0.684588, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tpnk2"]
+gradient = SubResource("Gradient_h8tvw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pbwaj"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(5, 1, 1)
+angle_min = -180.0
+angle_max = 180.0
+angular_velocity_min = -10.0
+angular_velocity_max = 10.0
+orbit_velocity_min = -0.01
+orbit_velocity_max = 0.01
+radial_velocity_max = 1.0
+gravity = Vector3(0, 98, 0)
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+scale_max = 3.0
+color_ramp = SubResource("GradientTexture1D_tpnk2")
+turbulence_enabled = true
+turbulence_noise_strength = 4.0
+turbulence_noise_speed = Vector3(0, 1, 0)
+turbulence_initial_displacement_min = -100.0
+turbulence_initial_displacement_max = 100.0
+
+[node name="Float" type="Node2D"]
+show_behind_parent = true
+z_index = -21
+material = SubResource("ShaderMaterial_lmose")
+script = ExtResource("1_fw7jk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_km5yf")
+flip_h = true
+hframes = 2
+
+[node name="Hallo" type="Node2D" parent="."]
+top_level = true
+material = SubResource("ShaderMaterial_oorq1")
+position = Vector2(-0.11196, -44.4974)
+script = ExtResource("3_6m1yw")
+rest_offset = Vector2(0, -50)
+lerp_coefficent = 0.4
+
+[node name="Sprite2D" type="Sprite2D" parent="Hallo"]
+texture = ExtResource("4_idswk")
+hframes = 2
+
+[node name="Float" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+z_index = -21
+position = Vector2(0, 24.7059)
+scale = Vector2(1, 1)
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_pbwaj")
+lifetime = 0.5
+speed_scale = 0.5

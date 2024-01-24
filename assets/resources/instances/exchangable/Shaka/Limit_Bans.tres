@@ -8,7 +8,7 @@
 script = ExtResource("2_ayh2r")
 protectile = ExtResource("1_wtg03")
 fire_range = 300.0
-speed = 220.0
+speed = 150.0
 fade_after = 250.0
 fade_before = 100.0
 

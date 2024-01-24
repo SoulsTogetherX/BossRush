@@ -16,7 +16,7 @@ var _fade_tween : Tween;
 var lights_on : bool = false;
 
 enum DIFFICULTY {EASY = 0, NORMAL = 1, BARKMODE = 2};
-var hard_mode : DIFFICULTY = DIFFICULTY.NORMAL;
+var hard_mode : DIFFICULTY = DIFFICULTY.BARKMODE;
 
 signal max_health_changed(amount : int);
 signal health_changed(amount : int);

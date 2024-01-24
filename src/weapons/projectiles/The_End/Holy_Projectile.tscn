@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://ydbwybvqxfi"]
+
+[ext_resource type="Texture2D" uid="uid://di783uchcd713" path="res://assets/sprites/characters/bosses/The End/holy_projectile.png" id="1_lrot2"]
+[ext_resource type="Script" path="res://src/weapons/projectiles/The_End/Holy_Projectile.gd" id="1_nm8us"]
+[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_oosdd"]
+
+[sub_resource type="Gradient" id="Gradient_eg5cu"]
+colors = PackedColorArray(1, 1, 0.584314, 0.392157, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5bry2"]
+gradient = SubResource("Gradient_eg5cu")
+width = 128
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kuva0"]
+radius = 4.0
+height = 56.0
+
+[node name="HolyProjectile" type="Node2D"]
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_nm8us")
+
+[node name="Glow" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_5bry2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.785398
+texture = ExtResource("1_lrot2")
+hframes = 2
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+monitorable = false
+script = ExtResource("3_oosdd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_kuva0")
+
+[connection signal="hit" from="hitbox" to="." method="on_collide"]

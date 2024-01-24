@@ -37,7 +37,10 @@ func _physics_process(_delta: float) -> void:
 	global_position = global_position.lerp(desired_position, 0.3);
 
 func get_center() -> Vector2:
-	return _center.global_position;
+	if _center:
+		return _center.global_position;
+	else:
+		return Vector2.ZERO;
 
 func handle_kickback(_dir : Vector2) -> void:
 	pass;

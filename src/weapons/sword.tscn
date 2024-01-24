@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://6wo1ybgdo3ao"]
+[gd_scene load_steps=16 format=3 uid="uid://6wo1ybgdo3ao"]
 
 [ext_resource type="Script" path="res://src/weapons/sword.gd" id="1_0rltq"]
 [ext_resource type="Texture2D" uid="uid://dmn4krji7uk2a" path="res://assets/sprites/weapons/Doggo Sword.png" id="2_lqugk"]
@@ -169,6 +169,31 @@ _data = {
 offsets = PackedFloat32Array(0, 0.487972, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d4b28"]
+gradient = SubResource("Gradient_u8lu2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_thpqq"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+angle_min = -180.0
+angle_max = 180.0
+spread = 30.0
+initial_velocity_min = 90.0
+initial_velocity_max = 120.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+orbit_velocity_min = -1.0
+orbit_velocity_max = 1.0
+radial_velocity_min = 100.0
+radial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+damping_min = 300.0
+damping_max = 300.0
+scale_min = 3.0
+scale_max = 5.0
+color = Color(0.341176, 0.341176, 0.341176, 1)
+color_ramp = SubResource("GradientTexture1D_d4b28")
+
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("sounds")]
 z_index = 1
 script = ExtResource("1_0rltq")
@@ -216,28 +241,38 @@ bus = &"Sound"
 [node name="trail_emiter" type="Marker2D" parent="."]
 position = Vector2(33, -23)
 
-[node name="hit_particle" type="CPUParticles2D" parent="."]
-position = Vector2(40, 0)
+[node name="hit_particle1" type="GPUParticles2D" parent="."]
+top_level = true
 emitting = false
 amount = 25
+process_material = SubResource("ParticleProcessMaterial_thpqq")
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
-spread = 30.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 90.0
-initial_velocity_max = 120.0
-angular_velocity_min = -180.0
-angular_velocity_max = 180.0
-orbit_velocity_min = -1.0
-orbit_velocity_max = 1.0
-radial_accel_min = -20.0
-radial_accel_max = 20.0
-damping_min = 300.0
-damping_max = 300.0
-angle_min = -180.0
-angle_max = 180.0
-scale_amount_min = 3.0
-scale_amount_max = 5.0
-color = Color(0.341176, 0.341176, 0.341176, 1)
-color_ramp = SubResource("Gradient_u8lu2")
+
+[node name="hit_particle2" type="GPUParticles2D" parent="."]
+top_level = true
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_thpqq")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+
+[node name="hit_particle3" type="GPUParticles2D" parent="."]
+top_level = true
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_thpqq")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+
+[node name="hit_particle4" type="GPUParticles2D" parent="."]
+top_level = true
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_thpqq")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0

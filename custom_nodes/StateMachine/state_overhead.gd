@@ -121,6 +121,9 @@ func update_machine(machine_id: String) -> void:
 func get_actor() -> Node:
 	return _actor;
 
+func get_current_state(machine_id: String) -> String:
+	return _state_machines[machine_id].get_current_state();
+
 ## Changes the running [StateBase] to an accessible one, within the [StateMachine] corresponding to
 ## the given index, with the given name identifier.[br][br]
 ##
