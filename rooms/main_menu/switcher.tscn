@@ -1,6 +1,53 @@
-[gd_scene load_steps=2 format=3 uid="uid://ba0hrtoxl8all"]
+[gd_scene load_steps=14 format=3 uid="uid://ba0hrtoxl8all"]
 
 [ext_resource type="Script" path="res://rooms/main_menu/switcher.gd" id="1_wr13t"]
+[ext_resource type="Texture2D" uid="uid://brytgnlcey3yv" path="res://assets/sprites/menu_screen/Start Screen.png" id="2_odt7x"]
+[ext_resource type="AudioStream" uid="uid://bodr1tdp085i6" path="res://assets/sounds/music/fireplace.mp3" id="2_spp8t"]
+[ext_resource type="Script" path="res://custom_nodes/AnimatedTextureRect/TextureRect.gd" id="3_hoc15"]
+[ext_resource type="AudioStream" uid="uid://ctyxqwhu8es3v" path="res://assets/sounds/music/Menu - Let's Take a Breather.ogg" id="3_pgt4j"]
+[ext_resource type="Shader" path="res://rooms/main_menu/pages/background.gdshader" id="4_wgy0d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qifrp"]
+atlas = ExtResource("2_odt7x")
+region = Rect2(1280, 0, 1280, 720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1onna"]
+atlas = ExtResource("2_odt7x")
+region = Rect2(0, 0, 1280, 720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qej31"]
+atlas = ExtResource("2_odt7x")
+region = Rect2(2560, 0, 1280, 720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ksbg"]
+atlas = ExtResource("2_odt7x")
+region = Rect2(3840, 0, 1280, 720)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7184k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1onna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qifrp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qej31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ksbg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sq4p4"]
+shader = ExtResource("4_wgy0d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxll0"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="Switcher" type="Control"]
 layout_mode = 3
@@ -10,3 +57,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wr13t")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_qifrp")
+expand_mode = 2
+stretch_mode = 1
+script = ExtResource("3_hoc15")
+sprites = SubResource("SpriteFrames_7184k")
+autoplay = true
+Animation = "default"
+Frame = 1
+"Speed Scale" = 1.0
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 1
+material = SubResource("ShaderMaterial_sq4p4")
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dxll0")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_pgt4j")
+autoplay = true
+bus = &"Music"
+
+[node name="fireplace" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_spp8t")
+volume_db = 10.0
+autoplay = true
+bus = &"Sound"

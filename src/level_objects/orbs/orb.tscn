@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://lt1h1nu2iplm"]
+[gd_scene load_steps=13 format=3 uid="uid://lt1h1nu2iplm"]
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/orb.gd" id="1_try8l"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="2_n4nyi"]
 [ext_resource type="Texture2D" uid="uid://bptx0evn742ok" path="res://assets/sprites/symbols.png" id="2_u6e50"]
 [ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="3_r7rkh"]
 [ext_resource type="AudioStream" uid="uid://knoj1l3k80om" path="res://assets/sounds/effects/orb/Power Choice v1.ogg" id="4_hr3s8"]
@@ -43,6 +44,7 @@ shadow_filter = 1
 shadow_filter_smooth = 10.0
 texture = SubResource("GradientTexture2D_um4t1")
 texture_scale = 9.0
+script = ExtResource("2_n4nyi")
 
 [node name="station_particle" type="CPUParticles2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.392157)

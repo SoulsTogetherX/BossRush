@@ -17,6 +17,7 @@ func get_id():
 func enter() -> void:
 	_actor.toggle_trail(true);
 	_actor.disable = true;
+	_animationPlayer.stop();
 	_animationPlayer.play("slam");
 	_enact_position = _actor.get_hold_position();
 	_pause_time = _actor.get_hold_time();
@@ -33,6 +34,7 @@ func exit() -> void:
 	_actor.toggle_slambox(false);
 	if _fall_tween:
 		_fall_tween.kill();
+	_actor.rotation_degrees = 0.0;
 
 func process_physics(_delta: float) -> State:
 	if _hold:
@@ -67,13 +69,25 @@ func fall_hand(interval : float, start : Vector2) -> void:
 func create_shock_wave() -> void:
 	var wave : Node2D = SHOCK_WAVE.instantiate();
 	wave.global_position = _enact_position;
-	wave.wave_time = 0.5;
-	wave.fade_time = 0.1;
-	wave.radius = 180;
+	
+	match PlayerInfo.hard_mode:
+		PlayerInfo.DIFFICULTY.EASY:
+			wave.wave_time = 0.5;
+			wave.fade_time = 0.1;
+			wave.radius = 180;
+		PlayerInfo.DIFFICULTY.NORMAL:
+			wave.wave_time = 0.7;
+			wave.fade_time = 0.1;
+			wave.radius = 240;
+		PlayerInfo.DIFFICULTY.BARKMODE:
+			wave.wave_time = 0.7;
+			wave.fade_time = 0.1;
+			wave.radius = 280;
 	
 	get_tree().current_scene.add_child(wave);
 	
 	PlayerInfo.cam.shake_event(Vector3(0.5, 0.5, 0.5), Vector3(15.0, 15.0, 360.0));
 
 func update() -> State:
+	_actor.finished_action.emit();
 	return over_player;

@@ -1,14 +1,21 @@
-[gd_scene load_steps=16 format=3 uid="uid://8xcdttdfpjaq"]
+[gd_scene load_steps=30 format=3 uid="uid://8xcdttdfpjaq"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_5stgi"]
-[ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="2_td27i"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="3_3j63k"]
 [ext_resource type="Texture2D" uid="uid://chfvc3f5slcda" path="res://assets/sprites/ground/The End/Floor 3 Clouds-export.png" id="3_egynh"]
 [ext_resource type="Texture2D" uid="uid://dbylb5wla1gp0" path="res://assets/sprites/ground/The End/Floor 3 Clouds-back-export.png" id="3_fxamg"]
 [ext_resource type="Texture2D" uid="uid://cxxtotkvb77ed" path="res://assets/sprites/ground/The End/Floor 3.png" id="4_20be0"]
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="4_wlwt0"]
 [ext_resource type="Script" path="res://rooms/rooms/The End Room/Platform.gd" id="5_24dwv"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="7_7gd64"]
 [ext_resource type="PackedScene" uid="uid://2t51xt3spvld" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd.tscn" id="8_e1u48"]
+[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.tscn" id="8_e4222"]
+[ext_resource type="PackedScene" uid="uid://cs88c1o34glwl" path="res://src/level_objects/orbs/orb_finisher__still_unsure_of_this_end_but_it_is_whatever_for_a_gameJam_I_suppose.tscn" id="9_v5sv8"]
+[ext_resource type="Script" path="res://rooms/rooms/The End Room/End Controller.gd" id="10_43bp4"]
+[ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="10_bsssp"]
+[ext_resource type="Texture2D" uid="uid://b41dv6tays24a" path="res://assets/sprites/characters/bosses/The End/Stains Final Attack.png" id="15_s5t0h"]
+[ext_resource type="PackedScene" uid="uid://cn2151tk8pfim" path="res://src/level_objects/location/location.tscn" id="16_6xee6"]
+[ext_resource type="PackedScene" uid="uid://ccdpw62ond2wb" path="res://src/level_objects/Arrow/Arrow.tscn" id="17_lub0i"]
 
 [sub_resource type="Gradient" id="Gradient_vvury"]
 offsets = PackedFloat32Array(0.00643087, 1)
@@ -19,11 +26,30 @@ gradient = SubResource("Gradient_vvury")
 fill_from = Vector2(0.42735, 0.452991)
 fill_to = Vector2(1, 1)
 
+[sub_resource type="Curve" id="Curve_ji2ya"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.71987, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tiv8x"]
+curve = SubResource("Curve_ji2ya")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cerhx"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(2124.99, 1001.98, 1)
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 10.0
+radial_accel_max = 10.0
+scale_min = 2.0
+scale_max = 6.0
+scale_curve = SubResource("CurveTexture_tiv8x")
+turbulence_noise_strength = 20.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_np6f4"]
-size = Vector2(641.5, 20)
+size = Vector2(641.5, 80.9336)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxmio"]
-size = Vector2(21.9375, 335)
+size = Vector2(78, 471)
 
 [sub_resource type="Gradient" id="Gradient_rdcti"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
@@ -35,6 +61,93 @@ height = 96
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Resource" id="Resource_c1ovc"]
+resource_local_to_scene = true
+script = ExtResource("7_7gd64")
+spawn_entity = ExtResource("8_e4222")
+max_spawn = 2
+weapon_range = 0.0
+delta = -1
+cooldown = 0.3
+name = "Slime Summon"
+symbol = 0
+
+[sub_resource type="Animation" id="Animation_utrga"]
+resource_name = "End_Slash"
+length = 6.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("End Controller/Hand:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 2.3, 2.45, 5.75, 5.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.1, 0.1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("End Controller/Hand:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 2.3, 2.45, 3, 3.85305, 3.90305, 3.95305, 4, 4.05, 4.1, 4.49695, 4.54695, 4.59695, 4.65, 4.69695, 4.75, 5, 5.3, 5.75, 5.8, 5.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-2.57611, -2.57611, 0.624828, 0.624828, 3.49066, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 0.624828, 2.6891, 2.6891, 0.624828, -1.24791, 3.69741]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TheEnd")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(5.85),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"finish_dead"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_yiwrm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("End Controller/Hand:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("End Controller/Hand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-2.57611]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_reacs"]
+_data = {
+"End_Slash": SubResource("Animation_utrga"),
+"RESET": SubResource("Animation_yiwrm")
+}
 
 [node name="TheEnd" type="Node2D"]
 y_sort_enabled = true
@@ -50,6 +163,12 @@ modulate = Color(0.615686, 0.615686, 0.615686, 1)
 position = Vector2(-10.4999, 115)
 scale = Vector2(33.2031, 15.6563)
 texture = SubResource("GradientTexture2D_8s4mc")
+
+[node name="ParallaxLayer7" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ParallaxBackground/ParallaxLayer7"]
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_cerhx")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.85, 0.85)
@@ -97,12 +216,13 @@ texture = ExtResource("3_fxamg")
 modulate = Color(0.92549, 0.92549, 0.92549, 1)
 top_level = true
 z_index = -10
-position = Vector2(8.68903, 7.1396)
+position = Vector2(3.71141, 9.16627)
 texture = ExtResource("4_20be0")
 script = ExtResource("5_24dwv")
 decay_factor = 0.1
 influence_factor = 0.01
 resist_factor = 0.1
+player_affect = 1000.0
 min_h_oscillator = 10.0
 max_h_oscillator = 10.0
 min_v_oscillator = 10.0
@@ -115,20 +235,28 @@ max_v_oscillation = 1.3
 [node name="StaticBody2D" type="StaticBody2D" parent="Floor"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(0.25, -54)
+position = Vector2(0, -85)
 shape = SubResource("RectangleShape2D_np6f4")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(-4, 264)
+position = Vector2(0, 295)
 shape = SubResource("RectangleShape2D_np6f4")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(-332.031, 103.5)
+position = Vector2(-355, 105)
 shape = SubResource("RectangleShape2D_jxmio")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(329, 102)
+position = Vector2(355, 105)
 shape = SubResource("RectangleShape2D_jxmio")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Floor"]
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/StaticBody2D2"]
+position = Vector2(0, -40)
+shape = SubResource("RectangleShape2D_np6f4")
 
 [node name="clip_contents" type="Control" parent="Floor"]
 clip_contents = true
@@ -149,9 +277,8 @@ position = Vector2(-69, -75)
 texture = SubResource("GradientTexture2D_owtm7")
 
 [node name="Doggo" parent="Floor" instance=ExtResource("3_3j63k")]
-position = Vector2(-5, 127)
-
-[node name="Reward_manager" parent="." instance=ExtResource("2_td27i")]
+position = Vector2(-4.99999, 127)
+secondary_attack = SubResource("Resource_c1ovc")
 
 [node name="cam" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 top_level = true
@@ -160,13 +287,15 @@ script = ExtResource("4_wlwt0")
 follow = NodePath("../Floor/Doggo")
 auto_follow = true
 
-[node name="TheEnd" parent="." node_paths=PackedStringArray("shadow_left", "shadow_right", "floor") instance=ExtResource("8_e1u48")]
+[node name="TheEnd" parent="." node_paths=PackedStringArray("ending_animator", "shadow_left", "shadow_right", "_floor", "arrow") instance=ExtResource("8_e1u48")]
 top_level = true
 y_sort_enabled = true
-position = Vector2(-2, -100)
+position = Vector2(-3, -100)
+ending_animator = NodePath("../Orb")
 shadow_left = NodePath("../Floor/clip_contents/Shadow_Left")
 shadow_right = NodePath("../Floor/clip_contents/Shadow_Right")
-floor = NodePath("../Floor")
+_floor = NodePath("../Floor")
+arrow = NodePath("../Arrow")
 rest_offset = Vector2(0, -100)
 lerp_coefficent = 0.05
 act_on_local = false
@@ -178,3 +307,46 @@ min_h_oscillation = 0.8
 max_h_oscillation = 0.8
 min_v_oscillation = 3.0
 max_v_oscillation = 3.0
+
+[node name="Orb" parent="." node_paths=PackedStringArray("ending_animator") instance=ExtResource("9_v5sv8")]
+position = Vector2(-619, -475)
+ending_animator = NodePath("../End Controller")
+
+[node name="Arrow" parent="." instance=ExtResource("17_lub0i")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-198, 52)
+auto_start = false
+
+[node name="Reward_manager" parent="." instance=ExtResource("10_bsssp")]
+
+[node name="End Controller" type="Node" parent="."]
+script = ExtResource("10_43bp4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="End Controller"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_reacs")
+}
+
+[node name="Hand" type="Node2D" parent="End Controller"]
+position = Vector2(89, -118)
+rotation = -2.57611
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Hand" type="Sprite2D" parent="End Controller/Hand"]
+position = Vector2(5.4233, -105.298)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("15_s5t0h")
+
+[node name="ColorRect" type="ColorRect" parent="End Controller"]
+offset_left = -1788.0
+offset_top = -844.0
+offset_right = 1227.0
+offset_bottom = 806.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="door5" parent="." instance=ExtResource("16_6xee6")]
+position = Vector2(-2, 153)
+location_id = "1"
+direction = 1

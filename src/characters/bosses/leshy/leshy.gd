@@ -107,6 +107,7 @@ func hide_self(animate : String, delay : float) -> void:
 	var tw : Tween = create_tween().set_parallel();
 	for bush in _shown_bushed:
 		bush.visible = true;
+		bush.get_node("StaticBody2D/CollisionShape2D").disabled = false;
 		bush.get_node("StaticBody2D").collision_layer = 64;
 		tw.tween_property(bush, "scale", Vector2(1.0, 1.0), 0.2);
 	
@@ -150,7 +151,7 @@ func hide_bushes() -> void:
 	
 	var tw : Tween = create_tween().set_parallel();
 	for bush in _shown_bushed:
-		bush.get_node("StaticBody2D").collision_layer = 0;
+		bush.get_node("StaticBody2D/CollisionShape2D").disabled = true;
 		tw.tween_property(bush, "scale", Vector2(0.0, 0.0), 0.2);
 		tw.tween_property(bush, "visible", false, 0.0).set_delay(0.2)
 	
@@ -174,11 +175,13 @@ func dash_hard() -> void:
 
 func dash() -> void:
 	_sprite.material.set_shader_parameter("modulate", Color("#ffffffff"));
-	while true:
-		var rand : int = randi_range(0, 7);
+	var rand_choice : Array[int] = [0, 1, 2, 3, 4, 5, 6, 7];
+	while rand_choice.size() > 0:
+		var rand : int = rand_choice.pick_random();
 		_move_direction = Vector2.RIGHT.rotated((PI / 4) * rand);
 		if can_move_here((_move_direction * _dash_distance) + global_position):
 			break;
+		rand_choice.erase(rand);
 	
 	dash_base(_move_direction.angle());
 
@@ -211,6 +214,8 @@ func _physics_process(delta: float) -> void:
 
 var _death : bool = false;
 func die() -> void:
+	$Music.stop();
+	
 	_death = true;
 	_sequence_timer.stop();
 	_animation_player.play("RESET");
@@ -233,6 +238,9 @@ func _on_hit(_hitbox: HitBox) -> void:
 		_force_move(_stun, 0.5, 0);
 		$AnimatableBody2D/CollisionShape2D2.disabled = true;
 		_waiting = false;
+		
+		$Music_Crash.play();
+		$Music.play();
 	elif !_death:
 		_force_move(_stun, 0.5, (2 if get_sequence_index() == 8 else 1));
 	

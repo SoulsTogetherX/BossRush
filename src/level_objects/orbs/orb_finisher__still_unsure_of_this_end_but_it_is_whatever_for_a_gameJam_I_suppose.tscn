@@ -1,0 +1,182 @@
+[gd_scene load_steps=17 format=3 uid="uid://cs88c1o34glwl"]
+
+[ext_resource type="Script" path="res://src/level_objects/orbs/orb_finisher__still_unsure_of_this_end_but_it_is_whatever_for_a_gameJam_I_suppose.gd" id="1_qvndu"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="2_vd13a"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_exchangable.gd" id="2_yfmlq"]
+[ext_resource type="Texture2D" uid="uid://bptx0evn742ok" path="res://assets/sprites/symbols.png" id="3_uio0a"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="4_ctkfm"]
+[ext_resource type="AudioStream" uid="uid://knoj1l3k80om" path="res://assets/sounds/effects/orb/Power Choice v1.ogg" id="5_ly6xo"]
+[ext_resource type="AudioStream" uid="uid://dg2ps76664hri" path="res://assets/sounds/effects/orb/Power Choice v2.ogg" id="6_2jfim"]
+[ext_resource type="AudioStream" uid="uid://duyx11n43nmus" path="res://assets/sounds/effects/orb/Power Choice v3.ogg" id="7_030wt"]
+[ext_resource type="AudioStream" uid="uid://uundau0wwota" path="res://assets/sounds/effects/orb/Power Absorb Changed.ogg" id="9_x50m5"]
+[ext_resource type="AudioStream" uid="uid://ctdla5w6e83qn" path="res://assets/sounds/effects/orb/Power Cancel Changed.ogg" id="10_mf07j"]
+
+[sub_resource type="Resource" id="Resource_4vdl6"]
+script = ExtResource("2_yfmlq")
+weapon_range = 0.0
+delta = -1
+cooldown = 0.0
+name = ""
+symbol = 0
+
+[sub_resource type="Gradient" id="Gradient_mo0ps"]
+colors = PackedColorArray(1, 1, 0.301961, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_um4t1"]
+gradient = SubResource("Gradient_mo0ps")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_7j2q1"]
+offsets = PackedFloat32Array(0, 0.0996564, 0.243986, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="SystemFont" id="SystemFont_2qooj"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_nmpi0"]
+font = SubResource("SystemFont_2qooj")
+font_size = 45
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Orb" type="Node2D"]
+z_index = 1
+scale = Vector2(2, 2)
+script = ExtResource("1_qvndu")
+exchange = SubResource("Resource_4vdl6")
+
+[node name="color" type="PointLight2D" parent="."]
+energy = 2.0
+blend_mode = 2
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 10.0
+texture = SubResource("GradientTexture2D_um4t1")
+texture_scale = 9.0
+script = ExtResource("2_vd13a")
+
+[node name="station_particle" type="CPUParticles2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+amount = 128
+lifetime = 2.0
+emission_shape = 2
+emission_sphere_radius = 20.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 20.0
+orbit_velocity_min = -0.2
+orbit_velocity_max = 0.2
+angle_min = -20.0
+angle_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_7j2q1")
+
+[node name="trail_particle" type="CPUParticles2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+amount = 32
+lifetime = 2.0
+emission_shape = 2
+emission_sphere_radius = 10.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+orbit_velocity_min = -0.02
+orbit_velocity_max = 0.02
+radial_accel_min = -5.0
+radial_accel_max = 5.0
+damping_min = 20.0
+damping_max = 20.0
+angle_min = -20.0
+angle_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_7j2q1")
+
+[node name="break_particle" type="CPUParticles2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.392157)
+show_behind_parent = true
+top_level = true
+emitting = false
+amount = 128
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 300.0
+damping_min = 20.0
+damping_max = 20.0
+angle_min = -20.0
+angle_max = 20.0
+scale_amount_min = 2.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_7j2q1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_uio0a")
+hframes = 3
+vframes = 3
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
+
+[node name="TitleDisplay" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 2000
+z_as_relative = false
+offset_left = -160.0
+offset_top = -53.0
+offset_right = 480.0
+offset_bottom = 2.0
+scale = Vector2(0.5, 0.5)
+text = "hello"
+label_settings = SubResource("LabelSettings_nmpi0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Choice_1" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_ctkfm")
+audios = Array[AudioStream]([ExtResource("5_ly6xo"), ExtResource("6_2jfim"), ExtResource("7_030wt")])
+
+[node name="Choice_2" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_ctkfm")
+audios = Array[AudioStream]([ExtResource("5_ly6xo"), ExtResource("6_2jfim"), ExtResource("7_030wt")])
+
+[node name="Choice_3" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_ctkfm")
+audios = Array[AudioStream]([ExtResource("5_ly6xo"), ExtResource("6_2jfim"), ExtResource("7_030wt")])
+
+[node name="Choice_4" type="AudioStreamPlayer" parent="."]
+script = ExtResource("4_ctkfm")
+audios = Array[AudioStream]([ExtResource("5_ly6xo"), ExtResource("6_2jfim"), ExtResource("7_030wt")])
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Absorb" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_x50m5")
+
+[node name="Cancel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_mf07j")
+
+[connection signal="gui_input" from="Control" to="." method="_on_click"]
+[connection signal="mouse_entered" from="Control" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control" to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="Timer" to="." method="collect"]

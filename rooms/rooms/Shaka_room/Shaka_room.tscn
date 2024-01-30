@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ckg7jtsjjc2tm"]
+[gd_scene load_steps=36 format=3 uid="uid://ckg7jtsjjc2tm"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_0u52g"]
 [ext_resource type="Texture2D" uid="uid://cgelphdxxdcqo" path="res://assets/sprites/ground/Shaka/Floor 2 Circus-walls.png" id="2_rlj6g"]
@@ -28,6 +28,20 @@ size = Vector2(25, 153)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrkoc"]
 size = Vector2(602, 464)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0tvt"]
+size = Vector2(39, 161)
+
+[sub_resource type="Resource" id="Resource_aogar"]
+resource_local_to_scene = true
+script = ExtResource("8_dn73q")
+spawn_entity = ExtResource("9_pr67h")
+max_spawn = 2
+weapon_range = 0.0
+delta = -1
+cooldown = 0.3
+name = "Slime Summon"
+symbol = 0
 
 [sub_resource type="Resource" id="Resource_7k1bm"]
 resource_local_to_scene = true
@@ -64,18 +78,18 @@ size = Vector2(217.625, 17)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0e0oy"]
 size = Vector2(172.812, 20)
 
-[sub_resource type="Gradient" id="Gradient_fa07v"]
+[sub_resource type="Gradient" id="Gradient_u2rff"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1o1br"]
-gradient = SubResource("Gradient_fa07v")
+gradient = SubResource("Gradient_u2rff")
 
-[sub_resource type="Gradient" id="Gradient_kyvr7"]
+[sub_resource type="Gradient" id="Gradient_c6nm5"]
 offsets = PackedFloat32Array(0, 0.993569)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ec7ik"]
-gradient = SubResource("Gradient_kyvr7")
+gradient = SubResource("Gradient_c6nm5")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -145,13 +159,23 @@ debug_color = Color(0, 0.643137, 0.321569, 0.419608)
 
 [node name="enter" parent="." instance=ExtResource("6_dkoa0")]
 position = Vector2(-337, -29)
-move_to = "2"
-scene_path = "res://rooms/rooms/Shaka_room/Shaka_room.tscn"
-location_id = "4"
+location_id = "1"
 direction = 2
+
+[node name="exit" parent="." instance=ExtResource("6_dkoa0")]
+position = Vector2(302, -1)
+move_to = "4"
+scene_path = "res://rooms/rooms/Walk way/In-between.tscn"
+location_id = "2"
+direction = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="exit"]
+position = Vector2(67.5, 2.5)
+shape = SubResource("RectangleShape2D_d0tvt")
 
 [node name="Doggo" parent="." instance=ExtResource("6_51n6a")]
 position = Vector2(228, -7)
+secondary_attack = SubResource("Resource_aogar")
 
 [node name="Shaka" parent="." node_paths=PackedStringArray("slime_summon_area", "fly_nodes", "center_node", "arrow", "door_hide", "door", "_reward_manager") instance=ExtResource("8_hwx5n")]
 position = Vector2(0, 61)
@@ -258,7 +282,6 @@ position = Vector2(-281, 209)
 texture = ExtResource("7_mlp8g")
 
 [node name="Center" type="Sprite2D" parent="."]
-visible = false
 z_index = -3
 position = Vector2(0, -10)
 texture = ExtResource("7_mlp8g")

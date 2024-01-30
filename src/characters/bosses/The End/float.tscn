@@ -8,7 +8,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lmose"]
 shader = ExtResource("1_eanwp")
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(0.333333, 1, 1, 0)
 shader_parameter/modulate = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 0
@@ -62,19 +62,22 @@ material = SubResource("ShaderMaterial_lmose")
 script = ExtResource("1_fw7jk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+use_parent_material = true
 texture = ExtResource("2_km5yf")
 flip_h = true
 hframes = 2
 
 [node name="Hallo" type="Node2D" parent="."]
 top_level = true
+z_index = -20
 material = SubResource("ShaderMaterial_oorq1")
-position = Vector2(-0.11196, -44.4974)
+position = Vector2(6.43606, -58.4298)
 script = ExtResource("3_6m1yw")
 rest_offset = Vector2(0, -50)
 lerp_coefficent = 0.4
 
 [node name="Sprite2D" type="Sprite2D" parent="Hallo"]
+use_parent_material = true
 texture = ExtResource("4_idswk")
 hframes = 2
 
@@ -82,7 +85,6 @@ hframes = 2
 show_behind_parent = true
 z_index = -21
 position = Vector2(0, 24.7059)
-scale = Vector2(1, 1)
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_pbwaj")
 lifetime = 0.5

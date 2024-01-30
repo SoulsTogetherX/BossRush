@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://bxtp8uggorlqb"]
+[gd_scene load_steps=52 format=3 uid="uid://bxtp8uggorlqb"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/Shaka.gd" id="1_g7w81"]
 [ext_resource type="Resource" uid="uid://uu34agn4p5h2" path="res://assets/resources/instances/exchangable/Shaka/SlimeSpawn.tres" id="2_5vtxt"]
@@ -23,6 +23,8 @@
 [ext_resource type="AudioStream" uid="uid://dd7oa74ypcvjg" path="res://assets/sounds/effects/boss/shaka/shaka/voice/hurt/Shaka voice hit 3.ogg" id="18_5hsi6"]
 [ext_resource type="AudioStream" uid="uid://xl7bushu5b3b" path="res://assets/sounds/effects/boss/shaka/shaka/voice/anger/Shaka Angry 2 fixed.ogg" id="18_gd640"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="19_bmu3j"]
+[ext_resource type="AudioStream" uid="uid://y2wdwqbmw4ox" path="res://assets/sounds/music/Leshy's Theme Start.ogg" id="24_djxs6"]
+[ext_resource type="AudioStream" uid="uid://cye5mx8xlpke6" path="res://assets/sounds/music/Leshy Theme.ogg" id="25_c5kfi"]
 
 [sub_resource type="Animation" id="Animation_o7wyk"]
 length = 0.001
@@ -1177,6 +1179,15 @@ bus = &"Sound"
 script = ExtResource("15_5735m")
 audios = Array[AudioStream]([ExtResource("16_ber6f"), ExtResource("17_lutdt"), ExtResource("18_5hsi6")])
 varation = 0.1
+
+[node name="Music_Crash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_djxs6")
+volume_db = 10.0
+bus = &"Music"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_c5kfi")
+bus = &"Music"
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]
 [connection signal="hit" from="hurt_box" to="hurt_box" method="_on_hit"]

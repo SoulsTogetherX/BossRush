@@ -1,22 +1,40 @@
 @tool
 extends FloatObjectControl
 
+@export var ending_animator : Node;
+
 @export var shadow_left : Sprite2D;
 @export var shadow_right : Sprite2D;
-@export var floor : Sprite2D;
+@export var _floor : Sprite2D;
+@export var arrow : Node2D;
 
 var _back_up : bool = false;
 var _position_x_addition : float;
 var _time_delta : float = 0.0;
-
+var dead : bool = false;
 
 func _ready() -> void:
 	super();
-	$TheEnd.set_shadows(shadow_left, shadow_right);
-	$TheEnd.set_floor(floor);
+	if !Engine.is_editor_hint():
+		$TheEnd.set_shadows(shadow_left, shadow_right);
+		$TheEnd.set_floor(_floor);
 
 func die() -> void:
-	queue_free();
+	dead = true;
+	ending_animator.global_position = global_position;
+	ending_animator.scale = Vector2.ZERO;
+	
+	var tw : Tween = create_tween().set_parallel();
+	tw.set_trans(Tween.TRANS_BACK);
+	tw.tween_property(ending_animator, "global_position", (global_position * 0.1) + (Vector2.UP * 20), 0.1);
+	tw.tween_property(ending_animator, "global_position", Vector2.ZERO, 1.0).set_delay(0.3);
+	tw.tween_property(ending_animator, "scale", Vector2(2.0, 2.0), 0.5);
+	
+	disable = true;
+
+func finish_dead() -> void:
+	ending_animator.queue_free();
+	$TheEnd.death_animation();
 
 func return_rest() -> void:
 	move_all_compoents(Vector2(1500 * (-1 if randf() < 0.5 else 1), -100));

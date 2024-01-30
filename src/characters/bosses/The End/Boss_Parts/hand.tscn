@@ -1,6 +1,5 @@
-[gd_scene load_steps=41 format=3 uid="uid://brvyfync5c1iv"]
+[gd_scene load_steps=46 format=3 uid="uid://brvyfync5c1iv"]
 
-[ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="1_pey8o"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/hand.gd" id="2_4rlrj"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="3_2bn6v"]
 [ext_resource type="Script" path="res://custom_nodes/trail/trail.gd" id="3_u3ps0"]
@@ -13,16 +12,20 @@
 [ext_resource type="Texture2D" uid="uid://c5inw5525f3ec" path="res://assets/sprites/characters/bosses/The End/Eye-Addition_sheet.png" id="7_kn2i2"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="8_f7hmg"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="9_1mvkw"]
+[ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/Pupil.gd" id="9_qusxr"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Idle.gd" id="10_lve7e"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Stationary.gd" id="11_ikdwx"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Aim_Lazor.gd" id="12_s35an"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Over_Player.gd" id="13_0obnk"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Slam_Player.gd" id="14_x034m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8e26e"]
-shader = ExtResource("1_pey8o")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pe34h"]
+resource_local_to_scene = true
+shader = ExtResource("7_2dywx")
 shader_parameter/color = Color(0.333333, 1, 1, 0)
 shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/replace = Color(1, 1, 1, 1)
+shader_parameter/replace_with = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 0
 shader_parameter/inside = false
@@ -94,6 +97,30 @@ damping_max = 1000.0
 color = Color(1, 1, 1, 0.784314)
 color_ramp = SubResource("GradientTexture1D_ccvj2")
 
+[sub_resource type="Gradient" id="Gradient_2mcyd"]
+offsets = PackedFloat32Array(0, 0.34767, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jqgg2"]
+gradient = SubResource("Gradient_2mcyd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wah4g"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 100.0
+angle_max = 180.0
+spread = 180.0
+flatness = 1.0
+initial_velocity_max = 100.0
+radial_velocity_min = -300.0
+radial_velocity_max = -300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 8.0
+color = Color(1, 1, 0.454902, 0.745098)
+color_ramp = SubResource("GradientTexture1D_jqgg2")
+turbulence_noise_strength = 20.0
+
 [sub_resource type="Curve" id="Curve_6cwl4"]
 _data = [Vector2(0, 0.193912), 0.0, 0.0, 0, 0, Vector2(0.651297, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -101,19 +128,6 @@ point_count = 3
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j1tyd"]
 radius = 15.2941
 height = 63.5294
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pe34h"]
-resource_local_to_scene = true
-shader = ExtResource("7_2dywx")
-shader_parameter/color = Color(0.333333, 1, 1, 0)
-shader_parameter/modulate = Color(1, 1, 1, 1)
-shader_parameter/replace = Color(1, 1, 1, 1)
-shader_parameter/replace_with = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 0
-shader_parameter/inside = false
-shader_parameter/add_margins = true
-shader_parameter/white_out = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xrgpn"]
 radius = 20.0
@@ -183,6 +197,34 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_c8f2h"]
 resource_name = "hurt"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Pupil:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_opmwf"]
+resource_name = "hurt_stun"
 length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -369,11 +411,53 @@ tracks/7/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_mbw04"]
+resource_name = "punch"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Pupil:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8khx2"]
 _data = {
 "RESET": SubResource("Animation_t21bu"),
 "hurt": SubResource("Animation_c8f2h"),
+"hurt_stun": SubResource("Animation_opmwf"),
 "idle": SubResource("Animation_d77cf"),
+"punch": SubResource("Animation_mbw04"),
 "slam": SubResource("Animation_apubr"),
 "slam_bounce": SubResource("Animation_2opd8")
 }
@@ -382,10 +466,14 @@ _data = {
 radius = 29.4118
 height = 87.0588
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nyljo"]
+radius = 18.8235
+height = 87.0588
+
 [node name="Hand" type="Node2D"]
 top_level = true
 z_index = -12
-material = SubResource("ShaderMaterial_8e26e")
+material = SubResource("ShaderMaterial_pe34h")
 scale = Vector2(0.85, 0.85)
 script = ExtResource("2_4rlrj")
 act_on_local = false
@@ -393,10 +481,13 @@ _state = 0
 max_h_oscillator = 4.0
 min_v_oscillator = 6.0
 
+[node name="await_punch" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="Float" type="GPUParticles2D" parent="."]
 show_behind_parent = true
 position = Vector2(0, 24.7059)
-scale = Vector2(1, 1)
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_mo7r8")
 lifetime = 0.5
@@ -405,7 +496,6 @@ speed_scale = 0.5
 [node name="Slam_right" type="GPUParticles2D" parent="."]
 z_index = 1
 position = Vector2(0, 18)
-scale = Vector2(1, 1)
 emitting = false
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_k884e")
@@ -418,7 +508,6 @@ explosiveness = 1.0
 [node name="Slam_left" type="GPUParticles2D" parent="."]
 z_index = 1
 position = Vector2(0, 18)
-scale = Vector2(1, 1)
 emitting = false
 amount = 20
 process_material = SubResource("ParticleProcessMaterial_xrlit")
@@ -427,6 +516,15 @@ lifetime = 0.5
 one_shot = true
 speed_scale = 0.5
 explosiveness = 1.0
+
+[node name="Charging" type="GPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(-7.05882, 1.52941)
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_wah4g")
+lifetime = 0.5
+speed_scale = 0.5
 
 [node name="trail" type="Line2D" parent="." node_paths=PackedStringArray("follow")]
 show_behind_parent = true
@@ -464,7 +562,7 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_j1tyd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_pe34h")
+use_parent_material = true
 position = Vector2(-1, -24)
 texture = ExtResource("5_xtfe0")
 hframes = 3
@@ -473,6 +571,8 @@ hframes = 3
 texture = ExtResource("7_kn2i2")
 hframes = 2
 frame = 1
+script = ExtResource("9_qusxr")
+distance_allowed = 6.0
 
 [node name="Lazor" type="Node2D" parent="."]
 z_as_relative = false
@@ -516,6 +616,18 @@ script = ExtResource("7_h752f")
 position = Vector2(-8.23529, 2.35294)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_h2gcy")
+debug_color = Color(0.992157, 0, 0.258824, 0.419608)
+
+[node name="Hit_Box_Punch" type="Area2D" parent="."]
+z_index = 100
+monitoring = false
+script = ExtResource("7_h752f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit_Box_Punch"]
+position = Vector2(-8.23529, -9.41177)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_nyljo")
+disabled = true
 debug_color = Color(0.992157, 0, 0.258824, 0.419608)
 
 [node name="state_overhead" type="Node" parent="." node_paths=PackedStringArray("_actor", "_animationPlayer")]

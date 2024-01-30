@@ -33,6 +33,9 @@ enum STATE {STATIONARY, IDLE};
 
 var _time : float = 0.0;
 
+var _fall : bool = false;
+var _fall_speed : Vector2 = Vector2(0.1, 1);
+
 # IDLE_VALUES
 @export_group("idle")
 @export var min_h_oscillator : float = 3.0;
@@ -67,7 +70,16 @@ func _ready() -> void:
 	top_level = true;
 	change_move_type(_state);
 
+func fall() -> void:
+	_fall = true;
+
 func _physics_process(delta: float) -> void:
+	if _fall:
+		rotation_degrees += 0.1 * (-1 if right else 1);
+		
+		position.x += _fall_speed.x * (-1 if right else 1);
+		position.y += _fall_speed.y;
+		return;
 	if disable:
 		return;
 	

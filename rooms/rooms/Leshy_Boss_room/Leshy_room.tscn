@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://vwuw6iktoxwg"]
+[gd_scene load_steps=36 format=3 uid="uid://vwuw6iktoxwg"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_6erxl"]
 [ext_resource type="Texture2D" uid="uid://d2l4g60ps0t60" path="res://assets/sprites/ground/Leshy/Floor 1 BG (Leshy Floor).png" id="1_erk7l"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="8_ff4pi"]
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="9_pks3f"]
 [ext_resource type="Texture2D" uid="uid://b7g6nxlyapyws" path="res://assets/sprites/ground/Leshy/Floor 1 -walls-second-layer.png" id="10_lfjar"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="13_5duk5"]
+[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.tscn" id="14_77pxi"]
 [ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="15_o4ah7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l21ms"]
@@ -58,6 +60,17 @@ size = Vector2(26, 167)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0lp45"]
 radius = 28.0
 height = 70.0
+
+[sub_resource type="Resource" id="Resource_r4w5c"]
+resource_local_to_scene = true
+script = ExtResource("13_5duk5")
+spawn_entity = ExtResource("14_77pxi")
+max_spawn = 2
+weapon_range = 0.0
+delta = -1
+cooldown = 0.3
+name = "Slime Summon"
+symbol = 0
 
 [sub_resource type="Gradient" id="Gradient_8md3c"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -188,9 +201,9 @@ shape = SubResource("RectangleShape2D_58m6h")
 
 [node name="exit" parent="." instance=ExtResource("4_xd7kx")]
 position = Vector2(322, -33)
-move_to = "4"
-scene_path = "res://rooms/rooms/Shaka_room/Shaka_room.tscn"
-location_id = "3"
+move_to = "2"
+scene_path = "res://rooms/rooms/Walk way/In-between.tscn"
+location_id = "2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="exit"]
 position = Vector2(42, 5.5)
@@ -198,9 +211,7 @@ shape = SubResource("RectangleShape2D_tq3ux")
 
 [node name="enter" parent="." instance=ExtResource("4_xd7kx")]
 position = Vector2(-7, -270)
-move_to = "4"
-scene_path = "res://rooms/rooms/Shaka_room/Shaka_room.tscn"
-location_id = "3"
+location_id = "1"
 direction = 3
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
@@ -651,6 +662,7 @@ shape = SubResource("CapsuleShape2D_0lp45")
 
 [node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
 position = Vector2(-31, -236)
+secondary_attack = SubResource("Resource_r4w5c")
 
 [node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "_reward_manager") instance=ExtResource("3_qsitx")]
 position = Vector2(-17, -3)

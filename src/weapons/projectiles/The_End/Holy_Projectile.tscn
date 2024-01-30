@@ -20,8 +20,10 @@ radius = 4.0
 height = 56.0
 
 [node name="HolyProjectile" type="Node2D"]
-scale = Vector2(0.7, 0.7)
 script = ExtResource("1_nm8us")
+rotation_inc = 0.0
+drag_factor = 0.02
+rotate_with = false
 
 [node name="Glow" type="Sprite2D" parent="."]
 texture = SubResource("GradientTexture2D_5bry2")
@@ -36,6 +38,7 @@ collision_layer = 2
 collision_mask = 0
 monitorable = false
 script = ExtResource("3_oosdd")
+alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 rotation = 1.5708

@@ -5,10 +5,12 @@ class_name Hand_TheEndBoss extends FloatObjectControl
 @onready var lazor: Node2D = $Lazor;
 
 signal lazor_action_finished;
+signal finished_action;
 
 var _grow_tween : Tween;
 var _shadow : Sprite2D;
 var _slam_speed : float;
+@warning_ignore("unused_private_class_variable")
 var _floor : Sprite2D;
 
 enum SLAM_TYPE {PLAYER_SLAM, WAVE_SLAM};
@@ -19,6 +21,7 @@ func _ready() -> void:
 	if !Engine.is_editor_hint():
 		lazor.action_finished.connect(lazor_action_finished_emit);
 		toggle_trail(false);
+		$Sprite2D/Pupil.target = PlayerInfo.player;
 	if right:
 		$Hit_Box_Slam.scale.x *= -1;
 		$Slam_right.scale.x *= -1;
@@ -26,10 +29,16 @@ func _ready() -> void:
 		
 		$Sprite2D/Pupil.flip_h = true;
 
+func fall() -> void:
+	_fall = true;
+	_fall_speed.y = randf() + 1.0;
+	_shadow.visible = false;
+
 func set_boxes(health_monitor : HealthMonitor, alignment : HurtBox.ALIGNMENT) -> Signal:
 	$hurt_box.health_monitor = health_monitor;
 	$hurt_box.alignment = alignment;
 	$Hit_Box_Slam.alignment = alignment;
+	$Hit_Box_Punch.alignment = alignment;
 	$Lazor/Hit_Box_Lazor.alignment = alignment;
 	
 	toggle_slambox(false);
@@ -56,6 +65,63 @@ func set_lerp_co(start : float, end : float = -1, time : float = -1) -> void:
 func is_in_states(states : Array[String]) -> bool:
 	return _state_overhead.is_in_states("main", states);
 
+var stop_punch : bool = false;
+func to_random_punch_pos(left : bool = false) -> void:
+	$AnimationPlayer.play("idle");
+	set_lerp_co(0.1);
+	z_index = 0;
+	act_on_local = false;
+	stop_punch = false;
+	
+	enact_position = Vector2(0, -200);
+	z_index = 0;
+	
+	var tw : Tween = create_tween().set_parallel();
+	tw.tween_property(self, "rotation_degrees", 0.0, 0.5);
+	tw.tween_property(self, "scale", Vector2.ONE, 0.5);
+	tw.tween_method(tween_shadow, 0.0, 1.0, 0.5);
+	
+	await get_tree().create_timer(0.5).timeout;
+	if stop_punch:
+		return;
+	
+	enact_position = Vector2(360 * (-1 if left else 1), (randf() * 240) - 15);
+	
+	change_move_type(STATE.STATIONARY);
+	_state_overhead.change_state("main", "stationary");
+func enact_punch(left : bool = false, time : float = 0.5) -> void:
+	$AnimationPlayer.play("punch");
+	z_index = 0;
+	
+	var tw : Tween = create_tween();
+	tw.tween_method(tween_shadow, 0.0, 1.0, time);
+	await tw.finished;
+	if stop_punch:
+		return;
+	
+	$Hit_Box_Punch.toggle_hitbox(true);
+	set_lerp_co(0.5);
+	
+	tw = create_tween().set_parallel();
+	tw.tween_property(self, "enact_position:x", 360 * (1 if left else -1), 0.2);
+	tw.tween_method(tween_shadow, 0.0, 1.0, 0.2);
+	tw.chain().tween_interval(0.8);
+	tw.tween_method(tween_shadow, 0.0, 1.0, 0.8);
+	
+	await tw.finished;
+	if stop_punch:
+		return;
+	
+	await get_tree().create_timer(1.0).timeout;
+	if stop_punch:
+		return;
+	
+	$Hit_Box_Punch.toggle_hitbox(false);
+	finished_action.emit();
+
+func tween_shadow(interval : float) -> void:
+	_shadow.global_position = _shadow.global_position.lerp(global_position, 0.2);
+
 func move_to_random_firing_position() -> void:
 	var x : float = randf() * 300;
 	if !right: x *= -1;
@@ -77,22 +143,30 @@ func _move_to_firing_position(x : float) -> void:
 	change_move_type(STATE.STATIONARY);
 	_state_overhead.change_state("main", "stationary");
 
+var _replace_tween : Tween;
 func player_aim(charge_time : float, blast_time) -> void:
 	z_index = -11;
 	set_lerp_co(0.1);
 	change_move_type(STATE.STATIONARY);
 	_state_overhead.change_state("main", "aim_lazor");
 	
-	var white : Material = $Sprite2D.material;
-	var tw : Tween = create_tween();
-	tw.tween_property(white, "shader_parameter/replace_with", Color(1, 1, 0), charge_time);
-	tw.tween_property(white, "shader_parameter/replace_with", Color.WHITE, blast_time);
+	_replace_tween = create_tween();
+	_replace_tween.tween_property(material, "shader_parameter/replace_with", Color(1, 1, 0), charge_time);
+	_replace_tween.tween_property(material, "shader_parameter/replace_with", Color.WHITE, blast_time);
+	
+	$Charging.emitting = true;
+
+func _clear_conects() -> void:
+	for cons in $await_punch.timeout.get_connections():
+		cons["signal"].disconnect(cons["callable"]);
+	$await_punch.stop();
 
 func enact_idle() -> void:
+	_clear_conects();
+	stop_punch = true;
 	_state_overhead.change_state("main", "idle");
 func _enact_idle() -> void:
 	set_lerp_co(0.03, 0.1, 1.0);
-	z_index = -12;
 	act_on_local = true;
 	
 	enact_position = Vector2(250, 0);
@@ -116,6 +190,12 @@ func slam_base() -> void:
 	change_move_type(STATE.STATIONARY);
 	_state_overhead.change_state("main", "over_hold");
 
+func slam_hand_wait(time : float = 0.5) -> void:
+	_clear_conects();
+	$await_punch.wait_time = time;
+	$await_punch.start();
+	$await_punch.timeout.connect(slam_hand, CONNECT_ONE_SHOT);
+
 func slam_hand() -> void:
 	z_index = 1;
 	_state_overhead.change_state("main", "slam");
@@ -125,10 +205,12 @@ func activate_lazor() -> void:
 	
 	change_move_type(STATE.STATIONARY);
 	_state_overhead.change_state("main", "stationary");
+	$Charging.emitting = false;
 func close_lazor() -> void:
 	lazor.close_lazor(0.1);
 func lazor_action_finished_emit() -> void:
 	lazor_action_finished.emit();
+	finished_action.emit();
 
 func shink_shadow_height(max_height : float, time : float) -> void:
 	var tw : Tween = create_tween();
@@ -152,9 +234,17 @@ func get_hold_time() -> float:
 			return 1.0;
 	return 0.0;
 
-func hurt() -> void:
-	$AnimationPlayer.play("hurt");
-	$AnimationPlayer.queue("idle");
+func hurt(dead : bool = false) -> void:
+	if _replace_tween:
+		_replace_tween.kill();
+	material.set_shader_parameter("replace_with", Color.WHITE);
+	$Charging.emitting = false;
+	
+	if dead:
+		$AnimationPlayer.play("hurt_stun");
+	else:
+		$AnimationPlayer.play("hurt");
+		$AnimationPlayer.queue("idle");
 
 func set_outline(out : float) -> void:
 	material.set_shader_parameter("width", out);

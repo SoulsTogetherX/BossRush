@@ -253,6 +253,8 @@ func _hard_mode_stage_3() -> void:
 
 var _death : bool = false;
 func die() -> void:
+	$Music.stop();
+	
 	off_scene_shoot_end();
 	_death = true;
 	$slime_timer.stop();
@@ -284,6 +286,9 @@ func _on_hit(_hitbox: HitBox) -> void:
 			off_scene_shoot_start();
 		else:
 			add_arrow = true;
+		
+		$Music_Crash.play();
+		$Music.play();
 	elif add_arrow:
 		hide_arrow();
 		add_arrow = false;
@@ -563,7 +568,7 @@ func can_slime_here(pos : Vector2) -> bool:
 	pp.collision_mask = 256;
 	return get_world_2d().direct_space_state.intersect_point(pp, 1).is_empty();
 
-var _slime_summoned : Array[ExchangeType] = [];
+var _slime_summoned : Array[Node2D] = [];
 func register_slime(slime : ExchangeType) -> void:
 	_slime_summoned.append(slime);
 	slime.killed.connect(slime_killed.bind(slime));
@@ -592,7 +597,7 @@ func summon_slimes_start_check() -> void:
 	else:
 		_next_sequence(1);
 func get_minons() -> Array[Node2D]:
-	return _slime_summoned.duplicate();
+	return (_slime_summoned.duplicate() as Array[Node2D]);
 
 func scared_start() -> void:
 	if !$float_timer.is_stopped():

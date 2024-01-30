@@ -14,3 +14,8 @@ func move_all_compoents(diff : Vector2) -> void:
 
 func get_hallo() -> FloatObjectControl:
 	return $Hallo;
+
+func fall() -> void:
+	_fall = true;
+	_fall_speed.y = randf()+ 1.0;
+	$Hallo.fall();

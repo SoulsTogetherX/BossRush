@@ -3,7 +3,7 @@ extends State
 @export var idle : State;
 @export var follow_leader : State;
 
-var _target : ExchangeType;
+var _target : Node2D;
 
 func get_id():
 	return "walk";
@@ -13,7 +13,7 @@ func enter() -> void:
 	_stateOverhead.update();
 
 func exit() -> void:
-	if _target && is_instance_valid(_target):
+	if _target && is_instance_valid(_target) && _target is ExchangeType:
 		if _target.killed.is_connected(_stateOverhead.update):
 			_target.killed.disconnect(_stateOverhead.update);
 		if _target.change_hit_status.is_connected(_stateOverhead.update):
@@ -23,13 +23,17 @@ func process_physics(delta: float) -> State:
 	if !is_instance_valid(_target):
 		return idle;
 	
-	_actor._handle_movement(delta, _actor, _actor.global_position, (_target.get_center() - _actor.global_position).normalized());
+	if _target is ExchangeType:
+		_actor._handle_movement(delta, _actor, _actor.global_position, (_target.get_center() - _actor.global_position).normalized());
+	else:
+		_actor._handle_movement(delta, _actor, _actor.global_position, (_target.global_position - _actor.global_position).normalized());
+	
 	if !_actor.velocity.is_zero_approx():
 		_actor._sprite.flip_h = (_actor.velocity.x >= 0);
 	return null;
 
 func update() -> State:
-	if _target && is_instance_valid(_target):
+	if _target && is_instance_valid(_target) && _target is ExchangeType:
 		if _target.killed.is_connected(_stateOverhead.update):
 			_target.killed.disconnect(_stateOverhead.update);
 		if _target.change_hit_status.is_connected(_stateOverhead.update):
@@ -47,6 +51,7 @@ func update() -> State:
 		if dist < distance_min:
 			distance_min = dist;
 			_target = t;
-	_target.killed.connect(_stateOverhead.update, CONNECT_ONE_SHOT | CONNECT_DEFERRED);
-	_target.change_hit_status.connect(_stateOverhead.update, CONNECT_ONE_SHOT | CONNECT_DEFERRED);
+	if _target is ExchangeType:
+		_target.killed.connect(_stateOverhead.update, CONNECT_ONE_SHOT | CONNECT_DEFERRED);
+		_target.change_hit_status.connect(_stateOverhead.update, CONNECT_ONE_SHOT | CONNECT_DEFERRED);
 	return null;

@@ -20,6 +20,10 @@ func process_input(_event: InputEvent) -> State:
 	return null;
 
 func process_physics(delta: float) -> State:
+	if PlayerInfo.force_idle:
+		_actor.set_direction("idle_", last_move.angle());
+		return idle;
+	
 	var input : Vector2 = _actor.get_input();
 	
 	if !_actor._handle_movement(delta, _actor, _actor.global_position, input, !Input.is_action_pressed("move_switch")):

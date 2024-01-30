@@ -5,6 +5,7 @@ extends FloatObjectControl
 @export var decay_factor : float = 0.0;
 @export var influence_factor : float = 0.0;
 @export var resist_factor : float = 0.0;
+@export var player_affect : float = 0.0;
 
 var angle_force : float = 0.0;
 
@@ -26,6 +27,6 @@ func _physics_process(delta: float) -> void:
 	
 	angle_force = lerp(angle_force, 0.0, decay_factor);
 	
-	var velocity = Vector2.RIGHT.rotated(global_rotation) * (global_rotation - desired_angle) * 1000 * delta;
+	var velocity = Vector2.RIGHT.rotated(global_rotation) * (global_rotation - desired_angle) * player_affect * delta;
 	if !velocity.is_zero_approx():
 		_player.move_and_collide(velocity);

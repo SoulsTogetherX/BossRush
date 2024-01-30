@@ -1,6 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbuhiqsiu6dy"]
+[gd_scene load_steps=8 format=3 uid="uid://bbuhiqsiu6dy"]
 
 [ext_resource type="Script" path="res://rooms/main_menu/pages/settings.gd" id="1_h7ylc"]
+[ext_resource type="Texture2D" uid="uid://dwwwfk3weg6lc" path="res://assets/sprites/GUI/Bark Souls UI-button-back.png" id="5_fsr4s"]
+[ext_resource type="Texture2D" uid="uid://0l41ra7pfw1s" path="res://assets/sprites/GUI/Bark Souls UI-symbol.png" id="6_0sg2h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qyxkd"]
+font_size = 40
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e8x8t"]
+font_size = 40
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qh44"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n00kg"]
+font_color = Color(0, 0, 0, 0.423529)
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -11,93 +34,221 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h7ylc")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="Control" type="Control" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Control2" type="Control" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="MasterContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MasterContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/Control/CenterContainer"]
 layout_mode = 2
+text = "Audio Settings"
+label_settings = SubResource("LabelSettings_qyxkd")
+horizontal_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MasterContainer/VBoxContainer"]
+[node name="MasterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MasterContainer/VBoxContainer/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/MasterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/MasterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/MasterContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
 text = "Master"
 
-[node name="Slider" type="HSlider" parent="VBoxContainer/MasterContainer/VBoxContainer"]
+[node name="Slider" type="HSlider" parent="HBoxContainer/VBoxContainer/MasterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 1
 max_value = 1.0
 step = 0.01
 
-[node name="MusicContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="MusicContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MusicContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/MusicContainer"]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/MusicContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/MusicContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MusicContainer/VBoxContainer/CenterContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/MusicContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
 text = "Music"
+horizontal_alignment = 1
 
-[node name="Slider" type="HSlider" parent="VBoxContainer/MusicContainer/VBoxContainer"]
+[node name="Slider" type="HSlider" parent="HBoxContainer/VBoxContainer/MusicContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 1
 max_value = 1.0
 step = 0.01
 
-[node name="SoundContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="SoundContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/SoundContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/SoundContainer"]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/SoundContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer/SoundContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/SoundContainer/VBoxContainer/CenterContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/SoundContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
 text = "Sound Effects"
 
-[node name="Slider" type="HSlider" parent="VBoxContainer/SoundContainer/VBoxContainer"]
+[node name="Slider" type="HSlider" parent="HBoxContainer/VBoxContainer/SoundContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 size_flags_vertical = 1
 max_value = 1.0
 step = 0.01
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Control3" type="Control" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
-[node name="Back" type="Button" parent="VBoxContainer/CenterContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer2"]
 layout_mode = 2
-text = "Back"
+size_flags_vertical = 3
+mouse_filter = 2
 
-[connection signal="value_changed" from="VBoxContainer/MasterContainer/VBoxContainer/Slider" to="." method="change_master"]
-[connection signal="value_changed" from="VBoxContainer/MusicContainer/VBoxContainer/Slider" to="." method="change_music"]
-[connection signal="value_changed" from="VBoxContainer/SoundContainer/VBoxContainer/Slider" to="." method="change_sound"]
-[connection signal="pressed" from="VBoxContainer/CenterContainer/Back" to="." method="_on_main_pressed"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/Control/CenterContainer"]
+layout_mode = 2
+text = "Peformance settings"
+label_settings = SubResource("LabelSettings_e8x8t")
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Control4" type="Control" parent="HBoxContainer/VBoxContainer2/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/CenterContainer/Control4"]
+layout_mode = 2
+offset_left = -24.0
+offset_top = -11.0
+offset_right = 23.0
+offset_bottom = 12.0
+text = "Lights"
+horizontal_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer2/CenterContainer/Control4"]
+layout_mode = 2
+offset_left = 26.0
+offset_top = -6.0
+offset_right = 44.0
+offset_bottom = 12.0
+size_flags_horizontal = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_8qh44")
+button_pressed = true
+
+[node name="Control2" type="Control" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Back" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 954.0
+offset_top = 608.0
+offset_right = 1088.0
+offset_bottom = 656.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("5_fsr4s")
+texture_pressed = ExtResource("5_fsr4s")
+texture_hover = ExtResource("5_fsr4s")
+texture_disabled = ExtResource("5_fsr4s")
+texture_focused = ExtResource("5_fsr4s")
+
+[node name="Sprite2D" type="Sprite2D" parent="Back"]
+position = Vector2(37, 24.5)
+texture = ExtResource("6_0sg2h")
+hframes = 3
+frame = 1
+
+[node name="Label" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 60.5
+offset_top = 11.0
+offset_right = 100.5
+offset_bottom = 34.0
+text = "Quit"
+label_settings = SubResource("LabelSettings_n00kg")
+
+[connection signal="value_changed" from="HBoxContainer/VBoxContainer/MasterContainer/VBoxContainer/Slider" to="." method="change_master"]
+[connection signal="value_changed" from="HBoxContainer/VBoxContainer/MusicContainer/VBoxContainer/Slider" to="." method="change_music"]
+[connection signal="value_changed" from="HBoxContainer/VBoxContainer/SoundContainer/VBoxContainer/Slider" to="." method="change_sound"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer2/CenterContainer/Control4/CheckBox" to="." method="toggle_lights"]
+[connection signal="pressed" from="Back" to="." method="_on_main_pressed"]

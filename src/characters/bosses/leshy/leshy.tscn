@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://cd6retw663av0"]
+[gd_scene load_steps=63 format=3 uid="uid://cd6retw663av0"]
 
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
 [ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
@@ -29,6 +29,8 @@
 [ext_resource type="AudioStream" uid="uid://pr5v3y3ovf21" path="res://assets/sounds/effects/player/footsteps/player/old/step_1.ogg" id="24_5ih3q"]
 [ext_resource type="AudioStream" uid="uid://b8joqu2onjulo" path="res://assets/sounds/effects/player/footsteps/player/old/step_2.ogg" id="25_ku33r"]
 [ext_resource type="AudioStream" uid="uid://dsqxrqh6xciyq" path="res://assets/sounds/effects/player/footsteps/player/old/step_3.ogg" id="26_6aamk"]
+[ext_resource type="AudioStream" uid="uid://y2wdwqbmw4ox" path="res://assets/sounds/music/Leshy's Theme Start.ogg" id="30_b3mmy"]
+[ext_resource type="AudioStream" uid="uid://cye5mx8xlpke6" path="res://assets/sounds/music/Leshy Theme.ogg" id="31_qwk22"]
 
 [sub_resource type="Gradient" id="Gradient_mms7y"]
 offsets = PackedFloat32Array(0, 0.462366, 1)
@@ -1558,6 +1560,7 @@ shader_parameter/width = 4.0
 shader_parameter/pattern = 0
 shader_parameter/inside = false
 shader_parameter/add_margins = true
+shader_parameter/white_out = 0.0
 
 [sub_resource type="Gradient" id="Gradient_yc8ce"]
 colors = PackedColorArray(1, 1, 0.301961, 0.803922, 1, 1, 1, 0)
@@ -1850,6 +1853,15 @@ collision_mask = 0
 position = Vector2(2.9985, 4.76837e-07)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_sc68m")
+
+[node name="Music_Crash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("30_b3mmy")
+volume_db = 10.0
+bus = &"Music"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_qwk22")
+bus = &"Music"
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]
 [connection signal="hit" from="hitbox" to="." method="_on_player_hit"]

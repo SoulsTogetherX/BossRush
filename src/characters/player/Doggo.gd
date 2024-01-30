@@ -93,11 +93,11 @@ func play_step() -> void:
 func get_spawn_pos() -> Array[Vector2]:
 	return [global_position + Vector2(0, 15)];
 
-var _slime_summoned : Array[ExchangeType] = [];
+var _slime_summoned : Array[Node2D] = [];
 func register_slime(slime : ExchangeType) -> void:
 	_slime_summoned.append(slime);
 	slime.killed.connect(slime_killed.bind(slime));
 func slime_killed(slime : ExchangeType) -> void:
 	_slime_summoned.erase(slime);
-func get_minons() -> Array[ExchangeType]:
+func get_minons() -> Array[Node2D]:
 	return _slime_summoned;

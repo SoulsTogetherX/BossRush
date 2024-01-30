@@ -64,5 +64,6 @@ void fragment() {
 	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {
 		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
 		COLOR.a += (1.0 - COLOR.a) * color.a;
+		COLOR *= modulate;
 	}
 }
