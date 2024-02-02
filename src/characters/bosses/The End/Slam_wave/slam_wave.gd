@@ -8,7 +8,7 @@ extends Node2D
 @export var alignment : HurtBox.ALIGNMENT;
 @export var amount : int = -1;
 
-@onready var _shape : CircleShape2D = $Area2D/CollisionShape2D.shape;
+@onready var _shape : CircleShape2D = $hit_box/CollisionShape2D.shape;
 
 var _curr_radius : float = 0.0;
 var _wave_speed : float = 0.0;
@@ -17,8 +17,8 @@ func _ready() -> void:
 	_wave_speed = radius / wave_time;
 	get_tree().create_timer(wave_time - fade_time).timeout.connect(fade_start);
 	
-	$Area2D.alignment = alignment;
-	$Area2D.amount = amount;
+	$hit_box.alignment = alignment;
+	$hit_box.amount = amount;
 func _draw() -> void:
 	draw_arc(Vector2.ZERO, _curr_radius, 0, TAU, 100, Color.WHITE * modulate, width);
 func _physics_process(delta: float) -> void:
@@ -26,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	queue_redraw();
 	
 	var rad : float = _curr_radius + width;
-	$Area2D.toggle_hitbox(PlayerInfo.player.global_position.distance_squared_to(global_position) > rad * rad);
+	$hit_box.toggle_hitbox(PlayerInfo.player.global_position.distance_squared_to(global_position) > rad * rad);
 	_shape.radius = rad;
 
 func fade_start() -> void:

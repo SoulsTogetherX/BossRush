@@ -21,16 +21,15 @@ func _ready() -> void:
 
 func die() -> void:
 	dead = true;
+	disable = true;
 	ending_animator.global_position = global_position;
 	ending_animator.scale = Vector2.ZERO;
 	
 	var tw : Tween = create_tween().set_parallel();
 	tw.set_trans(Tween.TRANS_BACK);
-	tw.tween_property(ending_animator, "global_position", (global_position * 0.1) + (Vector2.UP * 20), 0.1);
-	tw.tween_property(ending_animator, "global_position", Vector2.ZERO, 1.0).set_delay(0.3);
-	tw.tween_property(ending_animator, "scale", Vector2(2.0, 2.0), 0.5);
-	
-	disable = true;
+	tw.tween_property(ending_animator, "global_position", (global_position * 0.1) + (Vector2.UP * 20), 0.5);
+	tw.tween_property(ending_animator, "global_position", Vector2.ZERO, 1.0).set_delay(0.5);
+	tw.tween_property(ending_animator, "scale", Vector2(2.0, 2.0), 0.3);
 
 func finish_dead() -> void:
 	ending_animator.queue_free();
@@ -52,6 +51,7 @@ func hurt_action() -> void:
 	_time_delta = 0.0;
 	
 	$TheEnd/hurt_action.start();
+	$FlyAway.play();
 
 func _physics_process(delta: float) -> void:
 	if _back_up:
@@ -66,4 +66,4 @@ func end_hurt_action() -> void:
 func move_all_compoents(pos : Vector2) -> void:
 	var diff : Vector2 = pos - position;
 	position += diff;
-	get_child(0).move_all_compoents(diff);
+	$TheEnd.move_all_compoents(diff);

@@ -6,6 +6,7 @@ class_name Hand_TheEndBoss extends FloatObjectControl
 
 signal lazor_action_finished;
 signal finished_action;
+signal slammed;
 
 var _grow_tween : Tween;
 var _shadow : Sprite2D;
@@ -69,12 +70,11 @@ var stop_punch : bool = false;
 func to_random_punch_pos(left : bool = false) -> void:
 	$AnimationPlayer.play("idle");
 	set_lerp_co(0.1);
-	z_index = 0;
+	z_index = 1;
 	act_on_local = false;
 	stop_punch = false;
 	
 	enact_position = Vector2(0, -200);
-	z_index = 0;
 	
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(self, "rotation_degrees", 0.0, 0.5);
@@ -91,7 +91,7 @@ func to_random_punch_pos(left : bool = false) -> void:
 	_state_overhead.change_state("main", "stationary");
 func enact_punch(left : bool = false, time : float = 0.5) -> void:
 	$AnimationPlayer.play("punch");
-	z_index = 0;
+	z_index = 1;
 	
 	var tw : Tween = create_tween();
 	tw.tween_method(tween_shadow, 0.0, 1.0, time);
@@ -105,21 +105,20 @@ func enact_punch(left : bool = false, time : float = 0.5) -> void:
 	tw = create_tween().set_parallel();
 	tw.tween_property(self, "enact_position:x", 360 * (1 if left else -1), 0.2);
 	tw.tween_method(tween_shadow, 0.0, 1.0, 0.2);
-	tw.chain().tween_interval(0.8);
-	tw.tween_method(tween_shadow, 0.0, 1.0, 0.8);
+	tw.chain().tween_interval(0.3);
+	tw.tween_method(tween_shadow, 0.0, 1.0, 0.3);
 	
 	await tw.finished;
-	if stop_punch:
-		return;
-	
-	await get_tree().create_timer(1.0).timeout;
-	if stop_punch:
-		return;
-	
 	$Hit_Box_Punch.toggle_hitbox(false);
+	if stop_punch:
+		return;
+	
+	await get_tree().create_timer(0.3).timeout;
+	if stop_punch:
+		return;
 	finished_action.emit();
 
-func tween_shadow(interval : float) -> void:
+func tween_shadow(_interval : float) -> void:
 	_shadow.global_position = _shadow.global_position.lerp(global_position, 0.2);
 
 func move_to_random_firing_position() -> void:
@@ -144,17 +143,21 @@ func _move_to_firing_position(x : float) -> void:
 	_state_overhead.change_state("main", "stationary");
 
 var _replace_tween : Tween;
-func player_aim(charge_time : float, blast_time) -> void:
+func player_aim(charge_time : float, blast_time, color : bool) -> void:
 	z_index = -11;
 	set_lerp_co(0.1);
 	change_move_type(STATE.STATIONARY);
 	_state_overhead.change_state("main", "aim_lazor");
 	
 	_replace_tween = create_tween();
-	_replace_tween.tween_property(material, "shader_parameter/replace_with", Color(1, 1, 0), charge_time);
+	if color:
+		_replace_tween.tween_property(material, "shader_parameter/replace_with", Color(1, 0, 0), charge_time);
+	else:
+		_replace_tween.tween_property(material, "shader_parameter/replace_with", Color(1, 1, 0), charge_time);
 	_replace_tween.tween_property(material, "shader_parameter/replace_with", Color.WHITE, blast_time);
 	
-	$Charging.emitting = true;
+	lazor.change_color(color);
+	lazor.charge(true);
 
 func _clear_conects() -> void:
 	for cons in $await_punch.timeout.get_connections():
@@ -205,7 +208,7 @@ func activate_lazor() -> void:
 	
 	change_move_type(STATE.STATIONARY);
 	_state_overhead.change_state("main", "stationary");
-	$Charging.emitting = false;
+	lazor.charge(false);
 func close_lazor() -> void:
 	lazor.close_lazor(0.1);
 func lazor_action_finished_emit() -> void:
@@ -222,6 +225,8 @@ func _shink_shadow_height(interval : float, max_height : float) -> void:
 func get_hold_position() -> Vector2:
 	match _slam_type:
 		SLAM_TYPE.PLAYER_SLAM:
+			if !PlayerInfo.player:
+				return Vector2.ZERO;
 			return PlayerInfo.player.global_position;
 		SLAM_TYPE.WAVE_SLAM:
 			return Vector2(200 * (-1 if right else 1), PlayerInfo.player.global_position.y);
@@ -238,7 +243,7 @@ func hurt(dead : bool = false) -> void:
 	if _replace_tween:
 		_replace_tween.kill();
 	material.set_shader_parameter("replace_with", Color.WHITE);
-	$Charging.emitting = false;
+	lazor.charge(false);
 	
 	if dead:
 		$AnimationPlayer.play("hurt_stun");

@@ -32,7 +32,7 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_w7gu2")
 
-[sub_resource type="Resource" id="Resource_ynyov"]
+[sub_resource type="Resource" id="Resource_a2mqp"]
 resource_local_to_scene = true
 script = ExtResource("3_0udt1")
 spawn_entity = ExtResource("4_myihe")
@@ -75,7 +75,7 @@ layer_0/tile_data = PackedInt32Array(-1507359, 131072, 0, -1441823, 131072, 0, -
 
 [node name="Doggo" parent="." instance=ExtResource("2_nch0w")]
 position = Vector2(-785, -659)
-secondary_attack = SubResource("Resource_ynyov")
+secondary_attack = SubResource("Resource_a2mqp")
 
 [node name="cam" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 top_level = true

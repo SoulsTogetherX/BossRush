@@ -1,10 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://bs00uwofbh6wm"]
+[gd_scene load_steps=18 format=3 uid="uid://bs00uwofbh6wm"]
 
 [ext_resource type="Script" path="res://src/weapons/projectiles/Leshy/leshy_arrow.gd" id="1_e0qy1"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="2_aglto"]
 [ext_resource type="Texture2D" uid="uid://b17fqxh8qbi8i" path="res://assets/sprites/characters/bosses/leshy/Leshy Arow.png" id="2_erjfe"]
 [ext_resource type="Script" path="res://custom_nodes/trail/trail.gd" id="2_ks0nh"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_xldus"]
+[ext_resource type="Script" path="res://src/characters/bosses/Hit_Box_Color.gd" id="5_igs5j"]
 [ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="6_qabxc"]
 [ext_resource type="AudioStream" uid="uid://derni41h3vnwc" path="res://assets/sounds/effects/boss/leshy/arrow/Leshy Arrow Impact.ogg" id="7_xdlu4"]
 
@@ -16,24 +16,6 @@ point_count = 3
 offsets = PackedFloat32Array(0, 0.687296, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0uot6"]
-particle_flag_disable_z = true
-angle_min = -180.0
-angle_max = 180.0
-direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_min = 600.0
-initial_velocity_max = 1000.0
-angular_velocity_min = -30.0
-angular_velocity_max = 30.0
-gravity = Vector3(0, 0, 0)
-damping_min = 500.0
-damping_max = 500.0
-attractor_interaction_enabled = false
-scale_min = 2.0
-scale_max = 10.0
-turbulence_noise_strength = 20.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uybh0"]
 resource_local_to_scene = true
 shader = ExtResource("2_aglto")
@@ -43,6 +25,7 @@ shader_parameter/width = 1.0
 shader_parameter/pattern = 2
 shader_parameter/inside = false
 shader_parameter/add_margins = true
+shader_parameter/white_out = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8okip"]
 size = Vector2(24, 2)
@@ -145,13 +128,6 @@ angle_max = 180.0
 scale_amount_max = 4.0
 color_ramp = SubResource("Gradient_36nhk")
 
-[node name="hit_particles" type="GPUParticles2D" parent="."]
-emitting = false
-amount = 60
-process_material = SubResource("ParticleProcessMaterial_0uot6")
-one_shot = true
-explosiveness = 1.0
-
 [node name="sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_uybh0")
 position = Vector2(3, 0)
@@ -159,7 +135,8 @@ scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_erjfe")
 
 [node name="hitbox" type="Area2D" parent="."]
-script = ExtResource("3_xldus")
+script = ExtResource("5_igs5j")
+hit_color = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(9, 0)

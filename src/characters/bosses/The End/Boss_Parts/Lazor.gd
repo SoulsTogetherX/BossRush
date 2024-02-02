@@ -7,6 +7,8 @@ const MAX_RADUS : float = 20.0;
 
 @onready var lazor_beam_part: GPUParticles2D = $lazor_beam_part;
 
+const LAZOR_COLORS : Array[Color] = [Color(0.92549020051956, 0.91764706373215, 0), Color(0.92549020051956, 0.16470588743687, 0)];
+
 var lazor_tween : Tween;
 
 signal action_finished;
@@ -21,6 +23,17 @@ func _ready() -> void:
 	
 	$Hit_Box_Lazor.toggle_hitbox(false);
 
+func change_color(color : bool = false) -> void:
+	$lazor_beam_part.process_material.color = LAZOR_COLORS[int(color)];
+	$Charging.process_material.color = LAZOR_COLORS[int(color)];
+	$Lazor.default_color = LAZOR_COLORS[int(color)];
+
+func charge(toggle : bool = false) -> void:
+	$Charging.emitting = toggle;
+	
+	if toggle:
+		$Pre.play();
+
 func activate_lazor(time : float) -> void:
 	if lazor_tween:
 		lazor_tween.kill();
@@ -33,6 +46,13 @@ func activate_lazor(time : float) -> void:
 	$Hit_Box_Lazor.toggle_hitbox(true);
 	
 	lazor_beam_part.emitting = true;
+	
+	$Pre.stop();
+	
+	if $Lazor.default_color == LAZOR_COLORS[0]:
+		$"Post-Holy".play();
+	else:
+		$Post.play();
 
 func close_lazor(time : float) -> void:
 	if lazor_tween:

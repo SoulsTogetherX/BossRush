@@ -9,7 +9,7 @@ i_frames = 1.0
 
 [resource]
 script = ExtResource("1_havq7")
-max_health = 6
+max_health = 2
 _incincible = SubResource("Resource_ior0q")
 name = "Heated Heath"
 symbol = 0

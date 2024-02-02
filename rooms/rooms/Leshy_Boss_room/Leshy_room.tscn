@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://vwuw6iktoxwg"]
+[gd_scene load_steps=34 format=3 uid="uid://vwuw6iktoxwg"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_6erxl"]
 [ext_resource type="Texture2D" uid="uid://d2l4g60ps0t60" path="res://assets/sprites/ground/Leshy/Floor 1 BG (Leshy Floor).png" id="1_erk7l"]
@@ -14,9 +14,9 @@
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="8_ff4pi"]
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="9_pks3f"]
 [ext_resource type="Texture2D" uid="uid://b7g6nxlyapyws" path="res://assets/sprites/ground/Leshy/Floor 1 -walls-second-layer.png" id="10_lfjar"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="13_5duk5"]
-[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.tscn" id="14_77pxi"]
 [ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="15_o4ah7"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4c6dt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l21ms"]
 size = Vector2(155.25, 25)
@@ -61,17 +61,6 @@ size = Vector2(26, 167)
 radius = 28.0
 height = 70.0
 
-[sub_resource type="Resource" id="Resource_r4w5c"]
-resource_local_to_scene = true
-script = ExtResource("13_5duk5")
-spawn_entity = ExtResource("14_77pxi")
-max_spawn = 2
-weapon_range = 0.0
-delta = -1
-cooldown = 0.3
-name = "Slime Summon"
-symbol = 0
-
 [sub_resource type="Gradient" id="Gradient_8md3c"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
@@ -103,6 +92,22 @@ texture = ExtResource("3_7uj76")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture = ExtResource("4_ciupx")
+
+[node name="door_hide" type="Node2D" parent="."]
+
+[node name="Sprite2D3" type="Sprite2D" parent="door_hide"]
+modulate = Color(0, 0, 0, 1)
+z_index = 2
+position = Vector2(450.125, 0.499985)
+scale = Vector2(181.75, 585)
+texture = SubResource("PlaceholderTexture2D_4c6dt")
+
+[node name="Sprite2D4" type="Sprite2D" parent="door_hide"]
+modulate = Color(0, 0, 0, 1)
+z_index = 2
+position = Vector2(24, -377.75)
+scale = Vector2(735.5, 179.5)
+texture = SubResource("PlaceholderTexture2D_4c6dt")
 
 [node name="Doors" type="Node" parent="." node_paths=PackedStringArray("enter", "exit")]
 script = ExtResource("4_d7u0r")
@@ -662,17 +667,18 @@ shape = SubResource("CapsuleShape2D_0lp45")
 
 [node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
 position = Vector2(-31, -236)
-secondary_attack = SubResource("Resource_r4w5c")
 
-[node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "_reward_manager") instance=ExtResource("3_qsitx")]
+[node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "door_hide", "_reward_manager") instance=ExtResource("3_qsitx")]
 position = Vector2(-17, -3)
 bushes = NodePath("../Bushes")
+door_hide = NodePath("../door_hide")
 _reward_manager = NodePath("../Reward_manager")
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 texture = ExtResource("10_lfjar")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 position = Vector2(23, -35)
 energy = 0.4
 blend_mode = 1

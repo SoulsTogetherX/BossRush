@@ -71,6 +71,9 @@ func _let_go() -> void:
 	PlayerInfo.cam.zoom_event(Vector2(0.2, 0.2), Vector2(1.0, 1.0));
 
 func collect() -> void:
+	disable = true;
+	DeathSounds.stop_music();
+	
 	PlayerInfo.force_idle = true;
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(self, "global_position", PlayerInfo.player.global_position, 2.0);
@@ -78,6 +81,7 @@ func collect() -> void:
 	tw.tween_property(self, "z_index", -1, 0.01).set_delay(1.0);
 	tw.tween_callback(TimeManager.instant_time_scale.bind(0.5, 0.3)).set_delay(0.2);
 	tw.chain().tween_callback(ending_animator.play_end);
+	tw.tween_property(self, "modulate:a", 0.0, 0.4);
 
 func _on_mouse_entered() -> void:
 	if disable:

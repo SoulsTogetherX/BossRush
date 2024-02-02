@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://8xcdttdfpjaq"]
+[gd_scene load_steps=27 format=3 uid="uid://8xcdttdfpjaq"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_5stgi"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="3_3j63k"]
@@ -7,9 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cxxtotkvb77ed" path="res://assets/sprites/ground/The End/Floor 3.png" id="4_20be0"]
 [ext_resource type="Script" path="res://src/characters/player/Cam.gd" id="4_wlwt0"]
 [ext_resource type="Script" path="res://rooms/rooms/The End Room/Platform.gd" id="5_24dwv"]
-[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/slime_spawn.gd" id="7_7gd64"]
 [ext_resource type="PackedScene" uid="uid://2t51xt3spvld" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd.tscn" id="8_e1u48"]
-[ext_resource type="PackedScene" uid="uid://bql8akhayh121" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.tscn" id="8_e4222"]
 [ext_resource type="PackedScene" uid="uid://cs88c1o34glwl" path="res://src/level_objects/orbs/orb_finisher__still_unsure_of_this_end_but_it_is_whatever_for_a_gameJam_I_suppose.tscn" id="9_v5sv8"]
 [ext_resource type="Script" path="res://rooms/rooms/The End Room/End Controller.gd" id="10_43bp4"]
 [ext_resource type="PackedScene" uid="uid://bsn4rpp66og77" path="res://src/level_objects/orbs/reward_manager.tscn" id="10_bsssp"]
@@ -23,6 +21,8 @@ colors = PackedColorArray(0, 0.156863, 0.329412, 1, 0.721569, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8s4mc"]
 gradient = SubResource("Gradient_vvury")
+width = 256
+height = 256
 fill_from = Vector2(0.42735, 0.452991)
 fill_to = Vector2(1, 1)
 
@@ -61,17 +61,6 @@ height = 96
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
-
-[sub_resource type="Resource" id="Resource_c1ovc"]
-resource_local_to_scene = true
-script = ExtResource("7_7gd64")
-spawn_entity = ExtResource("8_e4222")
-max_spawn = 2
-weapon_range = 0.0
-delta = -1
-cooldown = 0.3
-name = "Slime Summon"
-symbol = 0
 
 [sub_resource type="Animation" id="Animation_utrga"]
 resource_name = "End_Slash"
@@ -160,8 +149,8 @@ motion_scale = Vector2(0.98, 0.98)
 
 [node name="Sky" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color(0.615686, 0.615686, 0.615686, 1)
-position = Vector2(-10.4999, 115)
-scale = Vector2(33.2031, 15.6563)
+position = Vector2(0, 121)
+scale = Vector2(7.34375, 4.48438)
 texture = SubResource("GradientTexture2D_8s4mc")
 
 [node name="ParallaxLayer7" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -216,7 +205,7 @@ texture = ExtResource("3_fxamg")
 modulate = Color(0.92549, 0.92549, 0.92549, 1)
 top_level = true
 z_index = -10
-position = Vector2(3.71141, 9.16627)
+position = Vector2(-6.66905, 1.7366)
 texture = ExtResource("4_20be0")
 script = ExtResource("5_24dwv")
 decay_factor = 0.1
@@ -278,11 +267,10 @@ texture = SubResource("GradientTexture2D_owtm7")
 
 [node name="Doggo" parent="Floor" instance=ExtResource("3_3j63k")]
 position = Vector2(-4.99999, 127)
-secondary_attack = SubResource("Resource_c1ovc")
 
 [node name="cam" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 top_level = true
-position = Vector2(15, 127)
+position = Vector2(14.7927, 127)
 script = ExtResource("4_wlwt0")
 follow = NodePath("../Floor/Doggo")
 auto_follow = true
@@ -339,6 +327,8 @@ scale = Vector2(0.95, 0.95)
 texture = ExtResource("15_s5t0h")
 
 [node name="ColorRect" type="ColorRect" parent="End Controller"]
+z_index = 4096
+z_as_relative = false
 offset_left = -1788.0
 offset_top = -844.0
 offset_right = 1227.0

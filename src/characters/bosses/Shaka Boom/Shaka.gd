@@ -65,7 +65,7 @@ func _ready() -> void:
 	up_shield();
 
 func _normal_mode_stage_1() -> void:
-	_slime_count = 6 + _health_monitor.health_missing() * 3;
+	_slime_count = 6 + _health_monitor.health_missing() * 3 - (int(_turn == 0) * 3);
 	$slime_timer.wait_time = 0.1;
 	_clear_sequence();
 	_add_to_sequence(summon_slimes_start_hard, INF);
@@ -145,7 +145,6 @@ func _normal_mode_stage_2() -> void:
 	_add_to_sequence(fourway_atttack_end, 0.01);
 
 	_add_to_sequence(idle, 2.0);
-	
 
 func _hard_mode_stage_1() -> void:
 	comfort = STANDARD_COMFORT_SOZE;
@@ -253,7 +252,7 @@ func _hard_mode_stage_3() -> void:
 
 var _death : bool = false;
 func die() -> void:
-	$Music.stop();
+	DeathSounds.stop_music();
 	
 	off_scene_shoot_end();
 	_death = true;
@@ -275,6 +274,8 @@ func die() -> void:
 	secondary_attack.reset();
 	tertiary_attack.reset();
 	_reward_manager._spawn_orbs(self);
+	
+	DeathSounds.play(1);
 
 func _on_hit(_hitbox: HitBox) -> void:
 	if _waiting:
@@ -287,8 +288,7 @@ func _on_hit(_hitbox: HitBox) -> void:
 		else:
 			add_arrow = true;
 		
-		$Music_Crash.play();
-		$Music.play();
+		DeathSounds.play_music(1);
 	elif add_arrow:
 		hide_arrow();
 		add_arrow = false;
@@ -299,8 +299,12 @@ func _on_hit(_hitbox: HitBox) -> void:
 	
 	$scared_timer.stop();
 	$sequence_timer.stop();
-	_stun();
+	
 	up_shield();
+	if _death:
+		return;
+	_stun();
+	
 	if PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.BARKMODE:
 		match _turn % 3:
 			0:
@@ -384,6 +388,7 @@ func pick_float(pick : FLOAT_PICK = FLOAT_PICK.OUTER, speed_up : float = 1.0) ->
 var float_height : float = 10;
 func _float_over(pos : Vector2, speed_up : float = 1.0) -> void:
 	$float_timer.start();
+	$hover.play(0.0);
 	
 	pos += Vector2(0, 71);
 	
@@ -425,6 +430,7 @@ func forward_atttack_start(angle : bool = false) -> void:
 	if !$scared_timer.is_stopped():
 		return;
 	$attack_timer.wait_time = 0.05;
+	$cross_hair_start.play(0.0);
 	
 	if angle:
 		var cross_hairs : int = 4;
@@ -434,7 +440,8 @@ func forward_atttack_start(angle : bool = false) -> void:
 	else:
 		spawn_crosshair();
 		
-	get_tree().create_timer(0.3).timeout.connect($attack_timer.start, CONNECT_ONE_SHOT);
+	get_tree().create_timer(0.3).timeout.connect((func(): $attack_timer.start(); $cross_hair_end.play(0.0)), CONNECT_ONE_SHOT);
+	
 	if !$attack_timer.timeout.is_connected(forward_atttack):
 		$attack_timer.timeout.connect(forward_atttack);
 func forward_atttack() -> void:
@@ -508,6 +515,9 @@ func sides_ban() -> void:
 		six_attack.force_handle_attack(self, launch_pos, launch_pos + Vector2.LEFT, get_alignment());
 		
 		pos += 20;
+
+const CROSSHAIR_SOUND_1 : AudioStream = preload("res://assets/sounds/effects/boss/shaka/shaka/new/crosshair/crosshair noise 1.ogg");
+const CROSSHAIR_SOUND_2 : AudioStream = preload("res://assets/sounds/effects/boss/shaka/shaka/new/crosshair/crosshair noise 2 (right before attack).ogg");
 
 func spawn_crosshair(offset : Vector2 = Vector2.ZERO, angle : bool = false) -> void:
 	var cross_hair = Sprite2D.new();
@@ -637,6 +647,10 @@ func mad_hit_start() -> void:
 	await get_tree().create_timer(1.6).timeout;
 	PlayerInfo.cam.shake_event(Vector3(0.7, 0.7, 0), Vector3(10., 10., 0), Vector3(0.9, 0.9, 0));
 	
+	$fire_throw.pitch_scale = (randf() * 0.2) + 0.9;
+	$fire_throw.play();
+	$fire_expand.play();
+	
 	var launch : LinearLaunch = secondary_attack.launch;
 	var add : float = 80.0 * float(PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.BARKMODE);
 	if _current_node == center_node:
@@ -657,10 +671,14 @@ func mad_hit_end() -> void:
 func fire_surround() -> void:
 	var cross_hairs : int = 10;
 	var angle_offset : float = TAU / cross_hairs;
+	
+	$cross_hair_start.play(0.0);
+	
 	for i in cross_hairs:
 		spawn_crosshair(Vector2.RIGHT.rotated(i * angle_offset) * 80, true);
 	get_tree().create_timer(1.4).timeout.connect(start_fire_surround);
 func start_fire_surround() -> void:
+	$cross_hair_end.play(0.0);
 	clear_crosshairs();
 	_fire_circle = FIRE_CIRCLE.instantiate();
 	get_tree().current_scene.add_child(_fire_circle);

@@ -27,9 +27,13 @@ func _input(event: InputEvent) -> void:
 			$PlayerGUI/blur.material.set_shader_parameter("amount", 1.5);
 			$PlayerGUI/blur.material.set_shader_parameter("darken", 0.2);
 			$PlayerGUI/darken.visible = true;
+			
+			$PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/CheckBox.button_pressed = PlayerInfo.lights_on;
 
 func update_max_health(amount : int) -> void:
 	_health_display.set_max_health(amount);
 func update_health(amount : int) -> void:
 	_health_display.set_health(amount);
 
+func _lights_toggled(toggled_on: bool) -> void:
+	PlayerInfo.lights_on = toggled_on;

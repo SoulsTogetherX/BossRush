@@ -1,7 +1,127 @@
-[gd_scene load_steps=3 format=3 uid="uid://duxnhgwyl3jfl"]
+[gd_scene load_steps=12 format=3 uid="uid://duxnhgwyl3jfl"]
 
+[ext_resource type="Shader" path="res://assets/shaders/whiteReplace.gdshader" id="1_ce6tt"]
 [ext_resource type="Texture2D" uid="uid://cogseia54myfd" path="res://assets/sprites/GUI/Bark_Souls_The_End_Background.png" id="1_udc7l"]
+[ext_resource type="Script" path="res://rooms/death_screen/DeathScreen.gd" id="1_widlb"]
 [ext_resource type="Texture2D" uid="uid://dldp24w13cdgc" path="res://assets/sprites/GUI/Bark_Souls_The_End_Stain.png" id="2_ybium"]
+[ext_resource type="AudioStream" uid="uid://cv12hxtk5p4fq" path="res://assets/sounds/music/Death Screen - Get Up, Pup!.ogg" id="5_nt0yx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ntr5s"]
+shader = ExtResource("1_ce6tt")
+shader_parameter/enabled = true
+shader_parameter/white_ratio = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_r2onl"]
+font_size = 60
+font_color = Color(0, 0.588235, 1, 1)
+outline_size = 2
+outline_color = Color(0, 1, 1, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 0.156863)
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="Animation" id="Animation_mqfmc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(638, 386)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dd4ve"]
+resource_name = "death_animation"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:material:shader_parameter/white_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 4, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(638, 253), Vector2(638, 253), Vector2(638, 359)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Label:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(4, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_x8ued"]
+resource_name = "float_doggo"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(638, 359), Vector2(638, 370)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q8ne7"]
+_data = {
+"RESET": SubResource("Animation_mqfmc"),
+"death_animation": SubResource("Animation_dd4ve"),
+"float_doggo": SubResource("Animation_x8ued")
+}
 
 [node name="DeathScreen" type="Control"]
 layout_mode = 3
@@ -10,8 +130,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_widlb")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_ntr5s")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,5 +143,28 @@ grow_vertical = 2
 texture = ExtResource("1_udc7l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(638, 362)
+texture_filter = 2
+position = Vector2(638, 386)
 texture = ExtResource("2_ybium")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 613.0
+offset_right = 1280.0
+offset_bottom = 696.0
+text = "Press Space To Revive"
+label_settings = SubResource("LabelSettings_r2onl")
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q8ne7")
+}
+autoplay = "death_animation"
+next/death_animation = &"float_doggo"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_nt0yx")
+autoplay = true
+bus = &"Music"

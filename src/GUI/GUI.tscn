@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvrfi64eypl2d"]
+[gd_scene load_steps=9 format=3 uid="uid://cvrfi64eypl2d"]
 
 [ext_resource type="Script" path="res://src/GUI/GUI.gd" id="1_qxsjj"]
 [ext_resource type="Script" path="res://src/GUI/Health_Display.gd" id="2_0xwye"]
@@ -19,6 +19,14 @@ corner_radius_bottom_left = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_oqwu3"]
 font_size = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yv3hv"]
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
 
 [node name="GUI" type="CanvasLayer"]
 process_mode = 3
@@ -94,21 +102,58 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_ef6ag")
 
-[node name="HBoxContainer" type="VBoxContainer" parent="PlayerGUI/PauseScreen/MidSection/MainPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerGUI/PauseScreen/MidSection/MainPanel"]
 layout_mode = 2
 
-[node name="TopPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/HBoxContainer"]
+[node name="TopPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.25
 
-[node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/HBoxContainer"]
+[node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "The Game is Paused"
 label_settings = SubResource("LabelSettings_oqwu3")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
+
+[node name="LeftPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="CenterContainer" type="CenterContainer" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control"]
+layout_mode = 2
+offset_left = 132.0
+offset_top = -156.0
+offset_right = 150.0
+offset_bottom = -138.0
+size_flags_horizontal = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_yv3hv")
+button_pressed = true
+
+[node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control"]
+layout_mode = 2
+offset_left = 61.0
+offset_top = -161.0
+offset_right = 142.0
+offset_bottom = -137.0
+text = "Lights"
 horizontal_alignment = 1
 
 [node name="RightPadding" type="Control" parent="PlayerGUI/PauseScreen/MidSection"]
@@ -123,6 +168,7 @@ size_flags_stretch_ratio = 0.25
 
 [node name="GameGUI" type="VBoxContainer" parent="PlayerGUI"]
 process_mode = 1
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -153,6 +199,7 @@ mouse_filter = 2
 script = ExtResource("2_0xwye")
 
 [node name="Health_Back" type="TextureRect" parent="PlayerGUI/GameGUI/Bottom/Health_Display"]
+visible = false
 modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
@@ -173,3 +220,5 @@ mouse_filter = 2
 texture = ExtResource("3_fowhc")
 expand_mode = 1
 stretch_mode = 1
+
+[connection signal="toggled" from="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/CheckBox" to="." method="_lights_toggled"]

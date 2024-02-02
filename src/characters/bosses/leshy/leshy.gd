@@ -1,6 +1,7 @@
 extends Boss
 
 @export var bushes : Node;
+@export var door_hide : Node2D;
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer;
 @onready var dash_sound: Emitter = $dash_sound;
@@ -31,7 +32,6 @@ func _ready() -> void:
 		_add_to_sequence(show_self_hard, 0.75);
 		
 		$dash_timer.timeout.connect(create_after_image.bind(Color(1.0, 1.0, 1.0, 0.1)));
-		$hitbox/CollisionShape2D.disabled = false;
 	elif PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.EASY:
 		_add_to_sequence(dash, 0.6);
 		_add_to_sequence(dash, 0.6);
@@ -214,33 +214,40 @@ func _physics_process(delta: float) -> void:
 
 var _death : bool = false;
 func die() -> void:
-	$Music.stop();
+	DeathSounds.stop_music();
+	door_hide.visible = true;
+	super.up_shield();
 	
 	_death = true;
 	_sequence_timer.stop();
 	_animation_player.play("RESET");
 	await _animation_player.animation_finished;
+	
 	$light_holder.visible = false;
 	$AnimationPlayer.play("die");
+	z_index = 1;
 	
 	$AnimatableBody2D/CollisionShape2D2.disabled = false;
 	$AnimatableBody2D/CollisionShape2D2.global_position = global_position;
-	
 	await get_tree().create_timer(2.5).timeout;
+	
+	z_index = 0;
+	DeathSounds.play(0);
 	
 	primary_attack.reset();
 	_reward_manager._spawn_orbs(self);
-	$hurt_box.visible = false;
-	$hit_area.visible = false;
 
 func _on_hit(_hitbox: HitBox) -> void:
 	if _waiting:
+		door_hide.visible = false;
 		_force_move(_stun, 0.5, 0);
 		$AnimatableBody2D/CollisionShape2D2.disabled = true;
 		_waiting = false;
 		
-		$Music_Crash.play();
-		$Music.play();
+		DeathSounds.play_music(0);
+		
+		if PlayerInfo.hard_mode != PlayerInfo.DIFFICULTY.EASY:
+			$hitbox/CollisionShape2D.disabled = false;
 	elif !_death:
 		_force_move(_stun, 0.5, (2 if get_sequence_index() == 8 else 1));
 	
@@ -279,6 +286,7 @@ func get_skills() -> Array[Exchangable]:
 	return [primary_attack, health_handle, load("res://assets/resources/instances/exchangable/leshy/Nature Dash_Reward.tres")]
 
 func _on_player_hit(_hurtbox: HurtBox) -> void:
-	$hit_particles.restart();
-	$hit_particles.global_position = PlayerInfo.player.global_position;
-	$hit_particles.emitting = true;
+	if PlayerInfo.player:
+		$hit_particles.restart();
+		$hit_particles.global_position = PlayerInfo.player.global_position;
+		$hit_particles.emitting = true;

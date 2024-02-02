@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://di783uchcd713" path="res://assets/sprites/characters/bosses/The End/holy_projectile.png" id="1_lrot2"]
 [ext_resource type="Script" path="res://src/weapons/projectiles/The_End/Holy_Projectile.gd" id="1_nm8us"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="3_oosdd"]
+[ext_resource type="Script" path="res://src/characters/bosses/Hit_Box_Color.gd" id="3_k47da"]
 
 [sub_resource type="Gradient" id="Gradient_eg5cu"]
 colors = PackedColorArray(1, 1, 0.584314, 0.392157, 1, 1, 1, 0)
@@ -37,7 +37,8 @@ hframes = 2
 collision_layer = 2
 collision_mask = 0
 monitorable = false
-script = ExtResource("3_oosdd")
+script = ExtResource("3_k47da")
+hit_color = Color(1, 0.882353, 0, 1)
 alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]

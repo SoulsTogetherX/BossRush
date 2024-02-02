@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ckg7jtsjjc2tm"]
+[gd_scene load_steps=35 format=3 uid="uid://ckg7jtsjjc2tm"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_0u52g"]
 [ext_resource type="Texture2D" uid="uid://cgelphdxxdcqo" path="res://assets/sprites/ground/Shaka/Floor 2 Circus-walls.png" id="2_rlj6g"]
@@ -31,17 +31,6 @@ size = Vector2(602, 464)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0tvt"]
 size = Vector2(39, 161)
-
-[sub_resource type="Resource" id="Resource_aogar"]
-resource_local_to_scene = true
-script = ExtResource("8_dn73q")
-spawn_entity = ExtResource("9_pr67h")
-max_spawn = 2
-weapon_range = 0.0
-delta = -1
-cooldown = 0.3
-name = "Slime Summon"
-symbol = 0
 
 [sub_resource type="Resource" id="Resource_7k1bm"]
 resource_local_to_scene = true
@@ -175,7 +164,6 @@ shape = SubResource("RectangleShape2D_d0tvt")
 
 [node name="Doggo" parent="." instance=ExtResource("6_51n6a")]
 position = Vector2(228, -7)
-secondary_attack = SubResource("Resource_aogar")
 
 [node name="Shaka" parent="." node_paths=PackedStringArray("slime_summon_area", "fly_nodes", "center_node", "arrow", "door_hide", "door", "_reward_manager") instance=ExtResource("8_hwx5n")]
 position = Vector2(0, 61)

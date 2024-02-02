@@ -15,6 +15,8 @@ func get_id():
 	return "slam";
 
 func enter() -> void:
+	_actor.z_index = 1;
+	
 	_actor.toggle_trail(true);
 	_actor.disable = true;
 	_animationPlayer.stop();
@@ -25,9 +27,10 @@ func enter() -> void:
 	_fall_tween = create_tween().set_parallel();
 	_fall_tween.tween_method(fall_hand.bind(_actor.global_position), 0.0, 1.0, _actor._slam_speed);
 	_fall_tween.tween_property(_actor, "rotation_degrees", 0.0, 0.2);
+	_fall_tween.tween_property(_actor, "z_index", 1, max(_actor._slam_speed, 0.2));
 	
 	_hold = false;
-	
+
 func exit() -> void:
 	_actor.toggle_trail(false);
 	_actor.disable = false;
@@ -41,6 +44,7 @@ func process_physics(_delta: float) -> State:
 		return;
 	
 	if _enact_position.distance_squared_to(_actor.global_position) < 10:
+		_actor.slammed.emit();
 		_actor.toggle_slambox(true);
 		_hold = true;
 		
@@ -50,6 +54,7 @@ func process_physics(_delta: float) -> State:
 			PlayerInfo.cam.shake_event(Vector3(0.1, 0.1, 0.0), Vector3(7.0, 7.0, 0.0));
 			_actor._floor.apply_force(10, _actor.global_position.x);
 		
+		$PunchGround.play_random();
 		_animationPlayer.play("slam_bounce");
 		if _pause_time == 0:
 			get_tree().physics_frame.connect(_stateOverhead.update, CONNECT_ONE_SHOT | CONNECT_DEFERRED);
@@ -74,11 +79,11 @@ func create_shock_wave() -> void:
 		PlayerInfo.DIFFICULTY.EASY:
 			wave.wave_time = 0.5;
 			wave.fade_time = 0.1;
-			wave.radius = 180;
+			wave.radius = 220;
 		PlayerInfo.DIFFICULTY.NORMAL:
 			wave.wave_time = 0.7;
 			wave.fade_time = 0.1;
-			wave.radius = 240;
+			wave.radius = 250;
 		PlayerInfo.DIFFICULTY.BARKMODE:
 			wave.wave_time = 0.7;
 			wave.fade_time = 0.1;

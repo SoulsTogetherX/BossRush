@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://brvyfync5c1iv"]
+[gd_scene load_steps=54 format=3 uid="uid://brvyfync5c1iv"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/hand.gd" id="2_4rlrj"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="3_2bn6v"]
@@ -8,16 +8,24 @@
 [ext_resource type="Texture2D" uid="uid://djpw1s2d70pge" path="res://assets/sprites/characters/bosses/The End/The End Fist-sheet.png" id="5_xtfe0"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/Lazor.gd" id="6_dyc2t"]
 [ext_resource type="Shader" path="res://src/characters/bosses/The End/Boss_Parts/Eye_Charge.gdshader" id="7_2dywx"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="7_h752f"]
 [ext_resource type="Texture2D" uid="uid://c5inw5525f3ec" path="res://assets/sprites/characters/bosses/The End/Eye-Addition_sheet.png" id="7_kn2i2"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="8_f7hmg"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="9_1mvkw"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/Pupil.gd" id="9_qusxr"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Idle.gd" id="10_lve7e"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Stationary.gd" id="11_ikdwx"]
+[ext_resource type="AudioStream" uid="uid://8uqtwkn5prd0" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Laser Pre-Emptive.ogg" id="12_cd28n"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Aim_Lazor.gd" id="12_s35an"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Over_Player.gd" id="13_0obnk"]
+[ext_resource type="AudioStream" uid="uid://bii65j617e4ec" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Laser Fire.ogg" id="13_hinxf"]
+[ext_resource type="AudioStream" uid="uid://cktw2gs3irhi" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Laser Fire but it is holy.ogg" id="14_52ywu"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Slam_Player.gd" id="14_x034m"]
+[ext_resource type="AudioStream" uid="uid://7jy8baqf07wc" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Boss Laser Loop.ogg" id="15_j3guq"]
+[ext_resource type="Script" path="res://src/characters/bosses/Hit_Box_Color.gd" id="17_xlvwn"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="19_3dop4"]
+[ext_resource type="AudioStream" uid="uid://xsefxvvyjqi2" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/single/Punch Ground 1.ogg" id="20_xgq5y"]
+[ext_resource type="AudioStream" uid="uid://dft81gbp00uas" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/single/Punch Ground 2.ogg" id="21_ov25c"]
+[ext_resource type="AudioStream" uid="uid://b2pul7m51r5rk" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/single/Punch Ground 3.ogg" id="22_6oki8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pe34h"]
 resource_local_to_scene = true
@@ -97,30 +105,6 @@ damping_max = 1000.0
 color = Color(1, 1, 1, 0.784314)
 color_ramp = SubResource("GradientTexture1D_ccvj2")
 
-[sub_resource type="Gradient" id="Gradient_2mcyd"]
-offsets = PackedFloat32Array(0, 0.34767, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_jqgg2"]
-gradient = SubResource("Gradient_2mcyd")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wah4g"]
-particle_flag_disable_z = true
-emission_shape = 2
-emission_sphere_radius = 100.0
-angle_max = 180.0
-spread = 180.0
-flatness = 1.0
-initial_velocity_max = 100.0
-radial_velocity_min = -300.0
-radial_velocity_max = -300.0
-gravity = Vector3(0, 0, 0)
-scale_min = 5.0
-scale_max = 8.0
-color = Color(1, 1, 0.454902, 0.745098)
-color_ramp = SubResource("GradientTexture1D_jqgg2")
-turbulence_noise_strength = 20.0
-
 [sub_resource type="Curve" id="Curve_6cwl4"]
 _data = [Vector2(0, 0.193912), 0.0, 0.0, 0, 0, Vector2(0.651297, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -155,6 +139,30 @@ scale_max = 6.0
 color = Color(0.92549, 0.917647, 0, 1)
 color_ramp = SubResource("GradientTexture1D_b3bg0")
 turbulence_noise_scale = 1.0
+
+[sub_resource type="Gradient" id="Gradient_2mcyd"]
+offsets = PackedFloat32Array(0, 0.34767, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jqgg2"]
+gradient = SubResource("Gradient_2mcyd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wah4g"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 100.0
+angle_max = 180.0
+spread = 180.0
+flatness = 1.0
+initial_velocity_max = 100.0
+radial_velocity_min = -300.0
+radial_velocity_max = -300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 8.0
+color = Color(1, 1, 0.454902, 0.745098)
+color_ramp = SubResource("GradientTexture1D_jqgg2")
+turbulence_noise_strength = 20.0
 
 [sub_resource type="Animation" id="Animation_t21bu"]
 length = 0.001
@@ -277,6 +285,46 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_mbw04"]
+resource_name = "punch"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/Pupil:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_apubr"]
@@ -411,46 +459,6 @@ tracks/7/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_mbw04"]
-resource_name = "punch"
-length = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [2]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D/Pupil:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8khx2"]
 _data = {
 "RESET": SubResource("Animation_t21bu"),
@@ -463,7 +471,7 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2gcy"]
-radius = 29.4118
+radius = 22.3529
 height = 87.0588
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nyljo"]
@@ -517,15 +525,6 @@ one_shot = true
 speed_scale = 0.5
 explosiveness = 1.0
 
-[node name="Charging" type="GPUParticles2D" parent="."]
-z_index = 1
-position = Vector2(-7.05882, 1.52941)
-emitting = false
-amount = 20
-process_material = SubResource("ParticleProcessMaterial_wah4g")
-lifetime = 0.5
-speed_scale = 0.5
-
 [node name="trail" type="Line2D" parent="." node_paths=PackedStringArray("follow")]
 show_behind_parent = true
 top_level = true
@@ -534,6 +533,8 @@ points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 width = 100.0
 width_curve = SubResource("Curve_6cwl4")
 default_color = Color(0.588235, 0.588235, 0.588235, 0.588235)
+begin_cap_mode = 2
+end_cap_mode = 2
 script = ExtResource("3_u3ps0")
 follow = NodePath("..")
 trailLength = 10
@@ -568,6 +569,7 @@ texture = ExtResource("5_xtfe0")
 hframes = 3
 
 [node name="Pupil" type="Sprite2D" parent="Sprite2D"]
+visible = false
 texture = ExtResource("7_kn2i2")
 hframes = 2
 frame = 1
@@ -590,7 +592,8 @@ end_cap_mode = 2
 
 [node name="Hit_Box_Lazor" type="Area2D" parent="Lazor"]
 position = Vector2(3.52941, -22.3529)
-script = ExtResource("7_h752f")
+script = ExtResource("17_xlvwn")
+hit_color = Color(1, 1, 0.454902, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lazor/Hit_Box_Lazor"]
 position = Vector2(-8.5, 507)
@@ -603,6 +606,28 @@ emitting = false
 amount = 150
 process_material = SubResource("ParticleProcessMaterial_3yl46")
 
+[node name="Charging" type="GPUParticles2D" parent="Lazor"]
+z_index = 1
+position = Vector2(-7.05882, 1.52941)
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_wah4g")
+lifetime = 0.5
+speed_scale = 0.5
+
+[node name="Pre" type="AudioStreamPlayer" parent="Lazor"]
+stream = ExtResource("12_cd28n")
+pitch_scale = 0.25
+
+[node name="Post" type="AudioStreamPlayer" parent="Lazor"]
+stream = ExtResource("13_hinxf")
+
+[node name="Post-Holy" type="AudioStreamPlayer" parent="Lazor"]
+stream = ExtResource("14_52ywu")
+
+[node name="During" type="AudioStreamPlayer" parent="Lazor"]
+stream = ExtResource("15_j3guq")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8khx2")
@@ -610,10 +635,11 @@ libraries = {
 
 [node name="Hit_Box_Slam" type="Area2D" parent="."]
 z_index = 100
-script = ExtResource("7_h752f")
+script = ExtResource("17_xlvwn")
+hit_color = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit_Box_Slam"]
-position = Vector2(-8.23529, 2.35294)
+position = Vector2(-8.23529, 8.23529)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_h2gcy")
 debug_color = Color(0.992157, 0, 0.258824, 0.419608)
@@ -621,7 +647,8 @@ debug_color = Color(0.992157, 0, 0.258824, 0.419608)
 [node name="Hit_Box_Punch" type="Area2D" parent="."]
 z_index = 100
 monitoring = false
-script = ExtResource("7_h752f")
+script = ExtResource("17_xlvwn")
+hit_color = Color(1, 0.501961, 0.231373, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hit_Box_Punch"]
 position = Vector2(-8.23529, -9.41177)
@@ -659,5 +686,13 @@ over_offset = 300.0
 script = ExtResource("14_x034m")
 over_offset = 300.0
 over_player = NodePath("../Over_Hold")
+
+[node name="PunchGround" type="AudioStreamPlayer" parent="state_overhead/state_machine/Slam"]
+volume_db = 5.0
+pitch_scale = 1.5
+bus = &"Sound"
+script = ExtResource("19_3dop4")
+audios = Array[AudioStream]([ExtResource("20_xgq5y"), ExtResource("21_ov25c"), ExtResource("22_6oki8")])
+varation = 0.2
 
 [connection signal="hit" from="hurt_box" to="hurt_box" method="_on_hit"]

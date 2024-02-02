@@ -6,6 +6,8 @@ var health_handle : HealthExchangable = preload("res://assets/resources/instance
 var primary_movement : MovementExchangable = preload("res://assets/resources/instances/exchangable/player_base/Doggo Walk.tres");
 var secondary_movement : MovementExchangable = null;
 
+var flag : bool = false;
+
 var player : Player;
 var weapon : Weapon;
 var cam : CameraFollow2D;
@@ -14,22 +16,28 @@ var saved_health : int;
 
 var _fade_tween : Tween;
 var force_idle : bool = false;
-var lights_on : bool = true;
+var lights_on : bool = true:
+	set(val):
+		lights_on = val;
+		lights_set.emit(val);
 
 enum DIFFICULTY {EASY = 0, NORMAL = 1, BARKMODE = 2};
-var hard_mode : DIFFICULTY = DIFFICULTY.NORMAL;
+var hard_mode : DIFFICULTY = DIFFICULTY.EASY;
 
 signal max_health_changed(amount : int);
 signal health_changed(amount : int);
+signal lights_set(light : bool);
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS;
 
 func max_health_update() -> void:
-	health_changed.emit(player.get_max_health());
+	if player:
+		health_changed.emit(player.get_max_health());
 
 func health_update(_amount : int = 0) -> void:
-	health_changed.emit(player.get_health());
+	if player:
+		health_changed.emit(player.get_health());
 
 func overwrite_player(toggle : bool) -> void:
 	player.process_mode = Node.PROCESS_MODE_DISABLED if toggle else Node.PROCESS_MODE_INHERIT;

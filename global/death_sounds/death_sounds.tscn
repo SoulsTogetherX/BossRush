@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://ca2lw0kats0bn"]
+
+[ext_resource type="Script" path="res://global/death_sounds/death_sounds.gd" id="1_y3w22"]
+[ext_resource type="AudioStream" uid="uid://12bgrg6wfft5" path="res://assets/sounds/effects/boss/leshy/die/Leshy Defeated.ogg" id="2_e800p"]
+[ext_resource type="AudioStream" uid="uid://cv7p4phja0d61" path="res://assets/sounds/effects/boss/shaka/shaka/new/die/Shaka Defeated.ogg" id="3_04ybq"]
+[ext_resource type="AudioStream" uid="uid://dfyoq2s0vaccg" path="res://assets/sounds/music/Dungeon Ambience.ogg" id="4_pbkof"]
+[ext_resource type="AudioStream" uid="uid://y2wdwqbmw4ox" path="res://assets/sounds/music/Leshy's Theme Start.ogg" id="5_2omby"]
+[ext_resource type="AudioStream" uid="uid://cye5mx8xlpke6" path="res://assets/sounds/music/Leshy Theme.ogg" id="6_d6urv"]
+[ext_resource type="AudioStream" uid="uid://obnadbq7of0w" path="res://assets/sounds/music/Shaka-Boom's Theme.ogg" id="7_hkonl"]
+[ext_resource type="AudioStream" uid="uid://cfnnjweit5jrg" path="res://assets/sounds/music/The End - Boss Theme.ogg" id="8_iqack"]
+
+[node name="DeathSounds" type="Node"]
+script = ExtResource("1_y3w22")
+
+[node name="Leshy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_e800p")
+
+[node name="Shaka" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_04ybq")
+
+[node name="TheEnd" type="AudioStreamPlayer" parent="."]
+
+[node name="Silence" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_pbkof")
+volume_db = -15.0
+bus = &"Sound"
+
+[node name="Music_Crash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_2omby")
+volume_db = 10.0
+bus = &"Music"
+
+[node name="Leshy_Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_d6urv")
+bus = &"Music"
+
+[node name="Shaka_Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_hkonl")
+bus = &"Music"
+
+[node name="TheEnd_Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_iqack")
+bus = &"Music"

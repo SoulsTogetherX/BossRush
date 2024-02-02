@@ -1,0 +1,279 @@
+[gd_scene load_steps=16 format=3 uid="uid://bmg5r5m57vubp"]
+
+[ext_resource type="AudioStream" uid="uid://xsefxvvyjqi2" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/single/Punch Ground 1.ogg" id="1_2cgxl"]
+[ext_resource type="Script" path="res://rooms/end_screen/End_Screen.gd" id="1_rghm7"]
+[ext_resource type="AudioStream" uid="uid://dft81gbp00uas" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/single/Punch Ground 2.ogg" id="2_7k8do"]
+[ext_resource type="AudioStream" uid="uid://b2pul7m51r5rk" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/single/Punch Ground 3.ogg" id="3_nnyng"]
+[ext_resource type="Shader" path="res://rooms/end_screen/End_Screen.gdshader" id="4_x07b8"]
+[ext_resource type="Texture2D" uid="uid://dwwwfk3weg6lc" path="res://assets/sprites/GUI/Bark Souls UI-button-back.png" id="5_c805f"]
+[ext_resource type="Script" path="res://rooms/main_menu/pages/Button.gd" id="6_vqon4"]
+
+[sub_resource type="Animation" id="Animation_nw16k"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/CenterContainer/Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer/CenterContainer2/Label2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HBoxContainer/CenterContainer/Label/Label:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Settings:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uxd8r"]
+resource_name = "Start"
+length = 6.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/CenterContainer/Label:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HBoxContainer/CenterContainer2/Label2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Bang1")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.6, 6.5),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Bang2")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HBoxContainer/CenterContainer/Label/Label:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Bang3")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Settings:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 6.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w7hwx"]
+_data = {
+"RESET": SubResource("Animation_nw16k"),
+"Start": SubResource("Animation_uxd8r")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_hbasp"]
+font_size = 70
+
+[sub_resource type="LabelSettings" id="LabelSettings_thshs"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_287a1"]
+font_size = 70
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jovt2"]
+shader = ExtResource("4_x07b8")
+
+[sub_resource type="LabelSettings" id="LabelSettings_avdw4"]
+font_size = 32
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rghm7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_w7hwx")
+}
+autoplay = "Start"
+
+[node name="Bang1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_2cgxl")
+
+[node name="Bang2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_7k8do")
+
+[node name="Bang3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nnyng")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/CenterContainer"]
+visible = false
+layout_mode = 2
+text = "God Is dead"
+label_settings = SubResource("LabelSettings_hbasp")
+
+[node name="Label" type="Label" parent="HBoxContainer/CenterContainer/Label"]
+visible = false
+layout_mode = 0
+offset_left = 256.0
+offset_top = 82.0
+offset_right = 543.0
+offset_bottom = 124.0
+text = "-Friedrich Nietzsche"
+label_settings = SubResource("LabelSettings_thshs")
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="HBoxContainer/CenterContainer2"]
+visible = false
+layout_mode = 2
+text = "Thank you for playing"
+label_settings = SubResource("LabelSettings_287a1")
+
+[node name="Control2" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Settings" type="TextureButton" parent="."]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_jovt2")
+layout_mode = 2
+offset_left = 496.0
+offset_top = 586.0
+offset_right = 630.0
+offset_bottom = 634.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("5_c805f")
+texture_pressed = ExtResource("5_c805f")
+texture_hover = ExtResource("5_c805f")
+texture_disabled = ExtResource("5_c805f")
+texture_focused = ExtResource("5_c805f")
+script = ExtResource("6_vqon4")
+
+[node name="Label" type="Label" parent="Settings"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 11.5
+offset_right = 184.0
+offset_bottom = 56.5
+scale = Vector2(0.5, 0.5)
+text = "Retry Fate"
+label_settings = SubResource("LabelSettings_avdw4")
+
+[connection signal="clicked" from="Settings" to="." method="switch_to_main"]

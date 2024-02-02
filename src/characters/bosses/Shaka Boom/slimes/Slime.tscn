@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://bql8akhayh121"]
+[gd_scene load_steps=45 format=3 uid="uid://bql8akhayh121"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/Slime.gd" id="1_adhuu"]
 [ext_resource type="Script" path="res://assets/resources/scripts/exchangable/health/health_exchangable.gd" id="2_nbk6d"]
@@ -6,19 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://c8awle6sackfu" path="res://assets/sprites/characters/bosses/shaka boom/slime_trail.png" id="4_k05c5"]
 [ext_resource type="Texture2D" uid="uid://k1iit618dj2h" path="res://assets/sprites/characters/bosses/shaka boom/Slime MegaSheet.png" id="5_bj25x"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="6_hyex2"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="7_8yei2"]
+[ext_resource type="Script" path="res://src/characters/bosses/Hit_Box_Color.gd" id="7_qvvq8"]
 [ext_resource type="Script" path="res://src/characters/bosses/hit_area.gd" id="8_3f6ut"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="9_h2ke1"]
 [ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="10_nva1m"]
-[ext_resource type="AudioStream" uid="uid://b67estg2bm20f" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 2.ogg" id="11_xle0r"]
-[ext_resource type="AudioStream" uid="uid://xowbxil5um1m" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 3.ogg" id="12_t3qol"]
-[ext_resource type="AudioStream" uid="uid://b5jo23j7wjsgd" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2 4.ogg" id="13_lnxlh"]
-[ext_resource type="AudioStream" uid="uid://cu6ecl26t3408" path="res://assets/sounds/effects/boss/shaka/slime/death/Slime Death v2.ogg" id="14_pua1m"]
-[ext_resource type="AudioStream" uid="uid://bn65o28uxgv4q" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 2.ogg" id="15_cjvnw"]
-[ext_resource type="AudioStream" uid="uid://b5p685ccyafq7" path="res://assets/sounds/effects/boss/shaka/slime/idle/Slime Existing 3.ogg" id="16_vsfdf"]
-[ext_resource type="AudioStream" uid="uid://0wb6xdvseigv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 2.ogg" id="17_q1ihp"]
-[ext_resource type="AudioStream" uid="uid://6ldvea6e7mhv" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth 3.ogg" id="18_fs5tn"]
-[ext_resource type="AudioStream" uid="uid://bh5fnesmb6nns" path="res://assets/sounds/effects/boss/shaka/slime/spawn/Slime Birth.ogg" id="19_jbbkv"]
+[ext_resource type="AudioStream" uid="uid://ddt2w0v3q21ry" path="res://assets/sounds/effects/boss/shaka/slime/new/die/Slime Pop 1.ogg" id="11_3chjj"]
+[ext_resource type="AudioStream" uid="uid://c4p2f11qqq0u6" path="res://assets/sounds/effects/boss/shaka/slime/new/die/Slime Pop 2.ogg" id="12_gr14t"]
+[ext_resource type="AudioStream" uid="uid://clp1wa3txegot" path="res://assets/sounds/effects/boss/shaka/slime/new/hit/Slime Hit 2.ogg" id="13_nbtho"]
+[ext_resource type="AudioStream" uid="uid://n5jcpwepdher" path="res://assets/sounds/effects/boss/shaka/slime/new/hit/Slime Hit.ogg" id="14_xadm1"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_overhead.gd" id="20_u3ghg"]
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="21_pwthv"]
 [ext_resource type="Script" path="res://src/characters/bosses/Shaka Boom/slimes/slime_states/spawn.gd" id="22_4eoo0"]
@@ -33,32 +28,6 @@ script = ExtResource("2_nbk6d")
 max_health = 3
 name = ""
 symbol = 0
-
-[sub_resource type="Gradient" id="Gradient_tpru6"]
-offsets = PackedFloat32Array(0, 0.426523, 1)
-colors = PackedColorArray(0.137255, 0.827451, 0.188235, 1, 0, 0.403922, 0, 0.67451, 0, 0.196078, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_u6q03"]
-gradient = SubResource("Gradient_tpru6")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_22da3"]
-particle_flag_disable_z = true
-angle_min = -180.0
-angle_max = 180.0
-direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_min = 600.0
-initial_velocity_max = 1000.0
-angular_velocity_min = -30.0
-angular_velocity_max = 30.0
-gravity = Vector3(0, 0, 0)
-damping_min = 500.0
-damping_max = 500.0
-attractor_interaction_enabled = false
-scale_min = 2.0
-scale_max = 10.0
-color_ramp = SubResource("GradientTexture1D_u6q03")
-turbulence_noise_strength = 20.0
 
 [sub_resource type="Curve" id="Curve_fp5lu"]
 _data = [Vector2(0.00626959, 1), 0.0, 0.0, 0, 0, Vector2(0.862069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -90,6 +59,13 @@ colors = PackedColorArray(1, 1, 1, 1, 0.581033, 0.581033, 0.581033, 1)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bg2rr"]
 radius = 12.0
 height = 38.0
+
+[sub_resource type="Gradient" id="Gradient_tpru6"]
+offsets = PackedFloat32Array(0, 0.426523, 1)
+colors = PackedColorArray(0.137255, 0.827451, 0.188235, 1, 0, 0.403922, 0, 0.67451, 0, 0.196078, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x4bio"]
+gradient = SubResource("Gradient_tpru6")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_57ax2"]
 radius = 2.99994
@@ -276,6 +252,20 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [22, 14, 15, 16, 17, 18, 19]
+}
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("die")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"play_random"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_gi45i"]
@@ -529,14 +519,6 @@ _sprite = NodePath("Sprite2D")
 health_handle = SubResource("Resource_v0xmn")
 primary_movement = ExtResource("3_q6q2o")
 
-[node name="hit_particles" type="GPUParticles2D" parent="."]
-top_level = true
-emitting = false
-amount = 60
-process_material = SubResource("ParticleProcessMaterial_22da3")
-one_shot = true
-explosiveness = 1.0
-
 [node name="trail" type="CPUParticles2D" parent="."]
 z_index = -2
 position = Vector2(0, -10)
@@ -638,10 +620,11 @@ alignment = 1
 position = Vector2(0, -10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bg2rr")
-disabled = true
 
 [node name="hitbox" type="Area2D" parent="."]
-script = ExtResource("7_8yei2")
+script = ExtResource("7_qvvq8")
+hit_color_grad = SubResource("GradientTexture1D_x4bio")
+alignment = 1
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="hitbox"]
 position = Vector2(0, -10)
@@ -658,7 +641,6 @@ script = ExtResource("8_3f6ut")
 position = Vector2(0, -10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_bg2rr")
-disabled = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1.19209e-07)
@@ -680,20 +662,19 @@ autoplay = "start"
 next/hurt = &"idle"
 next/start = &"idle"
 
-[node name="death" type="AudioStreamPlayer" parent="."]
+[node name="die" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+pitch_scale = 1.15
 bus = &"Sound"
 script = ExtResource("10_nva1m")
-audios = Array[AudioStream]([ExtResource("11_xle0r"), ExtResource("12_t3qol"), ExtResource("13_lnxlh"), ExtResource("14_pua1m")])
+audios = Array[AudioStream]([ExtResource("11_3chjj"), ExtResource("12_gr14t")])
+varation = 0.3
 
-[node name="idle" type="AudioStreamPlayer" parent="."]
+[node name="hit" type="AudioStreamPlayer" parent="."]
+pitch_scale = 1.05
 bus = &"Sound"
 script = ExtResource("10_nva1m")
-audios = Array[AudioStream]([ExtResource("15_cjvnw"), ExtResource("16_vsfdf")])
-
-[node name="spawn" type="AudioStreamPlayer" parent="."]
-bus = &"Sound"
-script = ExtResource("10_nva1m")
-audios = Array[AudioStream]([ExtResource("17_q1ihp"), ExtResource("18_fs5tn"), ExtResource("19_jbbkv")])
+audios = Array[AudioStream]([ExtResource("13_nbtho"), ExtResource("14_xadm1")])
 varation = 0.1
 
 [node name="glow" type="Sprite2D" parent="."]

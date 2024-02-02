@@ -21,7 +21,7 @@ func start(tree : SceneTree) -> void:
 		_start_invincibility_frames(tree);
 
 func _start_invincibility_frames(tree : SceneTree) -> void:
-	if i_frames > 0:
+	if i_frames > 0 && tree:
 		_invincible = true;
 		invincible_start.emit();
 		tree.create_timer(i_frames).timeout.connect(_end_invincibility_frames);

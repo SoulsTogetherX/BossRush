@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://2t51xt3spvld"]
+[gd_scene load_steps=36 format=3 uid="uid://2t51xt3spvld"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd_Control.gd" id="1_0inbp"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd.gd" id="2_xg4f6"]
@@ -10,6 +10,14 @@
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="7_jxonu"]
 [ext_resource type="PackedScene" uid="uid://brvyfync5c1iv" path="res://src/characters/bosses/The End/Boss_Parts/hand.tscn" id="8_i6skd"]
 [ext_resource type="Shader" path="res://src/characters/bosses/The End/Boss_Parts/Eye_Charge.gdshader" id="9_5sc8n"]
+[ext_resource type="AudioStream" uid="uid://cnjywvfjbwfx6" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/dual/Dual Fist Sfx.ogg" id="11_702j3"]
+[ext_resource type="AudioStream" uid="uid://cfnnjweit5jrg" path="res://assets/sounds/music/The End - Boss Theme.ogg" id="11_44445"]
+[ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="12_sshdl"]
+[ext_resource type="AudioStream" uid="uid://m6flxcfg3xkb" path="res://assets/sounds/effects/boss/TheEnd/Hurt/Hurt and Move.ogg" id="13_mielc"]
+[ext_resource type="AudioStream" uid="uid://40amfwa1sx5e" path="res://assets/sounds/effects/boss/TheEnd/Hurt/Hurt and Move 2.ogg" id="14_xi0eu"]
+[ext_resource type="AudioStream" uid="uid://d1oltrcw5vpn8" path="res://assets/sounds/effects/boss/TheEnd/fly/Flying in off screen (attach to boss location for stereo effect).ogg" id="15_uv2k8"]
+[ext_resource type="AudioStream" uid="uid://dkhtysgd8xlcm" path="res://assets/sounds/effects/boss/TheEnd/end and start/Boss Explode.ogg" id="16_o08ac"]
+[ext_resource type="AudioStream" uid="uid://cd020ya1k5n7k" path="res://assets/sounds/effects/boss/TheEnd/end and start/Final Boss Entrance.ogg" id="17_ify4f"]
 
 [sub_resource type="Resource" id="Resource_cywj5"]
 script = ExtResource("3_1vnr6")
@@ -194,6 +202,30 @@ tracks/9/keys = {
 "update": 0,
 "values": [Vector2(0.8, 0.8)]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Float_Right:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Float_Left:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_h06gw"]
 resource_name = "die"
@@ -209,6 +241,109 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("crack")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_u05ek"]
+resource_name = "hide"
+length = 0.001
+step = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left_Hand:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Body:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.00136e-05, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Right_Hand:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Float_Left:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Float_Right:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Float:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_1uo2i"]
@@ -371,7 +506,7 @@ tracks/9/path = NodePath("..:disable")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(0, 4.593),
+"times": PackedFloat32Array(0, 7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -474,11 +609,67 @@ tracks/17/keys = {
 "update": 1,
 "values": [Vector2(-1200, -84)]
 }
+tracks/18/type = "method"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("entance")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0.095),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Float_Left:scale")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Float_Right:scale")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/21/type = "method"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath(".")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"focus_camera"
+}, {
+"args": [],
+"method": &"unfocus_camera"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_31bub"]
 _data = {
 "RESET": SubResource("Animation_v18h1"),
 "die": SubResource("Animation_h06gw"),
+"hide": SubResource("Animation_u05ek"),
 "hurt": SubResource("Animation_1uo2i"),
 "start": SubResource("Animation_8ymmw")
 }
@@ -570,12 +761,12 @@ speed_scale = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_31bub")
 }
-autoplay = "start"
+autoplay = "hide"
 
 [node name="Float_Left" parent="TheEnd" instance=ExtResource("4_q54yb")]
 top_level = true
 material = SubResource("ShaderMaterial_fdxfv")
-position = Vector2(-108.878, -82.8047)
+position = Vector2(-113.447, -93.6712)
 rest_offset = Vector2(-110, 0)
 time_offset = 0.2
 lerp_coefficent = 0.4
@@ -591,7 +782,7 @@ frame = 32
 
 [node name="Float_Right" parent="TheEnd" instance=ExtResource("4_q54yb")]
 top_level = true
-position = Vector2(105.363, -76.9655)
+position = Vector2(111.64, -94.5572)
 right = true
 rest_offset = Vector2(110, 0)
 time_offset = 0.8
@@ -627,6 +818,41 @@ right = true
 rest_offset = Vector2(250, 0)
 time_offset = 0.2
 act_on_local = true
+
+[node name="DualSlam" type="AudioStreamPlayer" parent="TheEnd"]
+stream = ExtResource("11_702j3")
+volume_db = 10.0
+bus = &"Sound"
+
+[node name="Hurt" type="AudioStreamPlayer" parent="TheEnd"]
+bus = &"Sound"
+script = ExtResource("12_sshdl")
+audios = Array[AudioStream]([ExtResource("13_mielc"), ExtResource("14_xi0eu")])
+varation = 0.1
+
+[node name="Music_Crash" type="AudioStreamPlayer" parent="TheEnd"]
+stream = ExtResource("11_44445")
+volume_db = 10.0
+bus = &"Music"
+
+[node name="Music" type="AudioStreamPlayer" parent="TheEnd"]
+stream = ExtResource("11_44445")
+bus = &"Music"
+
+[node name="crack" type="AudioStreamPlayer" parent="TheEnd"]
+stream = ExtResource("16_o08ac")
+pitch_scale = 2.0
+bus = &"Sound"
+
+[node name="entance" type="AudioStreamPlayer" parent="TheEnd"]
+stream = ExtResource("17_ify4f")
+pitch_scale = 0.85
+bus = &"Sound"
+
+[node name="FlyAway" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_uv2k8")
+volume_db = 20.0
+bus = &"Sound"
 
 [connection signal="killed" from="TheEnd/HealthMonitor" to="." method="die"]
 [connection signal="timeout" from="TheEnd/sequence_timer" to="TheEnd" method="_next_sequence"]

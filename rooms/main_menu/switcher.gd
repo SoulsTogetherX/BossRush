@@ -18,6 +18,7 @@ func _ready() -> void:
 	_current_scene.play.connect(on_play);
 	_current_scene.settings.connect(on_settings);
 	_current_scene.credits.connect(on_credits);
+	_current_scene.quit.connect(on_quit);
 	
 	$fireplace.volume_db = -40;
 	$Music.volume_db = -40;
@@ -31,6 +32,11 @@ func _ready() -> void:
 	tw.tween_property($fireplace, "volume_db", 10, 0.5).set_delay(0.2);
 
 func on_play() -> void:
+	$Start.play();
+	
+	await get_tree().create_timer(1.0).timeout;
+	$Background.paused = true;
+	
 	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(GAME_SCENE_PATH));
 
 func on_main() -> void:
@@ -41,6 +47,9 @@ func on_main() -> void:
 	_current_scene.play.connect(on_play);
 	_current_scene.settings.connect(on_settings);
 	_current_scene.credits.connect(on_credits);
+	_current_scene.quit.connect(on_quit);
+	
+	$"De-confrim".play();
 
 func on_settings() -> void:
 	_current_scene.queue_free();
@@ -48,6 +57,8 @@ func on_settings() -> void:
 	add_child(_current_scene);
 	
 	_current_scene.main.connect(on_main);
+	
+	$Confrim.play_random();
 
 func on_credits() -> void:
 	_current_scene.queue_free();
@@ -55,3 +66,10 @@ func on_credits() -> void:
 	add_child(_current_scene);
 	
 	_current_scene.main.connect(on_main);
+	
+	$Confrim.play_random();
+
+func on_quit() -> void:
+	$Confrim.play_random();
+	await get_tree().create_timer(0.6).timeout;
+	get_tree().quit();

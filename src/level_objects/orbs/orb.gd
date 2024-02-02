@@ -25,7 +25,7 @@ signal unstage(orb : Orb);
 signal destroyed();
 
 func _ready() -> void:
-	z_index = 1;
+	z_index = 3;
 	
 	reset_pos = position;
 	set_exchange(exchange);
@@ -137,7 +137,7 @@ func reset(scale_ : bool, position_ : bool, title : bool, flow : bool) -> void:
 		_tween_decorate.tween_property(title_display, "modulate:a", 0.0, 0.2);
 	if flow:
 		_tween_decorate.chain().tween_callback(toggle_flow_particles.bind(true));
-	_tween_decorate.chain().tween_property(self, "z_index", 1, 0.0);
+	_tween_decorate.chain().tween_property(self, "z_index", 3, 0.0);
 
 func toggle_flow_particles(toggle : bool) -> void:
 	$station_particle.emitting = toggle;

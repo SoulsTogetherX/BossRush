@@ -23,6 +23,7 @@ PlayerInfo="*res://global/PlayerInfo.gd"
 TransitionManager="*res://global/scene_transition/transition_manager.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 TimeManager="*res://global/time_manager.gd"
+DeathSounds="*res://global/death_sounds/death_sounds.tscn"
 
 [dialogue_manager]
 

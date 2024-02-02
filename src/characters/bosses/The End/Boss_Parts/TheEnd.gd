@@ -51,36 +51,40 @@ func _ready() -> void:
 			_add_to_sequence(start_slams.bind(0.7), 1.5);
 			_add_to_sequence(start_slams.bind(0.7), 1.5);
 			_add_to_sequence(idle_slam_hand, 0.01);
-			_add_to_sequence(aim_lazor.bind(true, 2.7, 0.7), 2.0);
+			_add_to_sequence(aim_lazor.bind(true, 2.7, 0.7, false), 2.0);
 			_add_to_sequence(fire_lazor, 0.7);
 			_add_to_sequence(clear_lazor, 0.2);
 			_add_to_sequence(vunerable_eye, 1.5);
 			_add_to_sequence(shield_eye, 0.01);
 		PlayerInfo.DIFFICULTY.NORMAL:
-			pass;
+			_phase_1_normal();
 		PlayerInfo.DIFFICULTY.BARKMODE:
 			_phase_1_hard();
 	
-	$AnimationPlayer.play("start");
-	up_shield();
+	if PlayerInfo.flag == false:
+		await get_tree().create_timer(6.0).timeout;
+		PlayerInfo.flag = true;
 	
-	if PlayerInfo.hard_mode != PlayerInfo.DIFFICULTY.EASY:
-		await $AnimationPlayer.animation_finished;
-		_phase_1_normal();
+	$AnimationPlayer.play("start");
+	$AnimationPlayer.animation_finished.connect(_battle_start, CONNECT_ONE_SHOT);
+	up_shield();
+
+func _battle_start(_anim_name: StringName) -> void:
+	DeathSounds.play_music(2);
 
 func _phase_1_normal() -> void:
 	_clear_sequence();
 	_add_to_sequence(pick_hand, 0.01);
 	
 	_add_to_sequence(start_slams.bind(0.7), 1.2);
-	_add_to_sequence(aim_lazor.bind(false, 2.7, 0.7), 0.001);
+	_add_to_sequence(aim_lazor.bind(false, 2.7, 0.7, true), 0.001);
 	_add_to_sequence(start_slams.bind(0.7), 1.2);
 	_add_to_sequence(fire_lazor, 0.7);
 	_add_to_sequence(start_slams.bind(0.7), 1.2);
 	_add_to_sequence(clear_lazor, 0.001);
 	
 	_add_to_sequence(start_slams.bind(0.7), 1.2);
-	_add_to_sequence(aim_lazor.bind(false, 2.7, 0.7), 0.001);
+	_add_to_sequence(aim_lazor.bind(false, 2.7, 0.7, true), 0.001);
 	_add_to_sequence(start_slams.bind(0.7), 1.2);
 	_add_to_sequence(fire_lazor, 0.7);
 	_add_to_sequence(start_slams.bind(0.7), 1.2);
@@ -106,7 +110,7 @@ func _phase_2_normal() -> void:
 	
 	_add_to_sequence(pick_hand, 0.001);
 	_add_to_sequence(punch_fest_end.bind(true), 1.0);
-	_add_to_sequence(aim_lazor.bind(true, 2.7, 0.7), 1.5);
+	_add_to_sequence(aim_lazor.bind(true, 2.7, 0.7, false), 1.5);
 	_add_to_sequence(punch_fest_end.bind(false), 0.001);
 	_add_to_sequence(fire_lazor, 0.7);
 	_add_to_sequence(clear_lazor, 0.2);
@@ -210,13 +214,13 @@ func punch_fest_start() -> void:
 	right_hand.finished_action.connect(punch_fest.bind(right_hand));
 	punch_fest(right_hand);
 func punch_fest(hand : Hand_TheEndBoss) -> void:
-	if randf() < 0.7 && max_punch_safegaurd < 6:
+	if randf() < 0.7 && max_punch_safegaurd < 3:
 		hand.move_over_player();
 		hand.slam_hand_wait(0.5);
 		
 		max_punch_safegaurd += 1;
 	else:
-		start_punch(hand);
+		start_punch(hand, 1.0);
 		
 		max_punch_safegaurd = 0;
 func punch_fest_end(selected_hand : bool = false) -> void:
@@ -228,14 +232,14 @@ func punch_fest_end(selected_hand : bool = false) -> void:
 	hand.finished_action.disconnect(punch_fest);
 	hand.enact_idle();
 
-func start_punch(hand : Hand_TheEndBoss) -> void:
+func start_punch(hand : Hand_TheEndBoss, wait : float) -> void:
 	if left_hand == hand:
 		hand.to_random_punch_pos(false);
-		get_tree().create_timer(1.0).timeout.connect(hand.enact_punch.bind(false), CONNECT_ONE_SHOT);
+		get_tree().create_timer(wait).timeout.connect(hand.enact_punch.bind(false), CONNECT_ONE_SHOT);
 		return;
 	
 	hand.to_random_punch_pos(true);
-	get_tree().create_timer(1.0).timeout.connect(hand.enact_punch.bind(true), CONNECT_ONE_SHOT);
+	get_tree().create_timer(wait).timeout.connect(hand.enact_punch.bind(true), CONNECT_ONE_SHOT);
 
 func summon_arrow(follow : Node2D) -> void:
 	var arrow = get_parent().arrow;
@@ -258,6 +262,20 @@ func death_animation() -> void:
 	right_float.fall();
 	left_hand.fall();
 	right_hand.fall();
+	
+	PlayerInfo.flag = false;
+
+func focus_camera() -> void:
+	PlayerInfo.cam.snap = false;
+	PlayerInfo.cam.follow = self;
+	PlayerInfo.cam.offset = Vector2(0, -64);
+
+func unfocus_camera() -> void:
+	PlayerInfo.cam.follow = PlayerInfo.player;
+	PlayerInfo.cam.offset = Vector2.ZERO;
+	
+	await get_tree().create_timer(1.0).timeout;
+	PlayerInfo.cam.snap = true;
 
 func move_all_compoents(diff : Vector2) -> void:
 	left_float.move_all_compoents(diff);
@@ -317,6 +335,8 @@ func duel_slam_attack(aim_time : float) -> void:
 func slam_duel_hands() -> void:
 	left_hand.slam_hand();
 	right_hand.slam_hand();
+	
+	left_hand.slammed.connect($DualSlam.play, CONNECT_ONE_SHOT);
 
 func slam_active_hand() -> void:
 	if left_hand.is_in_states(["over_hold"]):
@@ -331,13 +351,13 @@ func idle_hands() -> void:
 	left_hand.enact_idle();
 	right_hand.enact_idle();
 
-func aim_lazor(selected_hand : bool = true, charge_time : float = 1.0, blast_time : float = 0.2) -> void:
+func aim_lazor(selected_hand : bool = true, charge_time : float = 1.0, blast_time : float = 0.2, color : bool = false) -> void:
 	if selected_hand:
 		_lazor_hand = left_hand if left_hand == _slam_hand else right_hand;
 	else:
 		_lazor_hand = right_hand if left_hand == _slam_hand else left_hand;
 	
-	_lazor_hand.player_aim(charge_time, blast_time);
+	_lazor_hand.player_aim(charge_time, blast_time, color);
 
 func fire_lazor() -> void:
 	_lazor_hand.activate_lazor();
@@ -406,6 +426,8 @@ func _on_hit(_hitbox: HitBox, _hand : Hand_TheEndBoss) -> void:
 	TimeManager.instant_time_scale(0.0, 0.3);
 	PlayerInfo.cam.shake_event();
 	
+	get_tree().create_timer(0.1, true, false, true).timeout.connect($Hurt.play_random, CONNECT_ONE_SHOT);
+	
 	match PlayerInfo.hard_mode:
 		PlayerInfo.DIFFICULTY.NORMAL:
 			_turn += 1;
@@ -455,3 +477,4 @@ func set_outline(out : float) -> void:
 	$Body.material.set_shader_parameter("width", out);
 func set_white_out(out : float) -> void:
 	$Body.material.set_shader_parameter("white_out", out);
+

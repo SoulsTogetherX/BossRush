@@ -7,6 +7,9 @@ func _ready() -> void:
 	$HBoxContainer/VBoxContainer/MusicContainer/VBoxContainer/Slider.value = db_to_linear(AudioServer.get_bus_volume_db(1));
 	$HBoxContainer/VBoxContainer/SoundContainer/VBoxContainer/Slider.value = db_to_linear(AudioServer.get_bus_volume_db(2));
 	
+	$HBoxContainer/VBoxContainer2/CenterContainer/Control4/CheckBox.button_pressed = PlayerInfo.lights_on;
+
+
 func _on_main_pressed() -> void:
 	main.emit();
 

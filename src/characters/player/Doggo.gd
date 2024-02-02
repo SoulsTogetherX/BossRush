@@ -1,6 +1,7 @@
 class_name Player extends ExchangeType
 
-#@onready var _state_overhead: StateOverhead = $StateOverhead;
+const HIT_PARTICLES : ParticleProcessMaterial = preload("res://assets/resources/instances/gpu_particles/hit_particles.tres");
+const HIT_PARTICLES_SCRIPT : Script = preload("res://custom_nodes/signal_burst/single_bust_GPU.gd");
 
 @onready var _animationPlayer : AnimationPlayer = $AnimationPlayer;
 
@@ -65,7 +66,25 @@ func change_direction(angle : float) -> void:
 		_animationPlayer.play(animation);
 		_animationPlayer.seek(pos, true);
 
-func _on_hurt_box_hit(_hitbox: HitBox) -> void:
+func _on_hurt_box_hit(hitbox: HitBox) -> void:
+	if hitbox is HitBoxColor:
+		var hit_particles = GPUParticles2D.new();
+		hit_particles.script = HIT_PARTICLES_SCRIPT;
+		hit_particles.process_material = HIT_PARTICLES;
+		hit_particles.global_position = get_center();
+		
+		if hitbox.hit_color_grad:
+			hit_particles.process_material.color_ramp = hitbox.hit_color_grad;
+		else:
+			hit_particles.process_material.color = hitbox.hit_color;
+		
+		hit_particles.amount = 60;
+		hit_particles.one_shot = true;
+		hit_particles.explosiveness = 1.0;
+		
+		get_tree().current_scene.add_child(hit_particles);
+		hit_particles
+	
 	modulate = Color.RED;
 	var t : Tween = create_tween();
 	if t == null:
@@ -81,7 +100,7 @@ func _on_hurt_box_hit(_hitbox: HitBox) -> void:
 
 func died() -> void:
 	$HealthMonitor.update_health_no_signal(0);
-	LocationManager.reload();
+	LocationManager.died_switch();
 
 func play_step() -> void:
 	match LocationManager.get_step_type():

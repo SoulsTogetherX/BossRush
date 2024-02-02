@@ -1,7 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://bvlv7rwah6txw"]
+[gd_scene load_steps=18 format=3 uid="uid://bvlv7rwah6txw"]
 
 [ext_resource type="Script" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.gd" id="1_w7pja"]
-[ext_resource type="Script" path="res://custom_nodes/combat/hit_box.gd" id="5_q7q7a"]
+[ext_resource type="Script" path="res://src/characters/bosses/Hit_Box_Color.gd" id="2_h8ye6"]
+
+[sub_resource type="Gradient" id="Gradient_vqnor"]
+offsets = PackedFloat32Array(0, 0.426523, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.596078, 0, 0.67451, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_d13qp"]
+gradient = SubResource("Gradient_vqnor")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nw5y4"]
 radius = 8.0
@@ -45,32 +52,6 @@ hue_variation_max = 0.1
 turbulence_noise_strength = 0.1
 turbulence_noise_scale = 0.0
 
-[sub_resource type="Gradient" id="Gradient_vqnor"]
-offsets = PackedFloat32Array(0, 0.426523, 1)
-colors = PackedColorArray(1, 0, 0, 1, 1, 0.596078, 0, 0.67451, 1, 1, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_d13qp"]
-gradient = SubResource("Gradient_vqnor")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_80yns"]
-particle_flag_disable_z = true
-angle_min = -180.0
-angle_max = 180.0
-direction = Vector3(0, 0, 0)
-spread = 180.0
-initial_velocity_min = 600.0
-initial_velocity_max = 1000.0
-angular_velocity_min = -30.0
-angular_velocity_max = 30.0
-gravity = Vector3(0, 0, 0)
-damping_min = 500.0
-damping_max = 500.0
-attractor_interaction_enabled = false
-scale_min = 2.0
-scale_max = 10.0
-color_ramp = SubResource("GradientTexture1D_d13qp")
-turbulence_noise_strength = 20.0
-
 [sub_resource type="Animation" id="Animation_d37by"]
 length = 0.001
 
@@ -105,7 +86,8 @@ script = ExtResource("1_w7pja")
 collision_layer = 2
 collision_mask = 0
 monitorable = false
-script = ExtResource("5_q7q7a")
+script = ExtResource("2_h8ye6")
+hit_color_grad = SubResource("GradientTexture1D_d13qp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource("CircleShape2D_nw5y4")
@@ -120,13 +102,6 @@ shape = SubResource("CircleShape2D_qka5p")
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_3a2dd")
 lifetime = 0.4
-
-[node name="hit_particles" type="GPUParticles2D" parent="."]
-emitting = false
-amount = 60
-process_material = SubResource("ParticleProcessMaterial_80yns")
-one_shot = true
-explosiveness = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
