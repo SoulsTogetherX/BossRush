@@ -18,6 +18,7 @@ func play_end() -> void:
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(hand, "global_position", PlayerInfo.player.global_position + Vector2(40, 10), 0.2).set_delay(0.3);
 	tw.tween_property(hand, "global_position", PlayerInfo.boss.global_position + Vector2(160, -20), 0.8).set_delay(1.5);
+	tw.tween_callback($"../TheEnd/TheEnd".focus_camera).set_delay(1.5);
 	tw.tween_property(hand, "global_position", PlayerInfo.boss.global_position + Vector2(100, -40), 0.15).set_delay(5.6);
 	tw.tween_property(hand, "global_position", PlayerInfo.boss.global_position + Vector2(20, -50), 0.3).set_delay(5.75);
 	

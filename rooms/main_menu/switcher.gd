@@ -6,12 +6,9 @@ const CREDITS_SCENE : PackedScene = preload("res://rooms/main_menu/pages/credits
 
 const GAME_SCENE_PATH : String = "res://rooms/rooms/Walk way/In-between.tscn";
 
-var game_scene : PackedScene;
 var _current_scene : Control;
 
 func _ready() -> void:
-	ResourceLoader.load_threaded_request(GAME_SCENE_PATH);
-	
 	_current_scene = MAIN_SCENE.instantiate();
 	add_child(_current_scene);
 	
@@ -37,7 +34,8 @@ func on_play() -> void:
 	await get_tree().create_timer(1.0).timeout;
 	$Background.paused = true;
 	
-	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(GAME_SCENE_PATH));
+	$Background.stop();
+	LocationManager.request_transfer(GAME_SCENE_PATH, "0");
 
 func on_main() -> void:
 	_current_scene.queue_free();

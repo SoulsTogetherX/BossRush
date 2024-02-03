@@ -26,6 +26,7 @@ func stop_music()  -> void:
 	$TheEnd_Music.stop();
 
 func slience()  -> void:
+	stop_music();
 	$Silence.play();
 
 func stop_slience()  -> void:

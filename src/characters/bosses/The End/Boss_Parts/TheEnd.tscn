@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://2t51xt3spvld"]
+[gd_scene load_steps=37 format=3 uid="uid://2t51xt3spvld"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd_Control.gd" id="1_0inbp"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd.gd" id="2_xg4f6"]
@@ -12,6 +12,7 @@
 [ext_resource type="Shader" path="res://src/characters/bosses/The End/Boss_Parts/Eye_Charge.gdshader" id="9_5sc8n"]
 [ext_resource type="AudioStream" uid="uid://cnjywvfjbwfx6" path="res://assets/sounds/effects/boss/TheEnd/ground_punch/new/dual/Dual Fist Sfx.ogg" id="11_702j3"]
 [ext_resource type="AudioStream" uid="uid://cfnnjweit5jrg" path="res://assets/sounds/music/The End - Boss Theme.ogg" id="11_44445"]
+[ext_resource type="AudioStream" uid="uid://c6swpt4n7cagy" path="res://assets/sounds/effects/boss/TheEnd/die/The End Defeated.ogg" id="12_h6s8p"]
 [ext_resource type="Script" path="res://custom_nodes/emiter/emiter.gd" id="12_sshdl"]
 [ext_resource type="AudioStream" uid="uid://m6flxcfg3xkb" path="res://assets/sounds/effects/boss/TheEnd/Hurt/Hurt and Move.ogg" id="13_mielc"]
 [ext_resource type="AudioStream" uid="uid://40amfwa1sx5e" path="res://assets/sounds/effects/boss/TheEnd/Hurt/Hurt and Move 2.ogg" id="14_xi0eu"]
@@ -766,7 +767,7 @@ autoplay = "hide"
 [node name="Float_Left" parent="TheEnd" instance=ExtResource("4_q54yb")]
 top_level = true
 material = SubResource("ShaderMaterial_fdxfv")
-position = Vector2(-113.447, -93.6712)
+position = Vector2(-104.975, -86.177)
 rest_offset = Vector2(-110, 0)
 time_offset = 0.2
 lerp_coefficent = 0.4
@@ -782,7 +783,7 @@ frame = 32
 
 [node name="Float_Right" parent="TheEnd" instance=ExtResource("4_q54yb")]
 top_level = true
-position = Vector2(111.64, -94.5572)
+position = Vector2(108.656, -75.764)
 right = true
 rest_offset = Vector2(110, 0)
 time_offset = 0.8
@@ -824,6 +825,11 @@ stream = ExtResource("11_702j3")
 volume_db = 10.0
 bus = &"Sound"
 
+[node name="die" type="AudioStreamPlayer" parent="TheEnd"]
+stream = ExtResource("12_h6s8p")
+volume_db = 10.0
+bus = &"Sound"
+
 [node name="Hurt" type="AudioStreamPlayer" parent="TheEnd"]
 bus = &"Sound"
 script = ExtResource("12_sshdl")
@@ -852,6 +858,7 @@ bus = &"Sound"
 [node name="FlyAway" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("15_uv2k8")
 volume_db = 20.0
+autoplay = true
 bus = &"Sound"
 
 [connection signal="killed" from="TheEnd/HealthMonitor" to="." method="die"]

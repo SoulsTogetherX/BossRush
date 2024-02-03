@@ -20,6 +20,7 @@ func _ready() -> void:
 		$TheEnd.set_floor(_floor);
 
 func die() -> void:
+	PlayerInfo.can_reload = false;
 	dead = true;
 	disable = true;
 	ending_animator.global_position = global_position;

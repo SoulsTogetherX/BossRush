@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://8xcdttdfpjaq"]
+[gd_scene load_steps=29 format=3 uid="uid://8xcdttdfpjaq"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_5stgi"]
 [ext_resource type="PackedScene" uid="uid://g022ma38jmtk" path="res://src/characters/player/Doggo.tscn" id="3_3j63k"]
@@ -49,7 +49,13 @@ turbulence_noise_strength = 20.0
 size = Vector2(641.5, 80.9336)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jxmio"]
-size = Vector2(78, 471)
+size = Vector2(102.972, 471)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v1ys4"]
+size = Vector2(641.5, 80.9336)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5dh0"]
+size = Vector2(60, 386.467)
 
 [sub_resource type="Gradient" id="Gradient_rdcti"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
@@ -205,13 +211,14 @@ texture = ExtResource("3_fxamg")
 modulate = Color(0.92549, 0.92549, 0.92549, 1)
 top_level = true
 z_index = -10
-position = Vector2(-6.66905, 1.7366)
+position = Vector2(-9.52734, -6.46299)
 texture = ExtResource("4_20be0")
 script = ExtResource("5_24dwv")
 decay_factor = 0.1
 influence_factor = 0.01
 resist_factor = 0.1
 player_affect = 1000.0
+disable = true
 min_h_oscillator = 10.0
 max_h_oscillator = 10.0
 min_v_oscillator = 10.0
@@ -227,17 +234,17 @@ max_v_oscillation = 1.3
 position = Vector2(0, -85)
 shape = SubResource("RectangleShape2D_np6f4")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(0, 295)
-shape = SubResource("RectangleShape2D_np6f4")
-
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(-355, 105)
+position = Vector2(-370, 100)
 shape = SubResource("RectangleShape2D_jxmio")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Floor/StaticBody2D"]
-position = Vector2(355, 105)
+position = Vector2(370, 100)
 shape = SubResource("RectangleShape2D_jxmio")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor/StaticBody2D"]
+position = Vector2(-0.472657, 294.463)
+shape = SubResource("RectangleShape2D_np6f4")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Floor"]
 collision_layer = 256
@@ -245,7 +252,19 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor/StaticBody2D2"]
 position = Vector2(0, -40)
-shape = SubResource("RectangleShape2D_np6f4")
+shape = SubResource("RectangleShape2D_v1ys4")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Floor/StaticBody2D2"]
+position = Vector2(-9.47266, 270.463)
+shape = SubResource("RectangleShape2D_v1ys4")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Floor/StaticBody2D2"]
+position = Vector2(-317.473, 121.696)
+shape = SubResource("RectangleShape2D_k5dh0")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Floor/StaticBody2D2"]
+position = Vector2(313.527, 103.463)
+shape = SubResource("RectangleShape2D_k5dh0")
 
 [node name="clip_contents" type="Control" parent="Floor"]
 clip_contents = true
@@ -266,11 +285,11 @@ position = Vector2(-69, -75)
 texture = SubResource("GradientTexture2D_owtm7")
 
 [node name="Doggo" parent="Floor" instance=ExtResource("3_3j63k")]
-position = Vector2(-4.99999, 127)
+position = Vector2(13.0161, 122.974)
 
 [node name="cam" type="Camera2D" parent="." node_paths=PackedStringArray("follow")]
 top_level = true
-position = Vector2(14.7927, 127)
+position = Vector2(14.7927, 122.974)
 script = ExtResource("4_wlwt0")
 follow = NodePath("../Floor/Doggo")
 auto_follow = true
@@ -317,6 +336,7 @@ libraries = {
 }
 
 [node name="Hand" type="Node2D" parent="End Controller"]
+z_index = 3
 position = Vector2(89, -118)
 rotation = -2.57611
 scale = Vector2(1e-05, 1e-05)
@@ -327,6 +347,7 @@ scale = Vector2(0.95, 0.95)
 texture = ExtResource("15_s5t0h")
 
 [node name="ColorRect" type="ColorRect" parent="End Controller"]
+visible = false
 z_index = 4096
 z_as_relative = false
 offset_left = -1788.0
@@ -335,6 +356,8 @@ offset_right = 1227.0
 offset_bottom = 806.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="Intro Controller" type="Node" parent="."]
 
 [node name="door5" parent="." instance=ExtResource("16_6xee6")]
 position = Vector2(-2, 153)

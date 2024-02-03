@@ -7,7 +7,7 @@
 resource_local_to_scene = true
 script = ExtResource("1_dmfso")
 spawn_entity = ExtResource("2_qx7ro")
-max_spawn = 2
+max_spawn = 6
 weapon_range = 0.0
 delta = -1
 cooldown = 0.3

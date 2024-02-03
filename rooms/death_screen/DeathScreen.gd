@@ -11,10 +11,10 @@ func _ready() -> void:
 	
 	LocationManager.room_ready.emit();
 	
-	$AudioStreamPlayer.volume_db = -40;
+	$music.volume_db = -40.0;
 	var tw : Tween = create_tween();
 	tw.set_trans(Tween.TRANS_QUART);
-	tw.tween_property($AudioStreamPlayer, "volume_db", 0.0, 4.0);
+	tw.tween_property($music, "volume_db", 0.0, 4.0);
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_switch"):

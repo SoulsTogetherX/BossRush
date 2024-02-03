@@ -1,4 +1,4 @@
-extends Projectile
+class_name LeshyArrows extends Projectile
 
 func set_alignment(allign : HurtBox.ALIGNMENT) -> void:
 	super(allign);
@@ -11,12 +11,6 @@ func set_alignment(allign : HurtBox.ALIGNMENT) -> void:
 			$trail.default_color = Color.LIGHT_CORAL;
 
 func on_collide(_hurtbox : HurtBox) -> void:
-	var hit_part = get_node_or_null("hit_particles");
-	
-	if hit_part:
-		hit_part.emitting = true;
-		hit_part.finished.connect(hit_part.queue_free, CONNECT_ONE_SHOT);
-		hit_part.reparent(get_tree().current_scene);
 	await _sound();
 	super(_hurtbox);
 

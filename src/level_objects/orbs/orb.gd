@@ -112,6 +112,14 @@ func _on_mouse_exited() -> void:
 		unstage.emit(self);
 		staged = false;
 
+func stop_cries() -> void:
+	$crying.stop();
+
+func fade_cries(time : float) -> void:
+	var tw : Tween = create_tween();
+	tw.set_trans(Tween.TRANS_QUAD);
+	tw.tween_property($crying, "volume_db", -40, time);
+
 var _shake_ramp = 0.0;
 func _process(_delta: float) -> void:
 	position = reset_pos + Vector2(randf(), randf()) * _shake_ramp;

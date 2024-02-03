@@ -1,12 +1,16 @@
-[gd_scene load_steps=60 format=3 uid="uid://cd6retw663av0"]
+[gd_scene load_steps=67 format=3 uid="uid://cd6retw663av0"]
 
 [ext_resource type="Texture2D" uid="uid://ddq1d20dmkl4n" path="res://assets/sprites/characters/bosses/leshy/Leshy Mega Sheet.png" id="1_4ufux"]
 [ext_resource type="Script" path="res://src/characters/bosses/leshy/leshy.gd" id="1_fbt6r"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="2_lk0ei"]
 [ext_resource type="Resource" uid="uid://vndacp7gvurp" path="res://assets/resources/instances/exchangable/leshy/FourWayFire.tres" id="2_w004h"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="3_aq87j"]
+[ext_resource type="PackedScene" uid="uid://bcshx8w54ljcf" path="res://src/weapons/projectiles/Leshy/bounce_leshy_arrow.tscn" id="3_k3l31"]
+[ext_resource type="Resource" uid="uid://dic5tbvusllmo" path="res://assets/resources/instances/exchangable/leshy/bounce_shot.tres" id="3_qolvg"]
 [ext_resource type="Resource" uid="uid://dg66auy72xda7" path="res://assets/resources/instances/exchangable/leshy/Pine Health.tres" id="3_r63ch"]
 [ext_resource type="Resource" uid="uid://c21gnq340y8a3" path="res://assets/resources/instances/exchangable/leshy/Nature Dash.tres" id="4_6umem"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/BounceLaunch.gd" id="4_h71dp"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/fourwayShoot.gd" id="4_s8k7v"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="5_5gxfh"]
 [ext_resource type="Texture2D" uid="uid://c75lq4oa7yn2h" path="res://assets/sprites/particle/nature_particles.png" id="6_n7ykj"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="7_58vc7"]
@@ -29,6 +33,29 @@
 [ext_resource type="AudioStream" uid="uid://pr5v3y3ovf21" path="res://assets/sounds/effects/player/footsteps/player/old/step_1.ogg" id="24_5ih3q"]
 [ext_resource type="AudioStream" uid="uid://b8joqu2onjulo" path="res://assets/sounds/effects/player/footsteps/player/old/step_2.ogg" id="25_ku33r"]
 [ext_resource type="AudioStream" uid="uid://dsqxrqh6xciyq" path="res://assets/sounds/effects/player/footsteps/player/old/step_3.ogg" id="26_6aamk"]
+[ext_resource type="AudioStream" uid="uid://b2pvidv6on0m2" path="res://assets/sounds/effects/orb/Power Cancel.ogg" id="34_kitv5"]
+
+[sub_resource type="Resource" id="Resource_s85u1"]
+script = ExtResource("4_h71dp")
+max_bounces = 1
+protectile = ExtResource("3_k3l31")
+fire_range = 9.22337e+18
+speed = 270.0
+fade_after = -1.0
+fade_before = -1.0
+
+[sub_resource type="Resource" id="Resource_kei6k"]
+script = ExtResource("4_s8k7v")
+spawn_delay = 0.9
+ring_count = 2
+projectiles = 4
+launch = SubResource("Resource_s85u1")
+offset = 0.0
+weapon_range = 8.0
+delta = -1
+cooldown = 0.0
+name = ""
+symbol = 0
 
 [sub_resource type="Gradient" id="Gradient_g7otn"]
 offsets = PackedFloat32Array(0, 0.690722, 1)
@@ -1587,7 +1614,7 @@ gradient = SubResource("Gradient_mms7y")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atsd2"]
 radius = 35.982
-height = 95.952
+height = 134.933
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sc68m"]
 radius = 20.9895
@@ -1605,9 +1632,11 @@ collision_mask = 129
 motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_fbt6r")
+tertiary_attack = SubResource("Resource_kei6k")
 _sprite = NodePath("Node2D/Sprite2D")
 alignment = 1
 primary_attack = ExtResource("2_w004h")
+secondary_attack = ExtResource("3_qolvg")
 health_handle = ExtResource("3_r63ch")
 primary_movement = ExtResource("4_6umem")
 
@@ -1743,6 +1772,7 @@ texture_scale = 4.0
 script = ExtResource("9_hh5tb")
 
 [node name="hurt_box" type="Area2D" parent="." node_paths=PackedStringArray("health_monitor")]
+visible = false
 position = Vector2(0, -74)
 script = ExtResource("2_lk0ei")
 health_monitor = NodePath("../HealthMonitor")
@@ -1760,6 +1790,7 @@ shape = SubResource("CapsuleShape2D_2ftwb")
 debug_color = Color(0.937255, 0, 0.631373, 0.419608)
 
 [node name="hit_area" type="Area2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 0
 monitoring = false
@@ -1783,8 +1814,7 @@ hit_color_grad = SubResource("GradientTexture1D_1506l")
 alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(2.9985, -25.4873)
-rotation = 1.5708
+position = Vector2(2.9985, -52.4738)
 shape = SubResource("CapsuleShape2D_atsd2")
 
 [node name="HealthMonitor" type="Node" parent="."]
@@ -1808,6 +1838,9 @@ one_shot = true
 
 [node name="dash_timer" type="Timer" parent="."]
 wait_time = 0.02
+
+[node name="burst_timer" type="Timer" parent="."]
+wait_time = 0.1
 
 [node name="Center" type="Marker2D" parent="."]
 position = Vector2(0, -60)
@@ -1841,6 +1874,11 @@ bus = &"Sound"
 stream = ExtResource("22_n2oo1")
 bus = &"Sound"
 
+[node name="burst_warning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("34_kitv5")
+pitch_scale = 2.0
+bus = &"Sound"
+
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 collision_layer = 512
 collision_mask = 0
@@ -1851,6 +1889,6 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_sc68m")
 
 [connection signal="hit" from="hurt_box" to="." method="_on_hit"]
-[connection signal="hit" from="hitbox" to="." method="_on_player_hit"]
 [connection signal="killed" from="HealthMonitor" to="." method="die"]
 [connection signal="timeout" from="sequence_timer" to="." method="_next_sequence"]
+[connection signal="timeout" from="burst_timer" to="." method="burst_shoot"]

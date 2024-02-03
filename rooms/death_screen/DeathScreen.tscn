@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cogseia54myfd" path="res://assets/sprites/GUI/Bark_Souls_The_End_Background.png" id="1_udc7l"]
 [ext_resource type="Script" path="res://rooms/death_screen/DeathScreen.gd" id="1_widlb"]
 [ext_resource type="Texture2D" uid="uid://dldp24w13cdgc" path="res://assets/sprites/GUI/Bark_Souls_The_End_Stain.png" id="2_ybium"]
-[ext_resource type="AudioStream" uid="uid://cv12hxtk5p4fq" path="res://assets/sounds/music/Death Screen - Get Up, Pup!.ogg" id="5_nt0yx"]
+[ext_resource type="AudioStream" uid="uid://4a146bc6tc0x" path="res://assets/sounds/music/Death Screen - Get Up, Pup!.ogg" id="5_nt0yx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ntr5s"]
 shader = ExtResource("1_ce6tt")
@@ -164,7 +164,7 @@ libraries = {
 autoplay = "death_animation"
 next/death_animation = &"float_doggo"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_nt0yx")
 autoplay = true
 bus = &"Music"

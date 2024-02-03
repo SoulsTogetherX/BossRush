@@ -1,5 +1,7 @@
 extends Boss
 
+@export var tertiary_attack : AttackExchangable;
+
 @export var bushes : Node;
 @export var door_hide : Node2D;
 
@@ -11,26 +13,17 @@ var _move_direction : Vector2;
 var _dash_distance : float;
 
 var _waiting : bool = true;
+var _turn : int = 0;
 
 func _ready() -> void:
 	super();
+	_sprite.material.set_shader_parameter("modulate", Color("#ffffffff"));
 	set_physics_process(false);
+	
 	if PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.BARKMODE:
 		pass
 	elif PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.NORMAL:
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(spin_attack_hard, 2.3);
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(spin_attack_hard, 2.3);
-		_add_to_sequence(dash_hard, 0.6);
-		_add_to_sequence(_idle, 0.3);
-		_add_to_sequence(hide_self.bind("bush_hard", 0.25), 2.5);
-		_add_to_sequence(show_self_hard, 0.75);
-		
+		_phase_1_normal();
 		$dash_timer.timeout.connect(create_after_image.bind(Color(1.0, 1.0, 1.0, 0.1)));
 	elif PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.EASY:
 		_add_to_sequence(dash, 0.6);
@@ -45,7 +38,7 @@ func _ready() -> void:
 		_add_to_sequence(show_self, 2.0);
 		
 		$dash_timer.timeout.connect(create_after_image.bind(Color(1.0, 1.0, 1.0, 0.3)));
-		$hitbox/CollisionShape2D.disabled = true;
+		$hitbox.toggle_hitbox(false);
 	
 	call_deferred("_calculate_distance");
 	call_deferred("_set_up_tweens");
@@ -57,6 +50,45 @@ func _ready() -> void:
 	
 	before_swap.connect(before_change);
 	$light_holder.visible = false;
+
+func _phase_1_normal() -> void:
+	_clear_sequence();
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(spin_attack_normal, 2.3);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(spin_attack_normal, 2.3);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(_idle, 0.3);
+	_add_to_sequence(hide_self.bind("bush_hard", 0.25), 2.5);
+	_add_to_sequence(show_self_hard, 0.75);
+
+func _phase_2_normal() -> void:
+	_clear_sequence();
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(burst_shoot_settup, 0.7);
+	_add_to_sequence(burst_shoot_end, 0.001);
+	_add_to_sequence(_idle, 0.3);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(burst_shoot_settup, 0.7);
+	_add_to_sequence(burst_shoot_end, 0.001);
+	_add_to_sequence(_idle, 0.3);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(burst_shoot_settup, 0.7);
+	_add_to_sequence(burst_shoot_end, 0.001);
+	_add_to_sequence(_idle, 0.3);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(dash_normal, 0.6);
+	_add_to_sequence(_idle, 1.0);
+	_add_to_sequence(hide_self.bind("bush_hard", 0.25), 2.5);
+	_add_to_sequence(show_self_hard, 0.75);
 
 func _set_up_tweens() -> void:
 	var tw : Tween = create_tween().set_loops();
@@ -73,9 +105,26 @@ func _calculate_distance() -> void:
 func dance() -> void:
 	_animation_player.play("spin_start");
 
-func spin_attack_hard() -> void:
+func burst_shoot_settup() -> void:
+	$burst_warning.play();
+	$hurt_box.toggle_hurtbox(false);
+	_animation_player.play("spin_start");
+	$spin_sound_start.play();
+	get_tree().create_timer(0.2).timeout.connect(burst_shoot_start, CONNECT_ONE_SHOT);
+func burst_shoot_start() -> void:
+	$spin_sound_continue.play();
+	$burst_timer.start();
+func burst_shoot() -> void:
+	secondary_attack.handle_attack(self, get_center(), PlayerInfo.player.global_position, get_alignment());
+func burst_shoot_end() -> void:
+	$hurt_box.toggle_hurtbox(true);
+	_animation_player.play("idle");
+	$spin_sound_start.stop();
+	$burst_timer.stop();
+
+func spin_attack_normal() -> void:
 	spin_attack_base();
-	primary_attack.handle_attack(self, get_center(), PlayerInfo.player.global_position, get_alignment());
+	tertiary_attack.handle_attack(self, get_center(), PlayerInfo.player.global_position, get_alignment());
 
 func spin_attack() -> void:
 	spin_attack_base();
@@ -127,12 +176,13 @@ func hide_self(animate : String, delay : float) -> void:
 	swap(true);
 	await get_tree().create_timer(0.05).timeout;
 	$hurt_box.toggle_hurtbox(true);
+	$hitbox.toggle_hitbox(false);
 
 func show_self_hard() -> void:
 	_animation_player.play("jump_hard");
 	up_shield();
 	await get_tree().create_timer(0.5).timeout;
-	$hitbox/CollisionShape2D.disabled = false;
+	$hitbox.toggle_hitbox(true);
 	show_self_base();
 
 func show_self() -> void:
@@ -165,7 +215,7 @@ func up_shield() -> void:
 	tw.tween_property(_sprite.material, "shader_parameter/color", Color("#60ffff5a"), 0.2);
 	super();
 
-func dash_hard() -> void:
+func dash_normal() -> void:
 	_sprite.material.set_shader_parameter("modulate", Color("#ffffff00"));
 	
 	var pos : Vector2 = PlayerInfo.player.global_position - global_position;
@@ -214,6 +264,9 @@ func _physics_process(delta: float) -> void:
 
 var _death : bool = false;
 func die() -> void:
+	_clear_sequence();
+	
+	PlayerInfo.can_reload = false;
 	DeathSounds.stop_music();
 	door_hide.visible = true;
 	super.up_shield();
@@ -249,7 +302,14 @@ func _on_hit(_hitbox: HitBox) -> void:
 		if PlayerInfo.hard_mode != PlayerInfo.DIFFICULTY.EASY:
 			$hitbox/CollisionShape2D.disabled = false;
 	elif !_death:
-		_force_move(_stun, 0.5, (2 if get_sequence_index() == 8 else 1));
+		if PlayerInfo.hard_mode == PlayerInfo.DIFFICULTY.NORMAL:
+			_turn += 1;
+			if _turn & 1:
+				_phase_2_normal();
+			else:
+				_phase_1_normal();
+		
+		_force_move(_stun, 0.5, 0);
 	
 	$hit_leave_particles.emitting = true;
 	
@@ -264,6 +324,9 @@ func _stun() -> void:
 	TimeManager.instant_time_scale();
 	PlayerInfo.cam.shake_event();
 	_animation_player.play("hurt");
+	
+	await _animation_player.animation_finished;
+	_reset_sequence();
 
 func set_light_at_flip(pos : Vector2) -> void:
 	pos.x *= -1 if _sprite.flip_h else 1;
@@ -284,9 +347,3 @@ func swap(toggle : bool) -> void:
 
 func get_skills() -> Array[Exchangable]:
 	return [primary_attack, health_handle, load("res://assets/resources/instances/exchangable/leshy/Nature Dash_Reward.tres")]
-
-func _on_player_hit(_hurtbox: HurtBox) -> void:
-	if PlayerInfo.player:
-		$hit_particles.restart();
-		$hit_particles.global_position = PlayerInfo.player.global_position;
-		$hit_particles.emitting = true;

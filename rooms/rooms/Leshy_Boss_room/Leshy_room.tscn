@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://vwuw6iktoxwg"]
+[gd_scene load_steps=37 format=3 uid="uid://vwuw6iktoxwg"]
 
 [ext_resource type="Script" path="res://rooms/room.gd" id="1_6erxl"]
 [ext_resource type="Texture2D" uid="uid://d2l4g60ps0t60" path="res://assets/sprites/ground/Leshy/Floor 1 BG (Leshy Floor).png" id="1_erk7l"]
@@ -36,23 +36,32 @@ radius = 19.8255
 height = 69.5581
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0ldwk"]
-radius = 21.371
+radius = 16.2726
 height = 74.8647
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hngmq"]
+size = Vector2(478, 219)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3okt1"]
+size = Vector2(612.5, 216.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wpcp5"]
-size = Vector2(279, 39)
+size = Vector2(279, 182.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e16fu"]
-size = Vector2(694.5, 22)
+size = Vector2(694.5, 119)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4tw8s"]
-size = Vector2(26, 555)
+size = Vector2(221, 771)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hbnah"]
-size = Vector2(24, 159.5)
+size = Vector2(343, 178.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ct0cl"]
+size = Vector2(309, 223)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_58m6h"]
-size = Vector2(24, 226.25)
+size = Vector2(346, 330.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tq3ux"]
 size = Vector2(26, 167)
@@ -150,6 +159,7 @@ debug_color = Color(0.772549, 0.14902, 1, 0.419608)
 [node name="Reward_manager" parent="." instance=ExtResource("5_sv2ph")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 0
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-97, -272)
@@ -173,35 +183,35 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_my4nl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-221.5, -274.5)
-shape = SubResource("RectangleShape2D_wpcp5")
+position = Vector2(-321, -364.5)
+shape = SubResource("RectangleShape2D_hngmq")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(209, -273)
-shape = SubResource("RectangleShape2D_wpcp5")
+position = Vector2(375.75, -361.75)
+shape = SubResource("RectangleShape2D_3okt1")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-3, -313)
+position = Vector2(-3, -384.75)
 shape = SubResource("RectangleShape2D_wpcp5")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-1.25, 279)
+position = Vector2(-1.25, 327.5)
 shape = SubResource("RectangleShape2D_e16fu")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-353, 9.5)
+position = Vector2(-450.5, 4.5)
 shape = SubResource("RectangleShape2D_4tw8s")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(351, -207.75)
+position = Vector2(510.5, -198.25)
 shape = SubResource("RectangleShape2D_hbnah")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(388, -35)
-shape = SubResource("RectangleShape2D_hbnah")
+position = Vector2(530.5, -34.5)
+shape = SubResource("RectangleShape2D_ct0cl")
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(349, 174.875)
+position = Vector2(510, 226.875)
 shape = SubResource("RectangleShape2D_58m6h")
 
 [node name="exit" parent="." instance=ExtResource("4_xd7kx")]
@@ -675,6 +685,7 @@ door_hide = NodePath("../door_hide")
 _reward_manager = NodePath("../Reward_manager")
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
+z_index = 1
 texture = ExtResource("10_lfjar")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

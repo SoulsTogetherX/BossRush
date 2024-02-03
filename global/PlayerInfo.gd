@@ -7,6 +7,7 @@ var primary_movement : MovementExchangable = preload("res://assets/resources/ins
 var secondary_movement : MovementExchangable = null;
 
 var flag : bool = false;
+var can_reload : bool = true;
 
 var player : Player;
 var weapon : Weapon;

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AttackRange" load_steps=5 format=3 uid="uid://dic5tbvusllmo"]
+
+[ext_resource type="PackedScene" uid="uid://bcshx8w54ljcf" path="res://src/weapons/projectiles/Leshy/bounce_leshy_arrow.tscn" id="1_ur03t"]
+[ext_resource type="Script" path="res://assets/resources/scripts/launch_method/BounceLaunch.gd" id="2_4vavx"]
+[ext_resource type="Script" path="res://assets/resources/scripts/exchangable/attacks/attack_range.gd" id="3_wi11e"]
+
+[sub_resource type="Resource" id="Resource_uaeeu"]
+script = ExtResource("2_4vavx")
+max_bounces = 3
+protectile = ExtResource("1_ur03t")
+fire_range = 9.22337e+18
+speed = 650.0
+fade_after = -1.0
+fade_before = -1.0
+
+[resource]
+script = ExtResource("3_wi11e")
+launch = SubResource("Resource_uaeeu")
+offset = 0.0
+weapon_range = 0.0
+delta = -1
+cooldown = 0.0
+name = ""
+symbol = 0

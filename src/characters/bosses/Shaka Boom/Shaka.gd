@@ -252,6 +252,7 @@ func _hard_mode_stage_3() -> void:
 
 var _death : bool = false;
 func die() -> void:
+	PlayerInfo.can_reload = false;
 	DeathSounds.stop_music();
 	
 	off_scene_shoot_end();

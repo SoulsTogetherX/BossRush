@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcshx8w54ljcf"]
+
+[ext_resource type="PackedScene" uid="uid://bs00uwofbh6wm" path="res://src/weapons/projectiles/Leshy/leshy_arrow.tscn" id="1_nxt3e"]
+[ext_resource type="Script" path="res://src/weapons/projectiles/Leshy/bounce_leshy_arrow.gd" id="2_drvl6"]
+[ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="3_8ld5q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_navvq"]
+resource_local_to_scene = true
+shader = ExtResource("3_8ld5q")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/white_out = 0.0
+
+[sub_resource type="Gradient" id="Gradient_yc8ce"]
+colors = PackedColorArray(1, 1, 0.301961, 0.803922, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pi15p"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_yc8ce")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0.5)
+
+[node name="velocity_leshy_arrow" instance=ExtResource("1_nxt3e")]
+script = ExtResource("2_drvl6")
+velocity = Vector2(0, 0)
+bounces = -1
+
+[node name="sprite" parent="." index="2"]
+material = SubResource("ShaderMaterial_navvq")
+
+[node name="PointLight2D" parent="." index="6"]
+texture = SubResource("GradientTexture2D_pi15p")
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="8"]
+position = Vector2(-30, 0)
+target_position = Vector2(29, 0)
+hit_from_inside = true

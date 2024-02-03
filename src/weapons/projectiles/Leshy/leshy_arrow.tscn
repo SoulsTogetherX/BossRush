@@ -28,7 +28,7 @@ shader_parameter/add_margins = true
 shader_parameter/white_out = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8okip"]
-size = Vector2(24, 2)
+size = Vector2(24, 6)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qka5p"]
 radius = 5.0
@@ -139,7 +139,7 @@ script = ExtResource("5_igs5j")
 hit_color = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(9, 0)
+position = Vector2(9, 0.35)
 shape = SubResource("RectangleShape2D_8okip")
 
 [node name="collide_detect" type="Area2D" parent="."]
@@ -156,6 +156,7 @@ libraries = {
 autoplay = "startup"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 scale = Vector2(1, 0.6)
 energy = 0.5
 texture = SubResource("GradientTexture2D_5rw6o")

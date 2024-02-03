@@ -10,13 +10,6 @@ func _ready() -> void:
 	PlayerInfo.player = self;
 	damaged.connect(PlayerInfo.health_update);
 	
-	
-	# REMOVE THIS
-	if primary_attack is SpawnAttack:
-		primary_attack.summoned.connect(register_slime);
-	if secondary_attack is SpawnAttack:
-		secondary_attack.summoned.connect(register_slime);
-	
 	$StateOverhead.set_process_unhandled_input(false);
 	$StateOverhead.set_process(false);
 
@@ -83,7 +76,6 @@ func _on_hurt_box_hit(hitbox: HitBox) -> void:
 		hit_particles.explosiveness = 1.0;
 		
 		get_tree().current_scene.add_child(hit_particles);
-		hit_particles
 	
 	modulate = Color.RED;
 	var t : Tween = create_tween();

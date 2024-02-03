@@ -5,9 +5,9 @@ var _locations : Dictionary = {};
 
 signal room_ready;
 
-var _last_scene : String = "res://rooms/test_room/test_room.tscn";
+var _last_scene : String = "res://rooms/rooms/Walk way/In-between.tscn";
 var _death_scene : PackedScene = preload("res://rooms/death_screen/DeathScreen.tscn");
-var _last_id : String = "1";
+var _last_id : String = "0";
 var _last_health : int = 4;
 var _step_type : int = 0;
 
@@ -40,6 +40,7 @@ func reload() -> void:
 	request_transfer(_last_scene, _last_id);
 
 func request_transfer(scene : String, id : String) -> void:
+	PlayerInfo.can_reload = true;
 	_last_scene = scene;
 	_last_id = id;
 	

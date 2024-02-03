@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://lt1h1nu2iplm"]
+[gd_scene load_steps=14 format=3 uid="uid://lt1h1nu2iplm"]
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/orb.gd" id="1_try8l"]
 [ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="2_n4nyi"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://knoj1l3k80om" path="res://assets/sounds/effects/orb/Power Choice v1.ogg" id="4_hr3s8"]
 [ext_resource type="AudioStream" uid="uid://dg2ps76664hri" path="res://assets/sounds/effects/orb/Power Choice v2.ogg" id="5_ckl18"]
 [ext_resource type="AudioStream" uid="uid://duyx11n43nmus" path="res://assets/sounds/effects/orb/Power Choice v3.ogg" id="6_qsvim"]
+[ext_resource type="AudioStream" uid="uid://cb41je8dry8p4" path="res://assets/sounds/effects/orb/Orb - Souls Crying Out.ogg" id="8_3psb7"]
 
 [sub_resource type="Gradient" id="Gradient_mo0ps"]
 colors = PackedColorArray(1, 1, 0.301961, 1, 1, 1, 1, 0)
@@ -152,6 +153,12 @@ audios = Array[AudioStream]([ExtResource("4_hr3s8"), ExtResource("5_ckl18"), Ext
 [node name="Choice_4" type="AudioStreamPlayer" parent="."]
 script = ExtResource("3_r7rkh")
 audios = Array[AudioStream]([ExtResource("4_hr3s8"), ExtResource("5_ckl18"), ExtResource("6_qsvim")])
+
+[node name="crying" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_3psb7")
+autoplay = true
+max_distance = 200.0
+bus = &"Sound"
 
 [connection signal="gui_input" from="Control" to="." method="_on_click"]
 [connection signal="mouse_entered" from="Control" to="." method="_on_mouse_entered"]

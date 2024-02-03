@@ -264,6 +264,20 @@ func death_animation() -> void:
 	right_hand.fall();
 	
 	PlayerInfo.flag = false;
+	
+	$die.play();
+	
+	var tw : Tween = create_tween().set_parallel();
+	tw.tween_property($Body.material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
+	
+	tw.tween_property(left_float.material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
+	tw.tween_property(right_float.material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
+	
+	tw.tween_property(left_float.get_hallo().material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
+	tw.tween_property(right_float.get_hallo().material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
+	
+	tw.tween_property(left_hand.material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
+	tw.tween_property(right_hand.material, "shader_parameter/modulate", Color(0.0, 0.0, 0.0, 1.0), 7.0);
 
 func focus_camera() -> void:
 	PlayerInfo.cam.snap = false;

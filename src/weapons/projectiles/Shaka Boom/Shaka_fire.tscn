@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bvlv7rwah6txw"]
+[gd_scene load_steps=15 format=3 uid="uid://bvlv7rwah6txw"]
 
 [ext_resource type="Script" path="res://src/weapons/projectiles/Shaka Boom/Shaka_fire.gd" id="1_w7pja"]
 [ext_resource type="Script" path="res://src/characters/bosses/Hit_Box_Color.gd" id="2_h8ye6"]
@@ -13,8 +13,7 @@ gradient = SubResource("Gradient_vqnor")
 [sub_resource type="CircleShape2D" id="CircleShape2D_nw5y4"]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qka5p"]
-radius = 8.0
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e4m6f"]
 
 [sub_resource type="Gradient" id="Gradient_k2smn"]
 offsets = PackedFloat32Array(0, 0.714777, 1)
@@ -52,19 +51,6 @@ hue_variation_max = 0.1
 turbulence_noise_strength = 0.1
 turbulence_noise_scale = 0.0
 
-[sub_resource type="Animation" id="Animation_d37by"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_iiei5"]
-resource_name = "startup"
-length = 0.3
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbjvj"]
-_data = {
-"RESET": SubResource("Animation_d37by"),
-"startup": SubResource("Animation_iiei5")
-}
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b7tlh"]
 blend_mode = 1
 
@@ -92,22 +78,11 @@ hit_color_grad = SubResource("GradientTexture1D_d13qp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource("CircleShape2D_nw5y4")
 
-[node name="collide_detect" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="collide_detect"]
-shape = SubResource("CircleShape2D_qka5p")
-
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_e4m6f")
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_3a2dd")
 lifetime = 0.4
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_tbjvj")
-}
-autoplay = "startup"
 
 [node name="glow" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_b7tlh")
@@ -115,5 +90,8 @@ position = Vector2(0, -1)
 scale = Vector2(10, 10)
 texture = SubResource("GradientTexture2D_dc21v")
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="hit" from="hitbox" to="." method="on_collide"]
-[connection signal="body_entered" from="collide_detect" to="." method="on_collide_wall"]
+[connection signal="timeout" from="Timer" to="." method="change_glow"]

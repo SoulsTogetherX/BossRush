@@ -120,16 +120,19 @@ func spawn_options() -> void:
 		orb = _create_orb(exchanges[0], start, Vector2(0, -80));
 		orb.stage.connect(_holding);
 		orb.unstage.connect(_let_go);
+		orb.stop_cries();
 		_player_orbs.append(orb);
 	elif exchanges.size() == 2:
 		orb = _create_orb(exchanges[0], start, Vector2(-25, -80));
 		orb.stage.connect(_holding);
 		orb.unstage.connect(_let_go);
+		orb.stop_cries();
 		_player_orbs.append(orb);
 		
 		orb = _create_orb(exchanges[1], start, Vector2( 25, -80));
 		orb.stage.connect(_holding);
 		orb.unstage.connect(_let_go);
+		orb.stop_cries();
 		_player_orbs.append(orb);
 
 func _destroy_options() -> void:
@@ -208,6 +211,7 @@ func _selected_option() -> void:
 	
 	await get_tree().create_timer(0.2).timeout;
 	
+	_selected.fade_cries(0.4);
 	var tween : Tween = create_tween();
 	set_physics_process(false);
 	tween.tween_property(_selected, "scale", Vector2(0,0), 0.4);

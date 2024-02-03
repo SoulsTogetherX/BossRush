@@ -75,6 +75,8 @@ func collect() -> void:
 	DeathSounds.stop_music();
 	
 	PlayerInfo.force_idle = true;
+	fade_cries(1.0);
+	
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(self, "global_position", PlayerInfo.player.global_position, 2.0);
 	tw.tween_property(self, "scale", Vector2.ZERO, 2.0);

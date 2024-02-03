@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvrfi64eypl2d"]
+[gd_scene load_steps=12 format=3 uid="uid://cvrfi64eypl2d"]
 
 [ext_resource type="Script" path="res://src/GUI/GUI.gd" id="1_qxsjj"]
 [ext_resource type="Script" path="res://src/GUI/Health_Display.gd" id="2_0xwye"]
 [ext_resource type="Shader" path="res://assets/shaders/blur_screen.gdshader" id="2_ce87h"]
 [ext_resource type="Texture2D" uid="uid://cpu1ltj78m2o1" path="res://assets/sprites/GUI/Health.png" id="3_fowhc"]
+[ext_resource type="Texture2D" uid="uid://dwwwfk3weg6lc" path="res://assets/sprites/GUI/Bark Souls UI-button-back.png" id="3_mw3r1"]
+[ext_resource type="Script" path="res://rooms/main_menu/pages/Button.gd" id="4_6m4me"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tldr2"]
 shader = ExtResource("2_ce87h")
@@ -19,6 +21,9 @@ corner_radius_bottom_left = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_oqwu3"]
 font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_m5ou0"]
+font_color = Color(0, 0, 0, 0.423529)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yv3hv"]
 draw_center = false
@@ -137,12 +142,63 @@ size_flags_horizontal = 3
 [node name="Control" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer"]
 layout_mode = 2
 
+[node name="Control" type="Control" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Restart_Room" type="TextureButton" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/Control"]
+layout_mode = 2
+offset_left = -415.0
+offset_top = -157.0
+offset_right = -281.0
+offset_bottom = -109.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("3_mw3r1")
+texture_pressed = ExtResource("3_mw3r1")
+texture_hover = ExtResource("3_mw3r1")
+texture_disabled = ExtResource("3_mw3r1")
+texture_focused = ExtResource("3_mw3r1")
+script = ExtResource("4_6m4me")
+
+[node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/Control/Restart_Room"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 11.0
+offset_right = 116.0
+offset_bottom = 34.0
+text = "Reload room"
+label_settings = SubResource("LabelSettings_m5ou0")
+
+[node name="Main_Menu" type="TextureButton" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/Control"]
+layout_mode = 2
+offset_left = -415.0
+offset_top = -18.0
+offset_right = -281.0
+offset_bottom = 30.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("3_mw3r1")
+texture_pressed = ExtResource("3_mw3r1")
+texture_hover = ExtResource("3_mw3r1")
+texture_disabled = ExtResource("3_mw3r1")
+texture_focused = ExtResource("3_mw3r1")
+script = ExtResource("4_6m4me")
+
+[node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/Control/Main_Menu"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 11.0
+offset_right = 110.0
+offset_bottom = 34.0
+text = "Main Menu"
+label_settings = SubResource("LabelSettings_m5ou0")
+
 [node name="CheckBox" type="CheckBox" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control"]
 layout_mode = 2
 offset_left = 132.0
-offset_top = -156.0
+offset_top = -128.0
 offset_right = 150.0
-offset_bottom = -138.0
+offset_bottom = -110.0
 size_flags_horizontal = 10
 theme_override_styles/normal = SubResource("StyleBoxFlat_yv3hv")
 button_pressed = true
@@ -150,9 +206,9 @@ button_pressed = true
 [node name="Label" type="Label" parent="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control"]
 layout_mode = 2
 offset_left = 61.0
-offset_top = -161.0
+offset_top = -133.0
 offset_right = 142.0
-offset_bottom = -137.0
+offset_bottom = -109.0
 text = "Lights"
 horizontal_alignment = 1
 
@@ -168,7 +224,6 @@ size_flags_stretch_ratio = 0.25
 
 [node name="GameGUI" type="VBoxContainer" parent="PlayerGUI"]
 process_mode = 1
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,4 +276,6 @@ texture = ExtResource("3_fowhc")
 expand_mode = 1
 stretch_mode = 1
 
+[connection signal="clicked" from="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/Control/Restart_Room" to="." method="restart_room"]
+[connection signal="clicked" from="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/Control/Main_Menu" to="." method="main_menu"]
 [connection signal="toggled" from="PlayerGUI/PauseScreen/MidSection/MainPanel/VBoxContainer/HBoxContainer/CenterContainer/Control/CheckBox" to="." method="_lights_toggled"]
