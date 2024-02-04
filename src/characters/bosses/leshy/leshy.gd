@@ -291,6 +291,11 @@ func die() -> void:
 	_reward_manager._spawn_orbs(self);
 
 func _on_hit(_hitbox: HitBox) -> void:
+	if !hitable():
+		return;
+	
+	up_shield();
+	
 	if _waiting:
 		door_hide.visible = false;
 		_force_move(_stun, 0.5, 0);
@@ -320,7 +325,6 @@ func _on_hit(_hitbox: HitBox) -> void:
 
 func _stun() -> void:
 	hide_bushes();
-	up_shield();
 	TimeManager.instant_time_scale();
 	PlayerInfo.cam.shake_event();
 	_animation_player.play("hurt");

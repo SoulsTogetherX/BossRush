@@ -20,7 +20,8 @@ func enter() -> void:
 	_rise_tween = create_tween().set_parallel();
 	_rise_tween.tween_property(_actor, "scale", Vector2.ONE, 0.5);
 	_rise_tween.tween_property(_actor, "rotation_degrees", 15.0 * (-1 if _actor.right else 1), 0.5);
-	_rise_tween.tween_property(_actor, "z_index", 1, 0.5);
+	_rise_tween.tween_property(_actor._shadow, "scale", Vector2.ONE * 2, 0.5);
+	_rise_tween.tween_property(_actor._shadow, "modulate:a", 1.0, 0.5);
 
 func exit() -> void:
 	if _rise_tween:

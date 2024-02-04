@@ -79,6 +79,7 @@ func to_random_punch_pos(left : bool = false) -> void:
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(self, "rotation_degrees", 0.0, 0.5);
 	tw.tween_property(self, "scale", Vector2.ONE, 0.5);
+	tw.tween_property(_shadow, "scale", Vector2(1.7, 1.2), 0.5);
 	tw.tween_method(tween_shadow, 0.0, 1.0, 0.5);
 	
 	await get_tree().create_timer(0.5).timeout;

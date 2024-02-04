@@ -27,7 +27,6 @@ func enter() -> void:
 	_fall_tween = create_tween().set_parallel();
 	_fall_tween.tween_method(fall_hand.bind(_actor.global_position), 0.0, 1.0, _actor._slam_speed);
 	_fall_tween.tween_property(_actor, "rotation_degrees", 0.0, 0.2);
-	_fall_tween.tween_property(_actor, "z_index", 1, max(_actor._slam_speed, 0.2));
 	
 	_hold = false;
 
@@ -70,6 +69,7 @@ func process_physics(_delta: float) -> State:
 func fall_hand(interval : float, start : Vector2) -> void:
 	_actor.global_position = start.lerp(_enact_position, interval);
 	_actor._shadow.global_position = _actor.global_position + (Vector2.DOWN * over_offset * (1.0 - interval));
+	_actor._shadow.scale = Vector2.ONE * 2 - (Vector2(0.9, 0.9) * interval);
 
 func create_shock_wave() -> void:
 	var wave : Node2D = SHOCK_WAVE.instantiate();

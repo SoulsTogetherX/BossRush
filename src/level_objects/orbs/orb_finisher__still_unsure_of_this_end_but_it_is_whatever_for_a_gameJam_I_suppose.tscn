@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cs88c1o34glwl"]
+[gd_scene load_steps=20 format=3 uid="uid://cs88c1o34glwl"]
 
 [ext_resource type="Script" path="res://src/level_objects/orbs/orb_finisher__still_unsure_of_this_end_but_it_is_whatever_for_a_gameJam_I_suppose.gd" id="1_qvndu"]
 [ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="2_vd13a"]
@@ -9,8 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://dg2ps76664hri" path="res://assets/sounds/effects/orb/Power Choice v2.ogg" id="6_2jfim"]
 [ext_resource type="AudioStream" uid="uid://duyx11n43nmus" path="res://assets/sounds/effects/orb/Power Choice v3.ogg" id="7_030wt"]
 [ext_resource type="AudioStream" uid="uid://uundau0wwota" path="res://assets/sounds/effects/orb/Power Absorb Changed.ogg" id="9_x50m5"]
+[ext_resource type="AudioStream" uid="uid://cpop4lw3baj21" path="res://assets/sounds/effects/boss/TheEnd/orb_absorb/Power Absorb Final Boss.ogg" id="10_a41g1"]
 [ext_resource type="AudioStream" uid="uid://ctdla5w6e83qn" path="res://assets/sounds/effects/orb/Power Cancel Changed.ogg" id="10_mf07j"]
 [ext_resource type="AudioStream" uid="uid://cb41je8dry8p4" path="res://assets/sounds/effects/orb/Orb - Souls Crying Out.ogg" id="11_jibss"]
+[ext_resource type="AudioStream" uid="uid://hqd7kfshu5gp" path="res://assets/sounds/effects/boss/TheEnd/die/Final Boss Kill.ogg" id="11_kstxo"]
 
 [sub_resource type="Resource" id="Resource_4vdl6"]
 script = ExtResource("2_yfmlq")
@@ -173,14 +175,27 @@ one_shot = true
 
 [node name="Absorb" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_x50m5")
+mix_target = 1
+
+[node name="Absorbed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_a41g1")
+mix_target = 1
+bus = &"Sound"
 
 [node name="Cancel" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_mf07j")
+mix_target = 1
+
+[node name="kill" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_kstxo")
+mix_target = 2
+bus = &"Sound"
 
 [node name="crying" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_jibss")
 autoplay = true
-max_distance = 200.0
+max_distance = 700.0
+attenuation = 1.6
 bus = &"Sound"
 
 [connection signal="gui_input" from="Control" to="." method="_on_click"]

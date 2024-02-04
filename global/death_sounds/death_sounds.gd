@@ -9,7 +9,9 @@ func play(type : int) -> void:
 		2:
 			$TheEnd.play();
 		
-func play_music(type : int) -> void:
+func play_music(type : int, volume : float = 1.0) -> void:
+	set_music_volume(volume);
+	
 	$Silence.stop();
 	$Music_Crash.play();
 	match type:
@@ -31,3 +33,6 @@ func slience()  -> void:
 
 func stop_slience()  -> void:
 	$Silence.stop();
+
+func set_music_volume(volume : float = 1.0) -> void:
+	AudioServer.set_bus_volume_db(1, linear_to_db(volume));

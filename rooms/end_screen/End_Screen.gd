@@ -10,4 +10,5 @@ func switch_to_main() -> void:
 	PlayerInfo.force_idle = false;
 	PlayerInfo.player = null;
 	PlayerInfo.weapon = null;
+	LocationManager._last_health = 4;
 	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(MAIN_SWITCH));

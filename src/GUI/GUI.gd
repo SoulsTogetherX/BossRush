@@ -14,6 +14,9 @@ func _ready() -> void:
 	$PlayerGUI/darken.visible = false;
 
 func _input(event: InputEvent) -> void:
+	if PlayerInfo.force_idle:
+		return;
+	
 	if event.is_action_pressed("pause"):
 		if get_tree().paused:
 			unpause();
@@ -62,4 +65,5 @@ func main_menu() -> void:
 	PlayerInfo.force_idle = false;
 	PlayerInfo.player = null;
 	PlayerInfo.weapon = null;
+	LocationManager._last_health = 4;
 	get_tree().change_scene_to_file(MAIN_SWITCH);

@@ -18,15 +18,13 @@ func _ready() -> void:
 	_current_scene.quit.connect(on_quit);
 	
 	$fireplace.volume_db = -40;
-	$Music.volume_db = -40;
 	
 	$fireplace.play();
 	$Music.play();
 	
 	var tw : Tween = create_tween().set_parallel();
-	tw.set_trans(Tween.TRANS_QUART);
-	tw.tween_property($Music, "volume_db", 0, 4.0).set_delay(0.2);
-	tw.tween_property($fireplace, "volume_db", 10, 0.5).set_delay(0.2);
+	tw.set_trans(Tween.TRANS_EXPO);
+	tw.tween_property($fireplace, "volume_db", 10, 0.5);
 
 func on_play() -> void:
 	$Start.play();

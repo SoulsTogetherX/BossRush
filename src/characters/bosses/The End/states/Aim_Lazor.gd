@@ -1,5 +1,7 @@
 extends State
 
+var aim_tween : Tween;
+
 func get_id():
 	return "aim_lazor";
 
@@ -9,9 +11,13 @@ func enter() -> void:
 	_animationPlayer.stop();
 	_animationPlayer.play("idle");
 	
-	var tw : Tween = create_tween().set_parallel();
-	tw.tween_property(_actor, "rotation_degrees", 0.0, 0.2);
-	tw.tween_property(_actor, "scale", Vector2.ONE, 0.2);
+	aim_tween = create_tween().set_parallel();
+	aim_tween.tween_property(_actor, "rotation_degrees", 0.0, 0.2);
+	aim_tween.tween_property(_actor, "scale", Vector2.ONE, 0.2);
+
+func exit() -> void:
+	if aim_tween:
+		aim_tween.kill();
 
 func process_physics(_delta: float) -> State:
 	if !PlayerInfo.player:

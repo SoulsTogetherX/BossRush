@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://2t51xt3spvld"]
+[gd_scene load_steps=41 format=3 uid="uid://2t51xt3spvld"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd_Control.gd" id="1_0inbp"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/TheEnd.gd" id="2_xg4f6"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dboeavc243luk" path="res://src/characters/bosses/The End/float.tscn" id="4_q54yb"]
 [ext_resource type="Texture2D" uid="uid://boud8x8i73div" path="res://assets/sprites/particle/puff_particle.png" id="4_v3v3w"]
 [ext_resource type="Shader" path="res://assets/shaders/outline_shader.gdshader" id="5_0phod"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="6_cv1po"]
 [ext_resource type="Texture2D" uid="uid://6ncbw2yicwui" path="res://assets/sprites/characters/bosses/The End/The End Boss MEGASHEET.png" id="6_wvu1i"]
 [ext_resource type="Script" path="res://custom_nodes/combat/health_monitor.gd" id="7_jxonu"]
 [ext_resource type="PackedScene" uid="uid://brvyfync5c1iv" path="res://src/characters/bosses/The End/Boss_Parts/hand.tscn" id="8_i6skd"]
@@ -17,8 +18,9 @@
 [ext_resource type="AudioStream" uid="uid://m6flxcfg3xkb" path="res://assets/sounds/effects/boss/TheEnd/Hurt/Hurt and Move.ogg" id="13_mielc"]
 [ext_resource type="AudioStream" uid="uid://40amfwa1sx5e" path="res://assets/sounds/effects/boss/TheEnd/Hurt/Hurt and Move 2.ogg" id="14_xi0eu"]
 [ext_resource type="AudioStream" uid="uid://d1oltrcw5vpn8" path="res://assets/sounds/effects/boss/TheEnd/fly/Flying in off screen (attach to boss location for stereo effect).ogg" id="15_uv2k8"]
-[ext_resource type="AudioStream" uid="uid://dkhtysgd8xlcm" path="res://assets/sounds/effects/boss/TheEnd/end and start/Boss Explode.ogg" id="16_o08ac"]
+[ext_resource type="AudioStream" uid="uid://dkhtysgd8xlcm" path="res://assets/sounds/effects/boss/TheEnd/die/Boss Explode.ogg" id="17_86nb8"]
 [ext_resource type="AudioStream" uid="uid://cd020ya1k5n7k" path="res://assets/sounds/effects/boss/TheEnd/end and start/Final Boss Entrance.ogg" id="17_ify4f"]
+[ext_resource type="AudioStream" uid="uid://brnfnvgh41ry" path="res://assets/sounds/effects/boss/TheEnd/wind/Wind Noise before or after fight.ogg" id="19_a4vj0"]
 
 [sub_resource type="Resource" id="Resource_cywj5"]
 script = ExtResource("3_1vnr6")
@@ -227,10 +229,34 @@ tracks/11/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Light:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Light:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2.50002, -78.3152)]
+}
 
 [sub_resource type="Animation" id="Animation_h06gw"]
 resource_name = "die"
-length = 2.4
+length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -256,6 +282,18 @@ tracks/1/keys = {
 "args": [0.0],
 "method": &"play"
 }]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Light:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.1, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 1.6), Vector2(1e-05, 1e-05)]
 }
 
 [sub_resource type="Animation" id="Animation_u05ek"]
@@ -345,6 +383,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Light:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
 }
 
 [sub_resource type="Animation" id="Animation_1uo2i"]
@@ -665,6 +715,30 @@ tracks/21/keys = {
 "method": &"unfocus_camera"
 }]
 }
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Light:scale")
+tracks/22/interp = 2
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.689, 1.597, 2.201, 2.64, 2.832, 3.021, 3.398, 3.401, 3.78, 4.173, 4.338, 4.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1e-05, 1e-05), Vector2(0.3, 0.24), Vector2(0.3, 0.24), Vector2(0.2, 0.164), Vector2(0.2, 0.187), Vector2(0.2, 0.2), Vector2(0.3, 0.24), Vector2(0.303213, 0.242408), Vector2(1, 0.799), Vector2(0.2, 0.16), Vector2(0.2, 0.16), Vector2(2, 1.6)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Light:position")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0.65, 3.4, 3.449, 3.688),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(1.50002, -71.3152), Vector2(2.50002, -78.3152), Vector2(-26, -105), Vector2(2.50002, -78.3152)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_31bub"]
 _data = {
@@ -674,6 +748,16 @@ _data = {
 "hurt": SubResource("Animation_1uo2i"),
 "start": SubResource("Animation_8ymmw")
 }
+
+[sub_resource type="Gradient" id="Gradient_d6aw7"]
+offsets = PackedFloat32Array(0, 0.321285, 0.993569)
+colors = PackedColorArray(1, 1, 1, 0.678431, 1, 1, 1, 0.678431, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4rosf"]
+gradient = SubResource("Gradient_d6aw7")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fdxfv"]
 shader = ExtResource("5_0phod")
@@ -726,6 +810,10 @@ z_index = -20
 script = ExtResource("1_0inbp")
 disable = true
 
+[node name="wind" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_a4vj0")
+bus = &"Sound"
+
 [node name="TheEnd" type="CharacterBody2D" parent="." node_paths=PackedStringArray("left_float", "right_float", "left_hand", "right_hand")]
 z_index = -2
 y_sort_enabled = true
@@ -764,10 +852,20 @@ libraries = {
 }
 autoplay = "hide"
 
+[node name="Light" type="PointLight2D" parent="TheEnd"]
+position = Vector2(2.50002, -78.3152)
+scale = Vector2(1e-05, 1e-05)
+energy = 1.5
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_4rosf")
+texture_scale = 12.0
+script = ExtResource("6_cv1po")
+
 [node name="Float_Left" parent="TheEnd" instance=ExtResource("4_q54yb")]
 top_level = true
 material = SubResource("ShaderMaterial_fdxfv")
-position = Vector2(-104.975, -86.177)
+position = Vector2(-114.535, -86.1284)
 rest_offset = Vector2(-110, 0)
 time_offset = 0.2
 lerp_coefficent = 0.4
@@ -783,7 +881,7 @@ frame = 32
 
 [node name="Float_Right" parent="TheEnd" instance=ExtResource("4_q54yb")]
 top_level = true
-position = Vector2(108.656, -75.764)
+position = Vector2(111.916, -88.3361)
 right = true
 rest_offset = Vector2(110, 0)
 time_offset = 0.8
@@ -792,7 +890,7 @@ lerp_coefficent = 0.4
 [node name="HealthMonitor" type="Node" parent="TheEnd"]
 script = ExtResource("7_jxonu")
 max_health = 6
-_health = 6
+_health = 1
 
 [node name="Center" type="Marker2D" parent="TheEnd"]
 position = Vector2(0, -84)
@@ -846,7 +944,8 @@ stream = ExtResource("11_44445")
 bus = &"Music"
 
 [node name="crack" type="AudioStreamPlayer" parent="TheEnd"]
-stream = ExtResource("16_o08ac")
+stream = ExtResource("17_86nb8")
+volume_db = 5.0
 pitch_scale = 2.0
 bus = &"Sound"
 
@@ -855,10 +954,9 @@ stream = ExtResource("17_ify4f")
 pitch_scale = 0.85
 bus = &"Sound"
 
-[node name="FlyAway" type="AudioStreamPlayer2D" parent="."]
+[node name="Thunder" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("15_uv2k8")
 volume_db = 20.0
-autoplay = true
 bus = &"Sound"
 
 [connection signal="killed" from="TheEnd/HealthMonitor" to="." method="die"]

@@ -37,6 +37,9 @@ func died_switch() -> void:
 	get_tree().paused = false;
 
 func reload() -> void:
+	if PlayerInfo.player:
+		PlayerInfo.player.set_health(0);
+		PlayerInfo.health_update();
 	request_transfer(_last_scene, _last_id);
 
 func request_transfer(scene : String, id : String) -> void:

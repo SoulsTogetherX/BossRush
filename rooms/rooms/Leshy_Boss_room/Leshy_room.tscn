@@ -25,7 +25,7 @@ size = Vector2(155.25, 25)
 size = Vector2(42.5, 146)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s0ak0"]
-size = Vector2(607, 417)
+size = Vector2(645, 460)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_my4nl"]
 radius = 23.1336
@@ -85,7 +85,7 @@ fill_to = Vector2(0, 0.5)
 size = Vector2(677.5, 36.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jwgbv"]
-size = Vector2(29.75, 476)
+size = Vector2(29.75, 499)
 
 [node name="Leshy_room" type="Node2D"]
 y_sort_enabled = true
@@ -118,10 +118,11 @@ position = Vector2(24, -377.75)
 scale = Vector2(735.5, 179.5)
 texture = SubResource("PlaceholderTexture2D_4c6dt")
 
-[node name="Doors" type="Node" parent="." node_paths=PackedStringArray("enter", "exit")]
+[node name="Doors" type="Node" parent="." node_paths=PackedStringArray("enter", "exit", "extra")]
 script = ExtResource("4_d7u0r")
 enter = NodePath("Door_up")
 exit = NodePath("Door_left")
+extra = NodePath("../Sprite2D3")
 
 [node name="Door_up" type="StaticBody2D" parent="Doors"]
 modulate = Color(1, 1, 1, 0)
@@ -152,7 +153,7 @@ collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="walk_area"]
-position = Vector2(-0.5, 21.5)
+position = Vector2(-0.5, 24)
 shape = SubResource("RectangleShape2D_s0ak0")
 debug_color = Color(0.772549, 0.14902, 1, 0.419608)
 
@@ -678,15 +679,15 @@ shape = SubResource("CapsuleShape2D_0lp45")
 [node name="Doggo" parent="." instance=ExtResource("4_mbe6u")]
 position = Vector2(-31, -236)
 
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("10_lfjar")
+
 [node name="Leshy" parent="." node_paths=PackedStringArray("bushes", "door_hide", "_reward_manager") instance=ExtResource("3_qsitx")]
 position = Vector2(-17, -3)
 bushes = NodePath("../Bushes")
 door_hide = NodePath("../door_hide")
 _reward_manager = NodePath("../Reward_manager")
-
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-z_index = 1
-texture = ExtResource("10_lfjar")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 visible = false
@@ -702,19 +703,19 @@ collision_layer = 128
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="No_Boss"]
-position = Vector2(3, -211)
+position = Vector2(-1, -224)
 shape = SubResource("RectangleShape2D_1dchg")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="No_Boss"]
-position = Vector2(1, 249.875)
+position = Vector2(0, 274)
 shape = SubResource("RectangleShape2D_1dchg")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="No_Boss"]
-position = Vector2(-322.875, 30)
+position = Vector2(-341, 15)
 shape = SubResource("RectangleShape2D_jwgbv")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="No_Boss"]
-position = Vector2(323, 27)
+position = Vector2(340, 17.5)
 shape = SubResource("RectangleShape2D_jwgbv")
 
 [connection signal="damaged" from="Leshy" to="Doors" method="_close_doors_comparable" flags=6]

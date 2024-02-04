@@ -61,13 +61,21 @@ func _ready() -> void:
 		PlayerInfo.DIFFICULTY.BARKMODE:
 			_phase_1_hard();
 	
+	up_shield();
+	
 	if PlayerInfo.flag == false:
+		if !get_parent().is_node_ready():
+			await get_parent().ready;
+		await get_parent().intro_animator.intro_finished;
+		
 		await get_tree().create_timer(6.0).timeout;
 		PlayerInfo.flag = true;
+	else:
+		await get_tree().create_timer(1.0).timeout;
 	
+	get_parent().fade_wind(2.0);
 	$AnimationPlayer.play("start");
 	$AnimationPlayer.animation_finished.connect(_battle_start, CONNECT_ONE_SHOT);
-	up_shield();
 
 func _battle_start(_anim_name: StringName) -> void:
 	DeathSounds.play_music(2);

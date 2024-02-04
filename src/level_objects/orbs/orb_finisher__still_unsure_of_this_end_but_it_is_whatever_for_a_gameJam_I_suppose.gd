@@ -6,6 +6,8 @@ extends Orb
 
 func _ready() -> void:
 	z_index = 1;
+	disable_click = true;
+	disable = true;
 	
 	reset_pos = Vector2.ZERO;
 	set_exchange(exchange);
@@ -77,8 +79,12 @@ func collect() -> void:
 	PlayerInfo.force_idle = true;
 	fade_cries(1.0);
 	
+	$Absorbed.play();
+	$"../TheEnd".stop_wind();
+	
 	var tw : Tween = create_tween().set_parallel();
 	tw.tween_property(self, "global_position", PlayerInfo.player.global_position, 2.0);
+	tw.tween_callback($kill.play).set_delay(1.85);
 	tw.tween_property(self, "scale", Vector2.ZERO, 2.0);
 	tw.tween_property(self, "z_index", -1, 0.01).set_delay(1.0);
 	tw.tween_callback(TimeManager.instant_time_scale.bind(0.5, 0.3)).set_delay(0.2);

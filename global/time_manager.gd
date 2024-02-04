@@ -38,20 +38,8 @@ func graduale_time_scale(
 func adjust_sounds(scale : float) -> void:
 	AudioServer.playback_speed_scale = scale;
 
-
 var time : float = 0.0;
 var timer_on : bool = false;
-
-func pause(toggle : bool = true, audio : bool = false) -> void:
-	if toggle:
-		Engine.time_scale = 0.0;
-		toggle_timer(false);
-	else:
-		Engine.time_scale = default_time;
-		toggle_timer(true);
-	
-	if audio:
-		adjust_sounds(Engine.time_scale);
 
 func toggle_timer(toggle : bool = true) -> void:
 	timer_on = toggle;

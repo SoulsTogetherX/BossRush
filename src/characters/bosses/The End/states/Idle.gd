@@ -5,15 +5,12 @@ var idle_tween : Tween;
 func get_id():
 	return "idle";
 
-func state_ready() -> void:
-	pass;
-
 func enter() -> void:
 	_animationPlayer.stop();
 	_animationPlayer.play("idle");
 	_actor._enact_idle();
 	
-	call_deferred("_start_tween");
+	_start_tween();
 
 func exit() -> void:
 	if idle_tween:
@@ -28,3 +25,5 @@ func _start_tween() -> void:
 	idle_tween.tween_property(_actor, "scale", Vector2.ONE * 0.85, 0.5);
 	idle_tween.tween_property(_actor, "rotation_degrees", 0.0, 0.5);
 	idle_tween.tween_property(_actor, "z_index", -12, 0.001).set_delay(1.0);
+	if _actor._shadow:
+		idle_tween.tween_property(_actor._shadow, "modulate:a", 0.0, 0.5);

@@ -14,20 +14,23 @@ script = ExtResource("1_y3w22")
 
 [node name="Leshy" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_e800p")
+volume_db = -3.0
 
 [node name="Shaka" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_04ybq")
+volume_db = -3.0
 
 [node name="TheEnd" type="AudioStreamPlayer" parent="."]
+volume_db = -7.0
 
 [node name="Silence" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_pbkof")
 volume_db = -15.0
-bus = &"Sound"
+bus = &"Music"
 
 [node name="Music_Crash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_2omby")
-volume_db = 10.0
+volume_db = 5.0
 bus = &"Music"
 
 [node name="Leshy_Music" type="AudioStreamPlayer" parent="."]

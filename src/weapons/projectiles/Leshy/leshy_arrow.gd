@@ -11,10 +11,14 @@ func set_alignment(allign : HurtBox.ALIGNMENT) -> void:
 			$trail.default_color = Color.LIGHT_CORAL;
 
 func on_collide(_hurtbox : HurtBox) -> void:
+	$hitbox.queue_free();
+	$collide_detect.queue_free();
 	await _sound();
 	super(_hurtbox);
 
 func on_collide_wall(_body : Node2D) -> void:
+	$hitbox.queue_free();
+	$collide_detect.queue_free()
 	var hit_part = get_node_or_null("wall_hit_particles");
 	
 	if hit_part:

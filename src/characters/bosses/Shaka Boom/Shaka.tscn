@@ -1299,7 +1299,7 @@ bus = &"Sound"
 
 [node name="fire_expand" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("28_7b537")
-volume_db = 10.0
+volume_db = 5.0
 bus = &"Sound"
 
 [node name="fire_throw" type="AudioStreamPlayer" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://brvyfync5c1iv"]
+[gd_scene load_steps=58 format=3 uid="uid://brvyfync5c1iv"]
 
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/hand.gd" id="2_4rlrj"]
 [ext_resource type="Script" path="res://custom_nodes/combat/hurt_box.gd" id="3_2bn6v"]
@@ -13,10 +13,12 @@
 [ext_resource type="Script" path="res://custom_nodes/StateMachine/state_machine.gd" id="9_1mvkw"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/Boss_Parts/Pupil.gd" id="9_qusxr"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Idle.gd" id="10_lve7e"]
+[ext_resource type="Script" path="res://src/level_objects/light_setup.gd" id="11_ftirn"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Stationary.gd" id="11_ikdwx"]
 [ext_resource type="AudioStream" uid="uid://8uqtwkn5prd0" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Laser Pre-Emptive.ogg" id="12_cd28n"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Aim_Lazor.gd" id="12_s35an"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Over_Player.gd" id="13_0obnk"]
+[ext_resource type="Texture2D" uid="uid://ci4685ododbym" path="res://assets/sprites/characters/bosses/The End/lazorLight.png" id="13_5bm46"]
 [ext_resource type="AudioStream" uid="uid://bii65j617e4ec" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Laser Fire.ogg" id="13_hinxf"]
 [ext_resource type="AudioStream" uid="uid://cktw2gs3irhi" path="res://assets/sounds/effects/boss/TheEnd/Lazor/Laser Fire but it is holy.ogg" id="14_52ywu"]
 [ext_resource type="Script" path="res://src/characters/bosses/The End/states/Slam_Player.gd" id="14_x034m"]
@@ -112,6 +114,15 @@ point_count = 3
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j1tyd"]
 radius = 15.2941
 height = 63.5294
+
+[sub_resource type="Gradient" id="Gradient_88beb"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c0384"]
+gradient = SubResource("Gradient_88beb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xrgpn"]
 radius = 20.0
@@ -589,6 +600,27 @@ width = 40.0
 default_color = Color(1, 1, 0.454902, 1)
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="beam_light" type="PointLight2D" parent="Lazor"]
+position = Vector2(-7.05882, 497.647)
+scale = Vector2(0.625193, 0.87876)
+color = Color(1, 1, 0.454902, 1)
+energy = 3.0
+blend_mode = 2
+range_layer_min = -100
+texture = ExtResource("13_5bm46")
+script = ExtResource("11_ftirn")
+
+[node name="charge_light" type="PointLight2D" parent="Lazor"]
+position = Vector2(-8.2353, 7.64706)
+scale = Vector2(0.5, 0.5)
+color = Color(1, 1, 0.454902, 1)
+energy = 2.0
+blend_mode = 2
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_c0384")
+texture_scale = 12.0
+script = ExtResource("11_ftirn")
 
 [node name="Hit_Box_Lazor" type="Area2D" parent="Lazor"]
 position = Vector2(3.52941, -22.3529)
